@@ -126,28 +126,30 @@ function seed_fonts_init() {
 	$selectors = get_option( 'seed_fonts_selectors' );
 	$is_important = get_option( 'seed_fonts_is_important' );
 
+	echo '<div class="wrap">';
 	echo '<h1>Seed Fonts</h1>';
 
+	
 	echo '<form id="seed-fonts-form" method="post" name="seed_fonts_form" action="'.get_bloginfo( 'url' ).'/wp-admin/admin-post.php" >';
-
-	echo 'Fonts <select id="seed-fonts-font" name="seed_fonts_font">';
+	echo '<table class="form-table"><tbody>';
+	echo '<tr><th scope="row">Fonts</th><td><select id="seed-fonts-font" name="seed_fonts_font">';
 	foreach( Seed_fonts::$fonts as $_font_family => $_font ):
 		echo '<option value="'.$_font_family.'" '.(($font == $_font_family) ? ' selected="selected"' : '').'>'.$_font_family.'</option>';
 	endforeach;
-	echo '</select>';
+	echo '</select></td></tr>';
 
-	echo 'Weight <select id="seed-fonts-weight" name="seed_fonts_weight">';
-	echo '<option value=""></option>';
+	echo '<tr><th scope="row">Weight</th><td><select id="seed-fonts-weight" name="seed_fonts_weight">';
 	foreach( Seed_fonts::$fonts[$font]['weights'] as $_weight ):
+		echo '<option value=""></option>';
 		echo '<option value="'.$_weight.'" '.(($weight == $_weight) ? ' selected="selected"' : '').'>'.$_weight.'</option>';
 	endforeach;
-	echo '</select>';
+	echo '</select></td></tr>';
 
-	echo 'Selectors <input id="seed-fonts-selectors" type="text" name="seed_fonts_selectors" value="'.htmlspecialchars( $selectors ).'" />';
-	echo 'imprtant!? <input id="seed-fonts-is-important" type="checkbox" name="seed_fonts_is_important" value="on"'.( $is_important ? ' checked="checked"' : '').' />';
-	echo '<textarea id="seed-fonts-css-generated"></textarea>';
-	echo '<input type="hidden" name="action" value="seed_fonts_save_options" />';
-	echo '<input type="submit" />';
+	echo '<tr><th scope="row">Selectors</th><td><input id="seed-fonts-selectors" class="regular-text" type="text" name="seed_fonts_selectors" value="'.htmlspecialchars( $selectors ).'" /></td></tr>';
+	echo '<tr><th scope="row">Force using this font?</th><td><label for="seed-fonts-is-important"><input id="seed-fonts-is-important" type="checkbox" name="seed_fonts_is_important" value="on"'.( $is_important ? ' checked="checked"' : '').' /> !important</label></td></tr>';
+	echo '<tr><th scope="row">Generated CSS</th><td><textarea id="seed-fonts-css-generated" rows="4" cols="60" class="code" readonly></textarea>';
+	echo '<input type="hidden" name="action" value="seed_fonts_save_options" /></td></tr></tbody></table>';
+	echo '<p class="submit"><input type="submit"  class="button button-primary" value="Save Changes" /></p>';
 
 	foreach( Seed_fonts::$fonts as $_font_family => $_font ):
 		echo '<select id="seed-fonts-'.$_font_family.'-weights" style="display:none">';
@@ -159,6 +161,8 @@ function seed_fonts_init() {
 	endforeach;
 
 	echo '</form>';
+	
+	echo '</div>';
 }
 
 add_action( 'admin_post_seed_fonts_save_options', 'seed_fonts_save' );
