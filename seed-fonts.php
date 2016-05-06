@@ -48,16 +48,16 @@ if(!class_exists('Seed_Fonts'))
 
         public static $fonts = array	(
         	"boontook" => array(
-        		"weights" => array( 300,400,500,600,700 )
+        		"weights" => array( 900 )
         		),
         	"cloud" => array(
-        		"weights" => array( 200 , 300, 400 , 500 )
+        		"weights" => array( 300, 700)
         		),
         	"prompt" => array(
-        		"weights" => array( 100, 200 )
+        		"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900 )
         		),
         	"thaisans_neue" => array(
-        		"weights" => array( 200, 400 )
+        		"weights" => array( 100, 200, 300, 400, 600, 700, 800, 900 )
         		)
         	);
 
