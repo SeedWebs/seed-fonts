@@ -143,7 +143,7 @@ function seed_fonts_init() {
 
 	echo '<tr><th scope="row">Selectors</th><td><input id="seed-fonts-selectors" class="regular-text" type="text" name="seed_fonts_selectors" value="'.htmlspecialchars( $selectors ).'" /></td></tr>';
 	echo '<tr><th scope="row">Force using this font?</th><td><label for="seed-fonts-is-important"><input id="seed-fonts-is-important" type="checkbox" name="seed_fonts_is_important" value="on"'.( $is_important ? ' checked="checked"' : '').' /> !important</label></td></tr>';
-	echo '<tr><th scope="row">Generated CSS</th><td><textarea id="seed-fonts-css-generated" row="4" col="20" class="large-text code"></textarea>';
+	echo '<tr><th scope="row">Generated CSS</th><td><textarea id="seed-fonts-css-generated" rows="4" cols="60" class="code" readonly></textarea>';
 	echo '<input type="hidden" name="action" value="seed_fonts_save_options" /></td></tr></tbody></table>';
 	echo '<p class="submit"><input type="submit"  class="button button-primary" value="Save Changes" /></p>';
 
