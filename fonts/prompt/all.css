@@ -1,0 +1,102 @@
+@font-face {
+    font-family: 'prompt';
+    src: url('prompt-black-webfont.eot');
+    src: url('prompt-black-webfont.eot?#iefix') format('embedded-opentype'),
+         url('prompt-black-webfont.woff2') format('woff2'),
+         url('prompt-black-webfont.woff') format('woff'),
+         url('prompt-black-webfont.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'prompt';
+    src: url('prompt-bold-webfont.eot');
+    src: url('prompt-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('prompt-bold-webfont.woff2') format('woff2'),
+         url('prompt-bold-webfont.woff') format('woff'),
+         url('prompt-bold-webfont.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'prompt';
+    src: url('prompt-extrabold-webfont.eot');
+    src: url('prompt-extrabold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('prompt-extrabold-webfont.woff2') format('woff2'),
+         url('prompt-extrabold-webfont.woff') format('woff'),
+         url('prompt-extrabold-webfont.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'prompt';
+    src: url('prompt-extralight-webfont.eot');
+    src: url('prompt-extralight-webfont.eot?#iefix') format('embedded-opentype'),
+         url('prompt-extralight-webfont.woff2') format('woff2'),
+         url('prompt-extralight-webfont.woff') format('woff'),
+         url('prompt-extralight-webfont.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'prompt';
+    src: url('prompt-light-webfont.eot');
+    src: url('prompt-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('prompt-light-webfont.woff2') format('woff2'),
+         url('prompt-light-webfont.woff') format('woff'),
+         url('prompt-light-webfont.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'prompt';
+    src: url('prompt-medium-webfont.eot');
+    src: url('prompt-medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('prompt-medium-webfont.woff2') format('woff2'),
+         url('prompt-medium-webfont.woff') format('woff'),
+         url('prompt-medium-webfont.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'prompt';
+    src: url('prompt-regular-webfont.eot');
+    src: url('prompt-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('prompt-regular-webfont.woff2') format('woff2'),
+         url('prompt-regular-webfont.woff') format('woff'),
+         url('prompt-regular-webfont.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'prompt';
+    src: url('prompt-semibold-webfont.eot');
+    src: url('prompt-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('prompt-semibold-webfont.woff2') format('woff2'),
+         url('prompt-semibold-webfont.woff') format('woff'),
+         url('prompt-semibold-webfont.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'prompt';
+    src: url('prompt-thin-webfont.eot');
+    src: url('prompt-thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('prompt-thin-webfont.woff2') format('woff2'),
+         url('prompt-thin-webfont.woff') format('woff'),
+         url('prompt-thin-webfont.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
