@@ -2,8 +2,8 @@
 		var css = '';
 
 		css = jQuery('#seed-fonts-selectors').val() + ' {\r\n';
-		css += '	font-family: "' + jQuery('#seed-fonts-font').val() + '", san-serif' + ((jQuery('#seed-fonts-is-important').prop('checked'))  ? ' !important' : '') + '\n';
-		css += '	font-weight: ' + jQuery('#seed-fonts-weight').val()  + ((jQuery('#seed-fonts-is-important').prop('checked'))  ? ' !important' : '') + '\n';
+		css += '	font-family: "' + jQuery('#seed-fonts-font').val() + '", san-serif;' + ((jQuery('#seed-fonts-is-important').prop('checked'))  ? ' !important;' : '') + '\n';
+		css += '	font-weight: ' + jQuery('#seed-fonts-weight').val()  + ';' + ((jQuery('#seed-fonts-is-important').prop('checked'))  ? ' !important;' : '') + '\n';
 		css += '}';
 
 		return css;
@@ -16,11 +16,16 @@
 			jQuery('#seed-fonts-css-generated').val( seed_fonts_generate_css() );
 		});
 
-		jQuery('#seed-fonts-selectors').change( function() {
+		jQuery('#seed-fonts-selectors').focusout( function() {
 			jQuery('#seed-fonts-css-generated').val( seed_fonts_generate_css() );
 		});
 
 		jQuery('#seed-fonts-font').change( function() {
+			var font = jQuery('#seed-fonts-font').val();
+			var weight = jQuery('#seed-fonts-weight').val();
+
+			jQuery('#seed-fonts-weight').empty().append(jQuery('#seed-fonts-' + font + '-weights').children()).val(weight);
+
 			jQuery('#seed-fonts-css-generated').val( seed_fonts_generate_css() );
 		});
 

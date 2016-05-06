@@ -47,20 +47,16 @@ if(!class_exists('Seed_Fonts'))
         } // END public static function activate
 
         public static $fonts = array	(
-        	"boon" => array(
-        		"css" => "https://fonts.seedthemes.com/boon/all.css",
+        	"boontook" => array(
         		"weights" => array( 300,400,500,600,700 )
         		),
-        	"cs_prajad" => array(
-        		"css" => "https://fonts.seedthemes.com/cs_prajad/all.css",
+        	"cloud" => array(
         		"weights" => array( 200 , 300, 400 , 500 )
         		),
-        	"supermarket" => array(
-        		"css" => "https://fonts.seedthemes.com/supermarket/all.css",
+        	"prompt" => array(
         		"weights" => array( 100, 200 )
         		),
         	"thaisans_neue" => array(
-        		"css" => "https://fonts.seedthemes.com/thaisans_neue/all.css",
         		"weights" => array( 200, 400 )
         		)
         	);
@@ -96,7 +92,7 @@ function seed_fonts_scripts() {
 
 		if( $font != '') {
 			$font_styles = $selectors.' {font-family: "'.$font.'",  sans-serif'.( $is_important ? ' !important' : '' ).'; font-weight: '.$weight.( $is_important ? ' !important' : '' ).';}';
-			wp_enqueue_style( 'seed-fonts-all', Seed_fonts::$fonts[$font]['css'] , array(  ) );
+			wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . '/fonts/' . $font . '/all.css' , array(  ) );
 			wp_add_inline_style( 'seed-fonts-all', $font_styles );
 		}
 	}
@@ -148,6 +144,14 @@ function seed_fonts_init() {
 	echo '<textarea id="seed-fonts-css-generated"></textarea>';
 	echo '<input type="hidden" name="action" value="seed_fonts_save_options" />';
 	echo '<input type="submit" />';
+
+	foreach( Seed_fonts::$fonts as $_font_family => $_font ):
+		echo '<select id="seed-fonts-'.$_font_family.'-weights" style="display:none">';
+		foreach( $_font['weights'] as $_weight ):
+		echo '<option value="'.$_weight.'">'.$_weight.'</option>';
+		endforeach;
+		echo '</select>';
+	endforeach;
 
 	echo '</form>';
 }
