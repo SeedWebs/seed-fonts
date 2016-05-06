@@ -91,7 +91,10 @@ function seed_fonts_scripts() {
 		$is_important = ( get_option( 'seed_fonts_is_important' ) );
 
 		if( $font != '') {
-			$font_styles = $selectors.' {font-family: "'.$font.'",  sans-serif;'.( $is_important ? ' !important' : '' );
+			if( $selectors != '' )
+				$font_styles = $selectors.' ';
+
+			$font_styles .= '{font-family: "'.$font.'",  sans-serif;'.( $is_important ? ' !important' : '' );
 			if( $weight != '' )
 				$font_styles .= ' font-weight: '.$weight.';'.( $is_important ? ' !important' : '' );
 			$font_styles .= ' }';
@@ -161,10 +164,10 @@ function seed_fonts_init() {
 	echo '<p class="submit"><input type="submit"  class="button button-primary" value="Save Changes" /></p>';
 
 	foreach( Seed_fonts::$fonts as $_font_family => $_font ):
-		echo '<select id="seed-fonts-'.$_font_family.'-weights">';
+		echo '<select id="seed-fonts-'.$_font_family.'-weights" style="display:none">';
 		echo '<option value=""></option>';
 		foreach( $_font['weights'] as $_weight ):
-		echo '<option value="'.$_weight.'">'.$_weight.'</option>';
+			echo '<option value="'.$_weight.'">'.$_weight.'</option>';
 		endforeach;
 		echo '</select>';
 	endforeach;
