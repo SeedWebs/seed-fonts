@@ -2,8 +2,8 @@
 /*
 Plugin Name: Seed Fonts
 Plugin URI: https://github.com/SeedThemes/seed-fonts
-Description: Custom font-face fonts with generated free Thai fonts on fonts.SeedThemes.com.
-Version: 0.5.0
+Description: A plugin for thai font-face
+Version: 0.9.2
 Author: Seed Themes
 Author URI: http://www.seedthemes.com
 License: GPL2
@@ -47,24 +47,23 @@ if(!class_exists('Seed_Fonts'))
         } // END public static function activate
 
 		public static $fonts = array	(
-							"boon" => array (
-										"font-family" => "boon",
-										"css" => "https://fonts.seedthemes.com/boon/fonts.css"
-									),
-							"cs_prajad" => array (
-										"font-family" => "cs_prajad",
-										"css" => "https://fonts.seedthemes.com/cs_prajad/fonts.css"
-									),
-							"supermarket" => array (
-										"font-family" => "supermarket",
-										"css" => "https://fonts.seedthemes.com/supermarket/fonts.css"
-									),
-							"thaisans_neue" => array (
-										"font-family" => "thaisans_neue",
-										"css" => "https://fonts.seedthemes.com/thaisans_neue/fonts.css"
-									)							
+							"boon" => array(
+												"css" => "https://fonts.seedthemes.com/boon/all.css",
+												"weights" => array( 100, 200 , 300 )
+											),
+							"cs_prajad" => array(
+												"css" => "https://fonts.seedthemes.com/cs_prajad/all.css",
+												"weights" => array( 200 , 300, 400 , 500 )
+											),
+							"supermarket" => array(
+												"css" => "https://fonts.seedthemes.com/supermarket/all.css",
+												"weights" => array( 100, 200 )
+											),
+							"thaisans_neue" => array(
+												"css" => "https://fonts.seedthemes.com/thaisans_neue/all.css",
+												"weights" => array( 200, 400 )
+											)
 						);
-
 
         /**
          * Deactivate the plugin
@@ -86,23 +85,23 @@ if(class_exists('Seed_Fonts'))
     $seed_fonts = new Seed_Fonts();
 }
 
-	add_action( 'wp_enqueue_scripts', 'seed_fonts_scripts' );
+	add_action( 'wp_enqueue_scripts', 'seed_fonts_scripts', 30 );
 
 	function seed_fonts_scripts() {
 		if( ! is_admin() ) {
-			wp_enqueue_script( 'seed-fonts', plugin_dir_url( __FILE__ ) . '/seed-fonts.js' , array('jquery'), '2016-1', true );
-			wp_enqueue_style( 'seed-fonts', plugin_dir_url( __FILE__ ) . '/seed-fonts.css' , array() );
+			$font = get_option( 'seed_fonts_font' );
+			$weight = get_option( 'seed_fonts_weight' );
+			$selectors = get_option( 'seed_fonts_selectors' );
+			$is_important = ( get_option( 'seed_fonts_is_important' ) );
 
-			$font_selected = get_option( 'seed_fonts_font_selected' );
-	
-			if( $font_selected != '') {
-					$font_styles = 'h1,h2,h3,h4,h5,h6,._heading {
-					font-family: "'.$font_selected.'",  sans-serif;
-					font-weight: 300;
+			if( $font != '') {
+					$font_styles = $selectors.' {
+					font-family: "'.$font.'",  sans-serif'.( $is_important ? ' !important' : '' ).'
+					font-weight: '.$weight.( $is_important ? ' !important' : '' ).';
 				}';
 
-				wp_enqueue_style( 'seed-fonts-selected', Seed_fonts::$fonts[$font_selected]['css'] , array() );
-				wp_add_inline_style( 'seed-fonts-selected', $font_styles );
+				wp_enqueue_style( 'seed-fonts-all', Seed_fonts::$fonts[$font]['css'] , array(  ) );
+				wp_add_inline_style( 'seed-fonts-all', $font_styles );
 			}
 		}
 	}
@@ -116,25 +115,41 @@ if(class_exists('Seed_Fonts'))
 	}
 
 	function seed_fonts_admin_styles() {
-		foreach( Seed_fonts::$fonts as $_font ):
-			wp_enqueue_style( 'seed-fonts-'.$_font["font-family"], $_font["css"] , array() );
-		endforeach;
+//		foreach( Seed_fonts::$fonts as $_font ):
+//			wp_enqueue_style( 'seed-fonts-'.$_font["font-family"], $_font["css"] , array() );
+//		endforeach;
 
-		wp_enqueue_style( 'seed-fonts-admin', plugin_dir_url( __FILE__ ) . '/seed-fonts-admin.css' , array() );
+//		wp_enqueue_style( 'seed-fonts-admin', plugin_dir_url( __FILE__ ) . '/seed-fonts-admin.css' , array() );
+
+		wp_enqueue_script( 'seed-fonts', plugin_dir_url( __FILE__ ) . '/seed-fonts-admin.js' , array( 'jquery' ), '2016-1', true );
+		wp_enqueue_style( 'seed-fonts', plugin_dir_url( __FILE__ ) . '/seed-fonts-admin.css' , array(  ) );
 	}
 
 	function seed_fonts_init() {
-		$font_selected = get_option( 'seed_fonts_font_selected' );
+		$font = get_option( 'seed_fonts_font' );
+		$weight = get_option( 'seed_fonts_weight' );
+		$selectors = get_option( 'seed_fonts_selectors' );
+		$is_important = get_option( 'seed_fonts_is_important' );
 
 		echo '<h1>Seed Fonts</h1>';
 
-		echo '<form id="seed-fonts-selector" method="post" name="seed_fonts_selector_form" action="'.get_bloginfo( 'url' ).'/wp-admin/admin-post.php" >';
+		echo '<form id="seed-fonts-form" method="post" name="seed_fonts_form" action="'.get_bloginfo( 'url' ).'/wp-admin/admin-post.php" >';
 
-		foreach( Seed_fonts::$fonts as $_font ):
-			echo '<input type="radio" name="seed_fonts_selector" id="font_'.$_font['font-family'].'" value="'.$_font['font-family'].'" '.(($font_selected == $_font['font-family']) ? ' checked="checked"' : '').' />';
-			echo '<h2 class="'.$_font["font-family"].'">'.$_font["font-family"].' AaBbCcDd 1 2 3 4 5 6 7 8 9 0</h2>';
+		echo 'Fonts <select id="seed-fonts-font" name="seed_fonts_font">';
+		foreach( Seed_fonts::$fonts as $_font_family => $_font ):
+			echo '<option value="'.$_font_family.'" '.(($font == $_font_family) ? ' selected="selected"' : '').'>'.$_font_family.'</option>';
 		endforeach;
+		echo '</select>';
 
+		echo 'Weight <select id="seed-fonts-weight" name="seed_fonts_weight">';
+		foreach( Seed_fonts::$fonts[$font]['weights'] as $_weight ):
+			echo '<option value="'.$_weight.'" '.(($weight == $_weight) ? ' selected="selected"' : '').'>'.$_weight.'</option>';
+		endforeach;
+		echo '</select>';
+
+		echo 'Selectors <input id="seed-fonts-selectors" type="text" name="seed_fonts_selectors" value="'.htmlspecialchars( $selectors ).'" />';
+		echo 'imprtant!? <input id="seed-fonts-is-important" type="checkbox" name="seed_fonts_is_important" value="on"'.( $is_important ? ' checked="checked"' : '').' />';
+		echo '<textarea id="seed-fonts-css-generated"></textarea>';
 		echo '<input type="hidden" name="action" value="seed_fonts_save_options" />';
 		echo '<input type="submit" />';
 
@@ -144,7 +159,15 @@ if(class_exists('Seed_Fonts'))
 	add_action( 'admin_post_seed_fonts_save_options', 'seed_fonts_save' );
 
 	function seed_fonts_save() {
-		update_option( 'seed_fonts_font_selected' , $_POST['seed_fonts_selector'] );
+		update_option( 'seed_fonts_font' , $_POST['seed_fonts_font'] );
+		update_option( 'seed_fonts_weight' , $_POST['seed_fonts_weight'] );
+		update_option( 'seed_fonts_selectors' , $_POST['seed_fonts_selectors'] );
+		if( array_key_exists( 'seed_fonts_is_important', $_POST ) && ( $_POST['seed_fonts_is_important'] == 'on' ) )
+			update_option( 'seed_fonts_is_important' , true );
+		else
+			update_option( 'seed_fonts_is_important' , false );
+
+//		print_r($_POST);
 
 		header("Location: admin.php?page=seed-fonts&saved=true");
 	}
