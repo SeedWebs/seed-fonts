@@ -91,7 +91,10 @@ function seed_fonts_scripts() {
 		$is_important = ( get_option( 'seed_fonts_is_important' ) );
 
 		if( $font != '') {
-			$font_styles = $selectors.' {font-family: "'.$font.'",  sans-serif'.( $is_important ? ' !important' : '' ).'; font-weight: '.$weight.( $is_important ? ' !important' : '' ).';}';
+			$font_styles = $selectors.' {font-family: "'.$font.'",  sans-serif'.( $is_important ? ' !important' : '' ).';';
+			if( $weight != '' )
+				$font_styles .= ' font-weight: '.$weight.( $is_important ? ' !important' : '' ).';';
+			$font_styles .= ' }';
 			wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . '/fonts/' . $font . '/all.css' , array(  ) );
 			wp_add_inline_style( 'seed-fonts-all', $font_styles );
 		}
@@ -101,7 +104,7 @@ function seed_fonts_scripts() {
 add_action( 'admin_menu', 'seed_fonts_setup_menu' );
 
 function seed_fonts_setup_menu() {
-	$seed_font_page = add_menu_page ( 'Seed Themes', 'Seed Fonts', 'manage_options', 'seed-fonts', 'seed_fonts_init' );
+	$seed_font_page = add_submenu_page ( 'themes.php', 'Seed Fonts', 'Fonts', 'manage_options', 'seed-fonts', 'seed_fonts_init' );
 
 	add_action( 'load-' . $seed_font_page, 'seed_fonts_admin_styles' );
 }
@@ -134,6 +137,7 @@ function seed_fonts_init() {
 	echo '</select>';
 
 	echo 'Weight <select id="seed-fonts-weight" name="seed_fonts_weight">';
+	echo '<option value=""></option>';
 	foreach( Seed_fonts::$fonts[$font]['weights'] as $_weight ):
 		echo '<option value="'.$_weight.'" '.(($weight == $_weight) ? ' selected="selected"' : '').'>'.$_weight.'</option>';
 	endforeach;
@@ -147,6 +151,7 @@ function seed_fonts_init() {
 
 	foreach( Seed_fonts::$fonts as $_font_family => $_font ):
 		echo '<select id="seed-fonts-'.$_font_family.'-weights" style="display:none">';
+		echo '<option value=""></option>';
 		foreach( $_font['weights'] as $_weight ):
 		echo '<option value="'.$_weight.'">'.$_weight.'</option>';
 		endforeach;
