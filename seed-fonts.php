@@ -91,9 +91,9 @@ function seed_fonts_scripts() {
 		$is_important = ( get_option( 'seed_fonts_is_important' ) );
 
 		if( $font != '') {
-			$font_styles = $selectors.' {font-family: "'.$font.'",  sans-serif'.( $is_important ? ' !important' : '' ).';';
+			$font_styles = $selectors.' {font-family: "'.$font.'",  sans-serif;'.( $is_important ? ' !important' : '' );
 			if( $weight != '' )
-				$font_styles .= ' font-weight: '.$weight.( $is_important ? ' !important' : '' ).';';
+				$font_styles .= ' font-weight: '.$weight.';'.( $is_important ? ' !important' : '' );
 			$font_styles .= ' }';
 			wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . '/fonts/' . $font . '/all.css' , array(  ) );
 			wp_add_inline_style( 'seed-fonts-all', $font_styles );
@@ -126,6 +126,15 @@ function seed_fonts_init() {
 	$selectors = get_option( 'seed_fonts_selectors' );
 	$is_important = get_option( 'seed_fonts_is_important' );
 
+	if( $font === FALSE )
+		$font = key ( Seed_fonts::$fonts );
+
+	if( $weight === FALSE )
+		$weight = '';
+
+	if( $selectors === FALSE )
+		$selectors = 'h1, h2, h3, h4, h5, h6, ._heading';
+
 	echo '<div class="wrap">';
 	echo '<h1>Seed Fonts</h1>';
 
@@ -139,8 +148,8 @@ function seed_fonts_init() {
 	echo '</select></td></tr>';
 
 	echo '<tr><th scope="row">Weight</th><td><select id="seed-fonts-weight" name="seed_fonts_weight">';
+	echo '<option value=""></option>';
 	foreach( Seed_fonts::$fonts[$font]['weights'] as $_weight ):
-		echo '<option value=""></option>';
 		echo '<option value="'.$_weight.'" '.(($weight == $_weight) ? ' selected="selected"' : '').'>'.$_weight.'</option>';
 	endforeach;
 	echo '</select></td></tr>';
@@ -152,7 +161,7 @@ function seed_fonts_init() {
 	echo '<p class="submit"><input type="submit"  class="button button-primary" value="Save Changes" /></p>';
 
 	foreach( Seed_fonts::$fonts as $_font_family => $_font ):
-		echo '<select id="seed-fonts-'.$_font_family.'-weights" style="display:none">';
+		echo '<select id="seed-fonts-'.$_font_family.'-weights">';
 		echo '<option value=""></option>';
 		foreach( $_font['weights'] as $_weight ):
 		echo '<option value="'.$_weight.'">'.$_weight.'</option>';
