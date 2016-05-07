@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'athiti';
+    src: url('athiti-medium-webfont.eot');
+    src: url('athiti-medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('athiti-medium-webfont.woff2') format('woff2'),
+         url('athiti-medium-webfont.woff') format('woff'),
+         url('athiti-medium-webfont.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'athiti';
+    src: url('athiti-semibold-webfont.eot');
+    src: url('athiti-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('athiti-semibold-webfont.woff2') format('woff2'),
+         url('athiti-semibold-webfont.woff') format('woff'),
+         url('athiti-semibold-webfont.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}

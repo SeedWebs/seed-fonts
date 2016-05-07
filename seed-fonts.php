@@ -47,18 +47,15 @@ if(!class_exists('Seed_Fonts'))
         } // END public static function activate
 
         public static $fonts = array	(
-        	"boontook" => array(
-        		"weights" => array( 900 )
+        	"athiti" => array(
+        		"weights" => array( 500, 600)
         		),
-        	"cloud" => array(
-        		"weights" => array( 300, 700)
+        	"kanit" => array(
+        		"weights" => array( 300, 400, 500,)
         		),
         	"prompt" => array(
-        		"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900 )
+        		"weights" => array( 400, 500, 600 )
         		),
-        	"thaisans_neue" => array(
-        		"weights" => array( 100, 200, 300, 400, 600, 700, 800, 900 )
-        		)
         	);
 
         /**
