@@ -100,9 +100,9 @@ function seed_fonts_scripts() {
 			$font_styles .= ' }';
 
 			if( file_exists( get_stylesheet_directory() . '/vendor/fonts' ) && is_dir( get_stylesheet_directory() . '/vendor/fonts' ) ) {
-				wp_enqueue_style( 'seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $font . '/all.css' , array(  ) );
+				wp_enqueue_style( 'seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $font . '/font.css' , array(  ) );
 			} else {
-				wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . '/fonts/' . $font . '/all.css' , array(  ) );
+				wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . '/fonts/' . $font . '/font.css' , array(  ) );
 			}
 
 			wp_add_inline_style( 'seed-fonts-all', $font_styles );
@@ -137,8 +137,8 @@ function seed_fonts_init() {
 		$fonts = array();
 
 		while( FALSE !== ( $entry = readdir( $d_handle ) ) ) {
-			if ( is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $entry ) && ( file_exists ( get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/all.css' ) ) ) {
-				$headers = get_file_data ( get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/all.css' , array( 'font' => 'Font Name', 'weights' => 'Weights' ) );
+			if ( is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $entry ) && ( file_exists ( get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css' ) ) ) {
+				$headers = get_file_data ( get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css' , array( 'font' => 'Font Name', 'weights' => 'Weights' ) );
 
 				$_font = array();
 
