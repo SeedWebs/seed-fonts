@@ -2,11 +2,12 @@
 /*
 Plugin Name: Seed Fonts
 Plugin URI: https://github.com/SeedThemes/seed-fonts
-Description: A plugin for thai font-face
-Version: 0.9.2
-Author: Seed Themes
+Description: Enable web fonts on Appearance -> Fonts. You can add more by <a href="https://github.com/SeedThemes/seed-fonts" target="_blank">uploading your web fonts to the theme folder</a>.
+Version: 0.9.3
+Author: SeedThemes
 Author URI: http://www.seedthemes.com
 License: GPL2
+Text Domain: seed-fonts
 */
 
 /*
@@ -112,7 +113,7 @@ function seed_fonts_scripts() {
 add_action( 'admin_menu', 'seed_fonts_setup_menu' );
 
 function seed_fonts_setup_menu() {
-	$seed_font_page = add_submenu_page ( 'themes.php', 'Seed Fonts', 'Fonts', 'manage_options', 'seed-fonts', 'seed_fonts_init' );
+	$seed_font_page = add_submenu_page ( 'themes.php', __( 'Seed Fonts', 'seed-fonts' ), __( 'Fonts', 'seed-fonts' ), 'manage_options', 'seed-fonts', 'seed_fonts_init' );
 
 	add_action( 'load-' . $seed_font_page, 'seed_fonts_admin_styles' );
 }
@@ -172,31 +173,33 @@ function seed_fonts_init() {
 		$selectors = 'h1, h2, h3, h4, h5, h6, ._heading';
 
 	echo '<div class="wrap">';
-	echo '<h1>Seed Fonts</h1>';
+	echo '<h1>'. __( 'Seed Fonts', 'seed-fonts' ) . '</h1>';
+	echo '<p>'. __( 'This plugin comes with 4 Thai web fonts from <a href="http://cadsondemak.github.io/" target="_blank">Cadson Demak</a>. You can add more by <a href="https://github.com/SeedThemes/seed-fonts" target="_blank">uploading your web fonts to the theme folder</a>.', 'seed-fonts' ) . '</p>';
 
 	echo '<form id="seed-fonts-form" method="post" name="seed_fonts_form" action="'.get_bloginfo( 'url' ).'/wp-admin/admin-post.php" >';
 	echo '<table class="form-table"><tbody>';
-	echo '<tr><th scope="row">Enable</th><td><label for="seed-fonts-is-enabled"><input id="seed-fonts-is-enabled" type="checkbox" name="seed_fonts_is_enabled" value="on"'.( $is_enabled ? ' checked="checked"' : '').' /></label></td></tr>';
-	echo '<tr><th scope="row">Fonts</th><td><select id="seed-fonts-font" name="seed_fonts_font"'.( $is_enabled ? '' : ' disabled' ).'>';
+	echo '<tr><th scope="row">'. __( 'Enable?', 'seed-fonts' ) .'</th><td><label for="seed-fonts-is-enabled"><input id="seed-fonts-is-enabled" type="checkbox" name="seed_fonts_is_enabled" value="on"'.( $is_enabled ? ' checked="checked"' : '').' /></label></td></tr>';
+	echo '<tr><th scope="row">'. __( 'Font', 'seed-fonts' ) .'</th><td><select id="seed-fonts-font" name="seed_fonts_font"'.( $is_enabled ? '' : ' disabled' ).'>';
 	foreach( Seed_fonts::$fonts as $_font_family => $_font ):
 		echo '<option value="'.$_font_family.'" '.(($font == $_font_family) ? ' selected="selected"' : '').'>'.( array_key_exists( 'font', $_font ) ? $_font['font'] : $_font_family ).'</option>';
 	endforeach;
 	echo '</select></td></tr>';
 
-	echo '<tr><th scope="row">Weight</th><td><select id="seed-fonts-weight" name="seed_fonts_weight"'.( $is_enabled ? '' : ' disabled' ).'>';
+	echo '<tr><th scope="row">'. __( 'Weight', 'seed-fonts' ) .'</th><td><select id="seed-fonts-weight" name="seed_fonts_weight"'.( $is_enabled ? '' : ' disabled' ).'>';
 	echo '<option value=""></option>';
+
 	if( array_key_exists( 'weights', Seed_fonts::$fonts[$font] ) ) {
 		foreach( Seed_fonts::$fonts[$font]['weights'] as $_weight ):
 			echo '<option value="'.$_weight.'" '.(($weight == $_weight) ? ' selected="selected"' : '').'>'.$_weight.'</option>';
 		endforeach;
 	}
-	echo '</select></td></tr>';
+	echo '</select><p class="description">'. __( '400 = Normal, 700 = Bold. For more detail, please see <a href="https://www.w3.org/TR/css-fonts-3/#font-weight-prop" target="_blank">W3.org</a>', 'seed-fonts' ) .'</p></td></tr>';
 
-	echo '<tr><th scope="row">Selectors</th><td><input id="seed-fonts-selectors" class="regular-text" type="text" name="seed_fonts_selectors" value="'.htmlspecialchars( $selectors ).'"'.( $is_enabled ? '' : ' disabled' ).' /></td></tr>';
-	echo '<tr><th scope="row">Force using this font?</th><td><label for="seed-fonts-is-important"><input id="seed-fonts-is-important" type="checkbox" name="seed_fonts_is_important" value="on"'.( $is_important ? ' checked="checked"' : '').( $is_enabled ? '' : ' disabled' ).' /> !important</label></td></tr>';
-	echo '<tr><th scope="row">Generated CSS</th><td><textarea id="seed-fonts-css-generated" rows="4" cols="60" class="code" readonly'.( $is_enabled ? '' : ' style="display:none"' ).'></textarea>';
+	echo '<tr><th scope="row">'. __( 'Selectors', 'seed-fonts' ) .'</th><td><input id="seed-fonts-selectors" class="regular-text" type="text" name="seed_fonts_selectors" value="'.htmlspecialchars( $selectors ).'"'.( $is_enabled ? '' : ' disabled' ).' /></td></tr>';
+	echo '<tr><th scope="row">'. __( 'Force using this font?', 'seed-fonts' ) .'</th><td><label for="seed-fonts-is-important"><input id="seed-fonts-is-important" type="checkbox" name="seed_fonts_is_important" value="on"'.( $is_important ? ' checked="checked"' : '').( $is_enabled ? '' : ' disabled' ).' /> '. __( 'Yes (!important added).', 'seed-fonts' ) .'</label></td></tr>';
+	echo '<tr><th scope="row">'. __( 'Generated CSS', 'seed-fonts' ) .'</th><td><textarea id="seed-fonts-css-generated" rows="4" cols="60" class="code" readonly'.( $is_enabled ? '' : ' style="display:none"' ).'></textarea>';
 	echo '<input type="hidden" name="action" value="seed_fonts_save_options" /></td></tr></tbody></table>';
-	echo '<p class="submit"><input id="seed-fonts-submit" type="button" class="button button-primary" value="Save Changes" /></p>';
+	echo '<p class="submit"><input id="seed-fonts-submit" type="button" class="button button-primary" value="'. __( 'Save Changes', 'seed-fonts' ) .'" /></p>';
 
 	foreach( Seed_fonts::$fonts as $_font_family => $_font ):
 		echo '<select id="seed-fonts-'.$_font_family.'-weights" style="display:none">';
@@ -236,3 +239,7 @@ function seed_fonts_save() {
 
 function seed_fonts( ) {
 }
+
+load_plugin_textdomain('seed-fonts', false, basename( dirname( __FILE__ ) ) . '/languages' );
+
+?>

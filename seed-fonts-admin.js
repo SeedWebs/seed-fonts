@@ -5,9 +5,9 @@
 			css += jQuery('#seed-fonts-selectors').val() + ' ';
 
 		css += '{\r\n';
-		css += '	font-family: "' + jQuery('#seed-fonts-font').val() + '", san-serif' + ((jQuery('#seed-fonts-is-important').prop('checked'))  ? ' !important' : '') + ';\n';
+		css += '  font-family: "' + jQuery('#seed-fonts-font').val() + '", san-serif' + ((jQuery('#seed-fonts-is-important').prop('checked'))  ? ' !important' : '') + ';\n';
 		if( jQuery('#seed-fonts-weight').val() != '' )
-			css += '	font-weight: ' + jQuery('#seed-fonts-weight').val() + ((jQuery('#seed-fonts-is-important').prop('checked'))  ? ' !important' : '') + ';\n';
+			css += '  font-weight: ' + jQuery('#seed-fonts-weight').val() + ((jQuery('#seed-fonts-is-important').prop('checked'))  ? ' !important' : '') + ';\n';
 		css += '}';
 
 		return css;
