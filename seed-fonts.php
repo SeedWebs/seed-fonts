@@ -85,18 +85,20 @@ add_action( 'wp_enqueue_scripts', 'seed_fonts_scripts', 30 );
 
 function seed_fonts_scripts() {
 	if( ! is_admin() ) {
+		$is_enabled = ( get_option( 'seed_fonts_is_enabled' ) );
 		$font = get_option( 'seed_fonts_font' );
 		$weight = get_option( 'seed_fonts_weight' );
 		$selectors = get_option( 'seed_fonts_selectors' );
 		$is_important = ( get_option( 'seed_fonts_is_important' ) );
 
-		if( $font != '') {
+
+		if( $is_enabled && ( $font !== FALSE ) && ( $font != '' ) ) {
 			if( $selectors != '' )
 				$font_styles = $selectors.' ';
 
-			$font_styles .= '{font-family: "'.$font.'",  sans-serif;'.( $is_important ? ' !important' : '' );
+			$font_styles .= '{font-family: "'.$font.'",  sans-serif'.( $is_important ? ' !important' : '' ).';';
 			if( $weight != '' )
-				$font_styles .= ' font-weight: '.$weight.';'.( $is_important ? ' !important' : '' );
+				$font_styles .= ' font-weight: '.$weight.( $is_important ? ' !important' : '' ).';';
 			$font_styles .= ' }';
 			wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . '/fonts/' . $font . '/all.css' , array(  ) );
 			wp_add_inline_style( 'seed-fonts-all', $font_styles );
@@ -124,6 +126,7 @@ function seed_fonts_admin_styles() {
 }
 
 function seed_fonts_init() {
+	$is_enabled = get_option( 'seed_fonts_is_enabled' );
 	$font = get_option( 'seed_fonts_font' );
 	$weight = get_option( 'seed_fonts_weight' );
 	$selectors = get_option( 'seed_fonts_selectors' );
@@ -141,27 +144,27 @@ function seed_fonts_init() {
 	echo '<div class="wrap">';
 	echo '<h1>Seed Fonts</h1>';
 
-	
 	echo '<form id="seed-fonts-form" method="post" name="seed_fonts_form" action="'.get_bloginfo( 'url' ).'/wp-admin/admin-post.php" >';
 	echo '<table class="form-table"><tbody>';
-	echo '<tr><th scope="row">Fonts</th><td><select id="seed-fonts-font" name="seed_fonts_font">';
+	echo '<tr><th scope="row">Enable</th><td><label for="seed-fonts-is-enabled"><input id="seed-fonts-is-enabled" type="checkbox" name="seed_fonts_is_enabled" value="on"'.( $is_enabled ? ' checked="checked"' : '').' /></label></td></tr>';
+	echo '<tr><th scope="row">Fonts</th><td><select id="seed-fonts-font" name="seed_fonts_font"'.( $is_enabled ? '' : ' disabled' ).'>';
 	foreach( Seed_fonts::$fonts as $_font_family => $_font ):
 		echo '<option value="'.$_font_family.'" '.(($font == $_font_family) ? ' selected="selected"' : '').'>'.$_font_family.'</option>';
 	endforeach;
 	echo '</select></td></tr>';
 
-	echo '<tr><th scope="row">Weight</th><td><select id="seed-fonts-weight" name="seed_fonts_weight">';
+	echo '<tr><th scope="row">Weight</th><td><select id="seed-fonts-weight" name="seed_fonts_weight"'.( $is_enabled ? '' : ' disabled' ).'>';
 	echo '<option value=""></option>';
 	foreach( Seed_fonts::$fonts[$font]['weights'] as $_weight ):
 		echo '<option value="'.$_weight.'" '.(($weight == $_weight) ? ' selected="selected"' : '').'>'.$_weight.'</option>';
 	endforeach;
 	echo '</select></td></tr>';
 
-	echo '<tr><th scope="row">Selectors</th><td><input id="seed-fonts-selectors" class="regular-text" type="text" name="seed_fonts_selectors" value="'.htmlspecialchars( $selectors ).'" /></td></tr>';
-	echo '<tr><th scope="row">Force using this font?</th><td><label for="seed-fonts-is-important"><input id="seed-fonts-is-important" type="checkbox" name="seed_fonts_is_important" value="on"'.( $is_important ? ' checked="checked"' : '').' /> !important</label></td></tr>';
-	echo '<tr><th scope="row">Generated CSS</th><td><textarea id="seed-fonts-css-generated" rows="4" cols="60" class="code" readonly></textarea>';
+	echo '<tr><th scope="row">Selectors</th><td><input id="seed-fonts-selectors" class="regular-text" type="text" name="seed_fonts_selectors" value="'.htmlspecialchars( $selectors ).'"'.( $is_enabled ? '' : ' disabled' ).' /></td></tr>';
+	echo '<tr><th scope="row">Force using this font?</th><td><label for="seed-fonts-is-important"><input id="seed-fonts-is-important" type="checkbox" name="seed_fonts_is_important" value="on"'.( $is_important ? ' checked="checked"' : '').( $is_enabled ? '' : ' disabled' ).' /> !important</label></td></tr>';
+	echo '<tr><th scope="row">Generated CSS</th><td><textarea id="seed-fonts-css-generated" rows="4" cols="60" class="code" readonly'.( $is_enabled ? '' : ' style="display:none"' ).'></textarea>';
 	echo '<input type="hidden" name="action" value="seed_fonts_save_options" /></td></tr></tbody></table>';
-	echo '<p class="submit"><input type="submit"  class="button button-primary" value="Save Changes" /></p>';
+	echo '<p class="submit"><input id="seed-fonts-submit" type="button" class="button button-primary" value="Save Changes" /></p>';
 
 	foreach( Seed_fonts::$fonts as $_font_family => $_font ):
 		echo '<select id="seed-fonts-'.$_font_family.'-weights" style="display:none">';
@@ -180,9 +183,15 @@ function seed_fonts_init() {
 add_action( 'admin_post_seed_fonts_save_options', 'seed_fonts_save' );
 
 function seed_fonts_save() {
+	if( array_key_exists( 'seed_fonts_is_enabled', $_POST ) && ( $_POST['seed_fonts_is_enabled'] == 'on' ) )
+		update_option( 'seed_fonts_is_enabled' , true );
+	else
+		update_option( 'seed_fonts_is_enabled' , false );
+
 	update_option( 'seed_fonts_font' , $_POST['seed_fonts_font'] );
 	update_option( 'seed_fonts_weight' , $_POST['seed_fonts_weight'] );
 	update_option( 'seed_fonts_selectors' , $_POST['seed_fonts_selectors'] );
+
 	if( array_key_exists( 'seed_fonts_is_important', $_POST ) && ( $_POST['seed_fonts_is_important'] == 'on' ) )
 		update_option( 'seed_fonts_is_important' , true );
 	else
