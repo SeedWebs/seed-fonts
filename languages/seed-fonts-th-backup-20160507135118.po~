@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Seed Fonts\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Sat May 07 2016 19:06:50 GMT+0700 (ICT)\n"
-"PO-Revision-Date: Sat May 07 2016 20:51:18 GMT+0700 (ICT)\n"
+"PO-Revision-Date: Sat May 07 2016 20:51:14 GMT+0700 (ICT)\n"
 "Last-Translator: root <info@mennstudio.com>\n"
 "Language-Team: \n"
 "Language: Thai\n"
@@ -21,6 +21,18 @@ msgstr ""
 "esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
 "X-Loco-Target-Locale: th_TH\n"
 "X-Generator: Loco - https://localise.biz/"
+
+#: ../seed-fonts.php:147
+msgid ""
+"This plugin comes with 4 Thai web fonts from <a href=\"http://cadsondemak."
+"github.io/\" target=\"_blank\">Cadson Demak</a>. You can add more by <a "
+"href=\"https://github.com/SeedThemes/seed-fonts\" target=\"_blank\">uploading "
+"your web fonts to the theme folder</a>."
+msgstr ""
+"ปลั๊กอินนี้แนบฟอนต์ไทยจาก <a href=\"http://cadsondemak.github.io/\" "
+"target=\"_blank\">คัดสรรดีมาก</a> มาให้ 4 ฟอนต์ หากต้องการเพิ่มฟอนต์สำหรับเว็บ "
+"ดูรายละเอียดที่ <a href=\"https://github.com/SeedThemes/seed-fonts\" "
+"target=\"_blank\">การอัพโหลดฟอนต์สำหรับเว็บไปใช้ในธีม</a>"
 
 #. Name of the plugin
 msgid "Seed Fonts"
@@ -52,18 +64,6 @@ msgstr "http://www.seedthemes.com\n"
 #: ../seed-fonts.php:113
 msgid "Fonts"
 msgstr "ฟอนต์"
-
-#: ../seed-fonts.php:147
-msgid ""
-"This plugin comes with 4 Thai web fonts from <a href=\"http://cadsondemak."
-"github.io/\" target=\"_blank\">Cadson Demak</a>. You can add more by <a "
-"href=\"https://github.com/SeedThemes/seed-fonts\" target=\"_blank\">uploading "
-"your web fonts to the theme folder</a>."
-msgstr ""
-"ปลั๊กอินนี้แนบฟอนต์ไทยจาก <a href=\"http://cadsondemak.github.io/\" "
-"target=\"_blank\">คัดสรรดีมาก</a> มาให้ 4 ฟอนต์ หากต้องการเพิ่มฟอนต์สำหรับเว็บ "
-"ดูรายละเอียดที่ <a href=\"https://github.com/SeedThemes/seed-fonts\" "
-"target=\"_blank\">การอัพโหลดฟอนต์สำหรับเว็บไปใช้ในธีม</a>"
 
 #: ../seed-fonts.php:151
 msgid "Enable?"

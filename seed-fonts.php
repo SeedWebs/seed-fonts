@@ -2,7 +2,7 @@
 /*
 Plugin Name: Seed Fonts
 Plugin URI: https://github.com/SeedThemes/seed-fonts
-Description: Enable @font-face with example Thai fonts.
+Description: Enable web fonts on Appearance -> Fonts. You can add more by <a href="https://github.com/SeedThemes/seed-fonts" target="_blank">uploading your web fonts to the theme folder</a>.
 Version: 0.9.3
 Author: SeedThemes
 Author URI: http://www.seedthemes.com
@@ -144,6 +144,7 @@ function seed_fonts_init() {
 
 	echo '<div class="wrap">';
 	echo '<h1>'. __( 'Seed Fonts', 'seed-fonts' ) . '</h1>';
+	echo '<p>'. __( 'This plugin comes with 4 Thai web fonts from <a href="http://cadsondemak.github.io/" target="_blank">Cadson Demak</a>. You can add more by <a href="https://github.com/SeedThemes/seed-fonts" target="_blank">uploading your web fonts to the theme folder</a>.', 'seed-fonts' ) . '</p>';
 
 	echo '<form id="seed-fonts-form" method="post" name="seed_fonts_form" action="'.get_bloginfo( 'url' ).'/wp-admin/admin-post.php" >';
 	echo '<table class="form-table"><tbody>';
@@ -159,7 +160,7 @@ function seed_fonts_init() {
 	foreach( Seed_fonts::$fonts[$font]['weights'] as $_weight ):
 		echo '<option value="'.$_weight.'" '.(($weight == $_weight) ? ' selected="selected"' : '').'>'.$_weight.'</option>';
 	endforeach;
-	echo '</select></td></tr>';
+	echo '</select><p class="description">'. __( '400 = Normal, 700 = Bold. For more detail, please see <a href="https://www.w3.org/TR/css-fonts-3/#font-weight-prop" target="_blank">W3.org</a>', 'seed-fonts' ) .'</p></td></tr>';
 
 	echo '<tr><th scope="row">'. __( 'Selectors', 'seed-fonts' ) .'</th><td><input id="seed-fonts-selectors" class="regular-text" type="text" name="seed_fonts_selectors" value="'.htmlspecialchars( $selectors ).'"'.( $is_enabled ? '' : ' disabled' ).' /></td></tr>';
 	echo '<tr><th scope="row">'. __( 'Force using this font?', 'seed-fonts' ) .'</th><td><label for="seed-fonts-is-important"><input id="seed-fonts-is-important" type="checkbox" name="seed_fonts_is_important" value="on"'.( $is_important ? ' checked="checked"' : '').( $is_enabled ? '' : ' disabled' ).' /> '. __( 'Yes (!important added).', 'seed-fonts' ) .'</label></td></tr>';
