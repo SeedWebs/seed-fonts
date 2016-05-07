@@ -48,13 +48,16 @@ if(!class_exists('Seed_Fonts'))
 
         public static $fonts = array	(
         	"athiti" => array(
-        		"weights" => array( 500, 600)
+        		"weights" => array(500, 600)
         		),
         	"kanit" => array(
-        		"weights" => array( 300, 400, 500,)
+        		"weights" => array(300, 400, 500)
+        		),
+        	"mitr" => array(
+        		"weights" => array(300, 400, 500)
         		),
         	"prompt" => array(
-        		"weights" => array( 400, 500, 600 )
+        		"weights" => array(400, 500, 600)
         		),
         	);
 
