@@ -46,18 +46,15 @@ if(!class_exists('Seed_Fonts'))
             // Do nothing
         } // END public static function activate
 
-        public static $fonts = array	(
+        public static $fonts = array (
         	"athiti" => array(
-        		"weights" => array(500, 600)
+        		"weights" => array( 500, 600)
         		),
         	"kanit" => array(
-        		"weights" => array(300, 400, 500)
-        		),
-        	"mitr" => array(
-        		"weights" => array(300, 400, 500)
+        		"weights" => array( 300, 400, 500,)
         		),
         	"prompt" => array(
-        		"weights" => array(400, 500, 600)
+        		"weights" => array( 400, 500, 600 )
         		),
         	);
 
@@ -100,7 +97,13 @@ function seed_fonts_scripts() {
 			if( $weight != '' )
 				$font_styles .= ' font-weight: '.$weight.( $is_important ? ' !important' : '' ).';';
 			$font_styles .= ' }';
-			wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . '/fonts/' . $font . '/all.css' , array(  ) );
+
+			if( file_exists( get_stylesheet_directory() . '/vendor/fonts' ) && is_dir( get_stylesheet_directory() . '/vendor/fonts' ) ) {
+				wp_enqueue_style( 'seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $font . '/all.css' , array(  ) );
+			} else {
+				wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . '/fonts/' . $font . '/all.css' , array(  ) );
+			}
+
 			wp_add_inline_style( 'seed-fonts-all', $font_styles );
 		}
 	}
@@ -126,6 +129,33 @@ function seed_fonts_admin_styles() {
 }
 
 function seed_fonts_init() {
+
+	if( file_exists( get_stylesheet_directory() . '/vendor/fonts' ) && is_dir( get_stylesheet_directory() . '/vendor/fonts' ) ) {
+		$d_handle = opendir( get_stylesheet_directory() . '/vendor/fonts' );
+
+		$fonts = array();
+
+		while( FALSE !== ( $entry = readdir( $d_handle ) ) ) {
+			if ( is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $entry ) && ( file_exists ( get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/all.css' ) ) ) {
+				$headers = get_file_data ( get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/all.css' , array( 'font' => 'Font Name', 'weights' => 'Weights' ) );
+
+				$_font = array();
+
+				if( $headers['font'] == '' )
+					$_font['font'] = $entry;
+				else
+					$_font['font'] = $headers['font'];
+
+				if( $headers['weights'] != '' )
+					$_font['weights'] = array_map( 'trim', explode( ',', $headers['weights'] ) );
+
+				$fonts[$entry] = $_font;
+			}
+		}
+
+		Seed_fonts::$fonts = $fonts;
+	}
+
 	$is_enabled = get_option( 'seed_fonts_is_enabled' );
 	$font = get_option( 'seed_fonts_font' );
 	$weight = get_option( 'seed_fonts_weight' );
@@ -149,15 +179,17 @@ function seed_fonts_init() {
 	echo '<tr><th scope="row">Enable</th><td><label for="seed-fonts-is-enabled"><input id="seed-fonts-is-enabled" type="checkbox" name="seed_fonts_is_enabled" value="on"'.( $is_enabled ? ' checked="checked"' : '').' /></label></td></tr>';
 	echo '<tr><th scope="row">Fonts</th><td><select id="seed-fonts-font" name="seed_fonts_font"'.( $is_enabled ? '' : ' disabled' ).'>';
 	foreach( Seed_fonts::$fonts as $_font_family => $_font ):
-		echo '<option value="'.$_font_family.'" '.(($font == $_font_family) ? ' selected="selected"' : '').'>'.$_font_family.'</option>';
+		echo '<option value="'.$_font_family.'" '.(($font == $_font_family) ? ' selected="selected"' : '').'>'.( array_key_exists( 'font', $_font ) ? $_font['font'] : $_font_family ).'</option>';
 	endforeach;
 	echo '</select></td></tr>';
 
 	echo '<tr><th scope="row">Weight</th><td><select id="seed-fonts-weight" name="seed_fonts_weight"'.( $is_enabled ? '' : ' disabled' ).'>';
 	echo '<option value=""></option>';
-	foreach( Seed_fonts::$fonts[$font]['weights'] as $_weight ):
-		echo '<option value="'.$_weight.'" '.(($weight == $_weight) ? ' selected="selected"' : '').'>'.$_weight.'</option>';
-	endforeach;
+	if( array_key_exists( 'weights', Seed_fonts::$fonts[$font] ) ) {
+		foreach( Seed_fonts::$fonts[$font]['weights'] as $_weight ):
+			echo '<option value="'.$_weight.'" '.(($weight == $_weight) ? ' selected="selected"' : '').'>'.$_weight.'</option>';
+		endforeach;
+	}
 	echo '</select></td></tr>';
 
 	echo '<tr><th scope="row">Selectors</th><td><input id="seed-fonts-selectors" class="regular-text" type="text" name="seed_fonts_selectors" value="'.htmlspecialchars( $selectors ).'"'.( $is_enabled ? '' : ' disabled' ).' /></td></tr>';
