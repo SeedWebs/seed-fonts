@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Seed Fonts
-Plugin URI: https://www.seedthemes.com/plugin/seed-fonts
+Plugin URI: https://github.com/SeedThemes/seed-fonts
 Description: Enable web fonts on Appearance -> Fonts. You can add more by <a href="https://github.com/SeedThemes/seed-fonts" target="_blank">uploading your web fonts to the theme folder</a>.
-Version: 0.9.5
+Version: 0.9.3
 Author: SeedThemes
-Author URI: https://www.seedthemes.com
+Author URI: http://www.seedthemes.com
 License: GPL2
 Text Domain: seed-fonts
 */
@@ -48,20 +48,14 @@ if(!class_exists('Seed_Fonts'))
         } // END public static function activate
 
         public static $fonts = array (
-        	"Athiti" => array(
+        	"athiti" => array(
         		"weights" => array( 500, 600)
         		),
-        	"Kanit" => array(
-        		"weights" => array( 300, 400, 500 )
+        	"kanit" => array(
+        		"weights" => array( 300, 400, 500,)
         		),
-        	"Mitr" => array(
-        		"weights" => array( 300, 400, 500 )
-        		),
-        	"Prompt" => array(
+        	"prompt" => array(
         		"weights" => array( 400, 500, 600 )
-        		),
-        	"TH-Sarabun-New" => array(
-        		"weights" => array( 400, 700 )
         		),
         	);
 
@@ -114,6 +108,29 @@ function seed_fonts_scripts() {
 			wp_add_inline_style( 'seed-fonts-all', $font_styles );
 		}
 	}
+}
+
+add_filter( 'body_class', 'seed_fonts_body_class' );
+
+function seed_fonts_body_class( $classes ) {
+	$is_enabled = get_option( 'seed_fonts_is_enabled' );
+	$font = get_option( 'seed_fonts_font' );
+	$weight = get_option( 'seed_fonts_weight' );
+
+	if( $font === FALSE )
+		$font = key ( Seed_fonts::$fonts );
+
+	if( $weight === FALSE )
+		$weight = '';
+
+	if( $is_enabled ) {
+		$classes[] = 'seed-fonts-'.$font;
+
+		if( $weight != '' )
+			$classes[] = 'seed-fonts-weight-'.$weight;
+	}
+
+	return $classes;
 }
 
 add_action( 'admin_menu', 'seed_fonts_setup_menu' );
@@ -180,7 +197,7 @@ function seed_fonts_init() {
 
 	echo '<div class="wrap">';
 	echo '<h1>'. __( 'Seed Fonts', 'seed-fonts' ) . '</h1>';
-	echo '<p>'. __( 'This plugin comes with 5 Thai web fonts. You can add your own collection by <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts" target="_blank">uploading your web fonts to the theme folder</a>.', 'seed-fonts' ) . '</p>';
+	echo '<p>'. __( 'This plugin comes with 4 Thai web fonts from <a href="http://cadsondemak.github.io/" target="_blank">Cadson Demak</a>. You can add more by <a href="https://github.com/SeedThemes/seed-fonts" target="_blank">uploading your web fonts to the theme folder</a>.', 'seed-fonts' ) . '</p>';
 
 	echo '<form id="seed-fonts-form" method="post" name="seed_fonts_form" action="'.get_bloginfo( 'url' ).'/wp-admin/admin-post.php" >';
 	echo '<table class="form-table"><tbody>';
