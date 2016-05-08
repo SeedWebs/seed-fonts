@@ -48,14 +48,20 @@ if(!class_exists('Seed_Fonts'))
         } // END public static function activate
 
         public static $fonts = array (
-        	"athiti" => array(
+        	"Athiti" => array(
         		"weights" => array( 500, 600)
         		),
-        	"kanit" => array(
-        		"weights" => array( 300, 400, 500,)
+        	"Kanit" => array(
+        		"weights" => array( 300, 400, 500 )
         		),
-        	"prompt" => array(
+        	"Mitr" => array(
+        		"weights" => array( 300, 400, 500 )
+        		),
+        	"Prompt" => array(
         		"weights" => array( 400, 500, 600 )
+        		),
+        	"THSarabunNew-web" => array(
+        		"weights" => array( 400, 700 )
         		),
         	);
 
