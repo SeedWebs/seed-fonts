@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Seed Fonts
-Plugin URI: https://github.com/SeedThemes/seed-fonts
+Plugin URI: https://www.seedthemes.com/plugin/seed-fonts
 Description: Enable web fonts on Appearance -> Fonts. You can add more by <a href="https://github.com/SeedThemes/seed-fonts" target="_blank">uploading your web fonts to the theme folder</a>.
-Version: 0.9.4
+Version: 0.9.5
 Author: SeedThemes
-Author URI: http://www.seedthemes.com
+Author URI: https://www.seedthemes.com
 License: GPL2
 Text Domain: seed-fonts
 */
@@ -60,7 +60,7 @@ if(!class_exists('Seed_Fonts'))
         	"Prompt" => array(
         		"weights" => array( 400, 500, 600 )
         		),
-        	"THSarabunNew-web" => array(
+        	"TH-Sarabun-New" => array(
         		"weights" => array( 400, 700 )
         		),
         	);
@@ -180,7 +180,7 @@ function seed_fonts_init() {
 
 	echo '<div class="wrap">';
 	echo '<h1>'. __( 'Seed Fonts', 'seed-fonts' ) . '</h1>';
-	echo '<p>'. __( 'This plugin comes with 4 Thai web fonts from <a href="http://cadsondemak.github.io/" target="_blank">Cadson Demak</a>. You can add more by <a href="https://github.com/SeedThemes/seed-fonts" target="_blank">uploading your web fonts to the theme folder</a>.', 'seed-fonts' ) . '</p>';
+	echo '<p>'. __( 'This plugin comes with 5 Thai web fonts. You can add your own collection by <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts" target="_blank">uploading your web fonts to the theme folder</a>.', 'seed-fonts' ) . '</p>';
 
 	echo '<form id="seed-fonts-form" method="post" name="seed_fonts_form" action="'.get_bloginfo( 'url' ).'/wp-admin/admin-post.php" >';
 	echo '<table class="form-table"><tbody>';

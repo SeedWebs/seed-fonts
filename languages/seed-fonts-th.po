@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Seed Fonts\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Sat May 07 2016 19:06:50 GMT+0700 (ICT)\n"
-"PO-Revision-Date: Sat May 07 2016 20:51:18 GMT+0700 (ICT)\n"
+"PO-Revision-Date: Sun May 08 2016 11:58:35 GMT+0700 (ICT)\n"
 "Last-Translator: root <info@mennstudio.com>\n"
 "Language-Team: \n"
 "Language: Thai\n"
@@ -22,13 +22,23 @@ msgstr ""
 "X-Loco-Target-Locale: th_TH\n"
 "X-Generator: Loco - https://localise.biz/"
 
+#: ../seed-fonts.php:183
+msgid ""
+"This plugin comes with 5 Thai web fonts. You can add your own collection by "
+"<a href=\"https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts\" "
+"target=\"_blank\">uploading your web fonts to the theme folder</a>."
+msgstr ""
+"ปลั๊กอินนี้มาพร้อมกับฟอนต์ไทย 5 ฟอนต์ หากต้องการใช้ฟอนต์อื่น "
+"ให้สร้างฟอนต์สำหรับเว็บแล้ว <a href=\"https://www.seedthemes.com/plugin/seed-"
+"fonts/#upload-your-fonts\" target=\"_blank\">อัพโหลดไปไว้ในธีม</a>"
+
 #. Name of the plugin
 msgid "Seed Fonts"
 msgstr "Seed Fonts"
 
 #. URI of the plugin
-msgid "https://github.com/SeedThemes/seed-fonts"
-msgstr "https://github.com/SeedThemes/seed-fonts\n"
+msgid "https://www.seedthemes.com/plugin/seed-fonts"
+msgstr "https://www.seedthemes.com/plugin/seed-fonts"
 
 #. Description of the plugin
 msgid ""
@@ -46,38 +56,26 @@ msgid "SeedThemes"
 msgstr "SeedThemes"
 
 #. Author URI of the plugin
-msgid "http://www.seedthemes.com"
-msgstr "http://www.seedthemes.com\n"
+msgid "https://www.seedthemes.com"
+msgstr "https://www.seedthemes.com"
 
-#: ../seed-fonts.php:113
+#: ../seed-fonts.php:122
 msgid "Fonts"
 msgstr "ฟอนต์"
 
-#: ../seed-fonts.php:147
-msgid ""
-"This plugin comes with 4 Thai web fonts from <a href=\"http://cadsondemak."
-"github.io/\" target=\"_blank\">Cadson Demak</a>. You can add more by <a "
-"href=\"https://github.com/SeedThemes/seed-fonts\" target=\"_blank\">uploading "
-"your web fonts to the theme folder</a>."
-msgstr ""
-"ปลั๊กอินนี้แนบฟอนต์ไทยจาก <a href=\"http://cadsondemak.github.io/\" "
-"target=\"_blank\">คัดสรรดีมาก</a> มาให้ 4 ฟอนต์ หากต้องการเพิ่มฟอนต์สำหรับเว็บ "
-"ดูรายละเอียดที่ <a href=\"https://github.com/SeedThemes/seed-fonts\" "
-"target=\"_blank\">การอัพโหลดฟอนต์สำหรับเว็บไปใช้ในธีม</a>"
-
-#: ../seed-fonts.php:151
+#: ../seed-fonts.php:187
 msgid "Enable?"
 msgstr "เปิดใช้งาน?"
 
-#: ../seed-fonts.php:152
+#: ../seed-fonts.php:188
 msgid "Font"
 msgstr "ฟอนต์"
 
-#: ../seed-fonts.php:158
+#: ../seed-fonts.php:194
 msgid "Weight"
 msgstr "น้ำหนัก"
 
-#: ../seed-fonts.php:163
+#: ../seed-fonts.php:202
 msgid ""
 "400 = Normal, 700 = Bold. For more detail, please see <a href=\"https://www."
 "w3.org/TR/css-fonts-3/#font-weight-prop\" target=\"_blank\">W3.org</a>"
@@ -85,22 +83,22 @@ msgstr ""
 "400 = ตัวธรรมดา, 700 = ตัวหนา, รายละเอียดดูที่ <a href=\"https://www.w3."
 "org/TR/css-fonts-3/#font-weight-prop\" target=\"_blank\">W3.org</a>\n"
 
-#: ../seed-fonts.php:165
+#: ../seed-fonts.php:204
 msgid "Selectors"
 msgstr "Selectors"
 
-#: ../seed-fonts.php:166
+#: ../seed-fonts.php:205
 msgid "Force using this font?"
 msgstr "บังคับใช้ฟอนต์นี้?"
 
-#: ../seed-fonts.php:166
+#: ../seed-fonts.php:205
 msgid "Yes (!important added)."
 msgstr "ใช่ (เพิ่มโค้ด !important)"
 
-#: ../seed-fonts.php:167
+#: ../seed-fonts.php:206
 msgid "Generated CSS"
 msgstr "CSS ที่สร้างขึ้น"
 
-#: ../seed-fonts.php:169
+#: ../seed-fonts.php:208
 msgid "Save Changes"
 msgstr "บันทึก"

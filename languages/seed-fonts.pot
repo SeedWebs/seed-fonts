@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Seed Fonts\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Sat May 07 2016 19:06:50 GMT+0700 (ICT)\n"
-"POT-Revision-Date: Sat May 07 2016 20:50:03 GMT+0700 (ICT)\n"
+"POT-Revision-Date: Sun May 08 2016 11:58:21 GMT+0700 (ICT)\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -29,7 +29,7 @@ msgid "Seed Fonts"
 msgstr ""
 
 #. URI of the plugin
-msgid "https://github.com/SeedThemes/seed-fonts"
+msgid "https://www.seedthemes.com/plugin/seed-fonts"
 msgstr ""
 
 #. Description of the plugin
@@ -44,55 +44,54 @@ msgid "SeedThemes"
 msgstr ""
 
 #. Author URI of the plugin
-msgid "http://www.seedthemes.com"
+msgid "https://www.seedthemes.com"
 msgstr ""
 
-#: ../seed-fonts.php:113
+#: ../seed-fonts.php:122
 msgid "Fonts"
 msgstr ""
 
-#: ../seed-fonts.php:147
+#: ../seed-fonts.php:183
 msgid ""
-"This plugin comes with 4 Thai web fonts from <a href=\"http://cadsondemak."
-"github.io/\" target=\"_blank\">Cadson Demak</a>. You can add more by <a "
-"href=\"https://github.com/SeedThemes/seed-fonts\" target=\"_blank\">uploading "
-"your web fonts to the theme folder</a>."
+"This plugin comes with 5 Thai web fonts. You can add your own collection by "
+"<a href=\"https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts\" "
+"target=\"_blank\">uploading your web fonts to the theme folder</a>."
 msgstr ""
 
-#: ../seed-fonts.php:151
+#: ../seed-fonts.php:187
 msgid "Enable?"
 msgstr ""
 
-#: ../seed-fonts.php:152
+#: ../seed-fonts.php:188
 msgid "Font"
 msgstr ""
 
-#: ../seed-fonts.php:158
+#: ../seed-fonts.php:194
 msgid "Weight"
 msgstr ""
 
-#: ../seed-fonts.php:163
+#: ../seed-fonts.php:202
 msgid ""
 "400 = Normal, 700 = Bold. For more detail, please see <a href=\"https://www."
 "w3.org/TR/css-fonts-3/#font-weight-prop\" target=\"_blank\">W3.org</a>"
 msgstr ""
 
-#: ../seed-fonts.php:165
+#: ../seed-fonts.php:204
 msgid "Selectors"
 msgstr ""
 
-#: ../seed-fonts.php:166
+#: ../seed-fonts.php:205
 msgid "Force using this font?"
 msgstr ""
 
-#: ../seed-fonts.php:166
+#: ../seed-fonts.php:205
 msgid "Yes (!important added)."
 msgstr ""
 
-#: ../seed-fonts.php:167
+#: ../seed-fonts.php:206
 msgid "Generated CSS"
 msgstr ""
 
-#: ../seed-fonts.php:169
+#: ../seed-fonts.php:208
 msgid "Save Changes"
 msgstr ""
