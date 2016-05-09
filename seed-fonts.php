@@ -64,7 +64,7 @@ if(!class_exists('Seed_Fonts'))
         		"font" => "Prompt",
         		"weights" => array( 400, 500, 600 )
         		),
-        	"THSarabunNew-web" => array(
+        	"TH-Sarabun-New" => array(
 				"font" => "TH Sarabun New",
         		"weights" => array( 400, 700 )
         		)
