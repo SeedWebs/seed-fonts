@@ -3,7 +3,7 @@
 Plugin Name: Seed Fonts
 Plugin URI: https://www.seedthemes.com/plugin/seed-fonts
 Description: Enable web fonts on Appearance -> Fonts. You can add more by <a href="https://github.com/SeedThemes/seed-fonts" target="_blank">uploading your web fonts to the theme folder</a>.
-Version: 0.9.5
+Version: 0.9.6
 Author: SeedThemes
 Author URI: https://www.seedthemes.com
 License: GPL2
