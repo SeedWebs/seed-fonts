@@ -1,45 +1,55 @@
 jQuery(document).ready(function ($) {
 
+	/**
+	 * Cache selectors
+	 */
+	var inputEnable = $('#seed-fonts-is-enabled'),
+		inputCSS = $('#seed-fonts-css-generated'),
+		inputSelectors = $('#seed-fonts-selectors'),
+		inputFonts = $('#seed-fonts-font'),
+		inputImportant = $('#seed-fonts-is-important'),
+		inputFontWeight = $('#seed-fonts-weight');
+
 	function seed_fonts_generate_css() {
 		var css = '';
 
-		if ($('#seed-fonts-selectors').val() != '')
-			css += $('#seed-fonts-selectors').val() + ' ';
+		if (inputSelectors.val() != '')
+			css += inputSelectors.val() + ' ';
 
 		css += '{\r\n';
-		css += '  font-family: "' + $('#seed-fonts-font').val() + '", san-serif' + (($('#seed-fonts-is-important').prop('checked')) ? ' !important' : '') + ';\n';
-		if ($('#seed-fonts-weight').val() != '')
-			css += '  font-weight: ' + $('#seed-fonts-weight').val() + (($('#seed-fonts-is-important').prop('checked')) ? ' !important' : '') + ';\n';
+		css += '  font-family: "' + inputFonts.val() + '", san-serif' + ((inputImportant.prop('checked')) ? ' !important' : '') + ';\n';
+		if (inputFontWeight.val() != '')
+			css += '  font-weight: ' + inputFontWeight.val() + ((inputImportant.prop('checked')) ? ' !important' : '') + ';\n';
 		css += '}';
 
-		$('#seed-fonts-css-generated').val(css);
+		inputCSS.val(css);
 	}
 
 	function seed_fonts_is_enabled() {
-		var is_enabled = $('#seed-fonts-is-enabled').prop('checked');
+		var is_enabled = inputEnable.prop('checked');
 
-		$('#seed-fonts-font').prop('disabled', !is_enabled);
-		$('#seed-fonts-weight').prop('disabled', !is_enabled);
-		$('#seed-fonts-selectors').prop('disabled', !is_enabled);
-		$('#seed-fonts-is-important').prop('disabled', !is_enabled);
-		$('#seed-fonts-css-generated').toggle(is_enabled);
+		inputFonts.prop('disabled', !is_enabled);
+		inputFontWeight.prop('disabled', !is_enabled);
+		inputSelectors.prop('disabled', !is_enabled);
+		inputImportant.prop('disabled', !is_enabled);
+		inputCSS.toggle(is_enabled);
 	}
 
 	seed_fonts_generate_css();
 
 	seed_fonts_is_enabled();
 
-	$('#seed-fonts-is-enabled').change(function () {
+	inputEnable.change(function () {
 		seed_fonts_is_enabled();
 	});
 
-	$('#seed-fonts-font').change(function () {
-		var font = $('#seed-fonts-font').val();
-		var weight = $('#seed-fonts-weight').val();
+	inputFonts.change(function () {
+		var font = inputFonts.val();
+		var weight = inputFontWeight.val();
 
-		$('#seed-fonts-weight').empty().append($('#seed-fonts-' + font + '-weights').children().clone()).val(weight);
+		inputFontWeight.empty().append($('#seed-fonts-' + font + '-weights').children().clone()).val(weight);
 
-		if ($('#seed-fonts-weight').val() == null)
+		if (inputFontWeight.val() == null)
 			$("#seed-fonts-weight option:first").attr('selected', 'selected');
 
 		seed_fonts_generate_css();
@@ -49,7 +59,7 @@ jQuery(document).ready(function ($) {
 		seed_fonts_generate_css();
 	});
 
-	$('#seed-fonts-selectors').on('keyup focusout', function () {
+	inputSelectors.on('keyup focusout', function () {
 		seed_fonts_generate_css();
 	});
 
