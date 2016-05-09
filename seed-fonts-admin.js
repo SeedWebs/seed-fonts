@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
 			css += '  font-weight: ' + $('#seed-fonts-weight').val() + (($('#seed-fonts-is-important').prop('checked')) ? ' !important' : '') + ';\n';
 		css += '}';
 
-		return css;
+		$('#seed-fonts-css-generated').val(css);
 	}
 
 	function seed_fonts_is_enabled() {
@@ -25,7 +25,7 @@ jQuery(document).ready(function ($) {
 		$('#seed-fonts-css-generated').toggle(is_enabled);
 	}
 
-	$('#seed-fonts-css-generated').val(seed_fonts_generate_css());
+	seed_fonts_generate_css();
 
 	seed_fonts_is_enabled();
 
@@ -42,15 +42,15 @@ jQuery(document).ready(function ($) {
 		if ($('#seed-fonts-weight').val() == null)
 			$("#seed-fonts-weight option:first").attr('selected', 'selected');
 
-		$('#seed-fonts-css-generated').val(seed_fonts_generate_css());
+		seed_fonts_generate_css();
 	});
 
 	$('#seed-fonts-weight, #seed-fonts-is-important').change(function () {
-		$('#seed-fonts-css-generated').val(seed_fonts_generate_css());
+		seed_fonts_generate_css();
 	});
 
-	$('#seed-fonts-selectors').on('keyup focusout', function() {
-		$('#seed-fonts-css-generated').val(seed_fonts_generate_css());
+	$('#seed-fonts-selectors').on('keyup focusout', function () {
+		seed_fonts_generate_css();
 	});
 
 });
