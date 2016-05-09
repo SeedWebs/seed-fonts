@@ -16,10 +16,10 @@
 	function seed_fonts_is_enabled() {
 		var is_enabled = jQuery('#seed-fonts-is-enabled').prop('checked');
 
-		jQuery('#seed-fonts-font').prop('disabled', is_enabled);
-		jQuery('#seed-fonts-weight').prop('disabled', is_enabled);
-		jQuery('#seed-fonts-selectors').prop('disabled', is_enabled);
-		jQuery('#seed-fonts-is-important').prop('disabled', is_enabled);
+		jQuery('#seed-fonts-font').prop('disabled', !is_enabled);
+		jQuery('#seed-fonts-weight').prop('disabled', !is_enabled);
+		jQuery('#seed-fonts-selectors').prop('disabled', !is_enabled);
+		jQuery('#seed-fonts-is-important').prop('disabled', !is_enabled);
 		jQuery('#seed-fonts-css-generated').toggle(is_enabled);
 	}
 
