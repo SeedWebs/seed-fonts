@@ -16,19 +16,11 @@
 	function seed_fonts_is_enabled() {
 		var is_enabled = jQuery('#seed-fonts-is-enabled').prop('checked');
 
-		if (is_enabled) {
-			jQuery('#seed-fonts-font').prop('disabled', false);
-			jQuery('#seed-fonts-weight').prop('disabled', false);
-			jQuery('#seed-fonts-selectors').prop('disabled', false);
-			jQuery('#seed-fonts-is-important').prop('disabled', false);
-			jQuery('#seed-fonts-css-generated').show();
-		} else {
-			jQuery('#seed-fonts-font').prop('disabled', true);
-			jQuery('#seed-fonts-weight').prop('disabled', true);
-			jQuery('#seed-fonts-selectors').prop('disabled', true);
-			jQuery('#seed-fonts-is-important').prop('disabled', true);
-			jQuery('#seed-fonts-css-generated').hide();
-		}
+		jQuery('#seed-fonts-font').prop('disabled', is_enabled);
+		jQuery('#seed-fonts-weight').prop('disabled', is_enabled);
+		jQuery('#seed-fonts-selectors').prop('disabled', is_enabled);
+		jQuery('#seed-fonts-is-important').prop('disabled', is_enabled);
+		jQuery('#seed-fonts-css-generated').toggle(is_enabled);
 	}
 
 	jQuery(document).ready(function () {
