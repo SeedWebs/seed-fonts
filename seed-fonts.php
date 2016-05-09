@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Seed Fonts
-Plugin URI: https://github.com/SeedThemes/seed-fonts
+Plugin URI: https://www.seedthemes.com/plugin/seed-fonts
 Description: Enable web fonts on Appearance -> Fonts. You can add more by <a href="https://github.com/SeedThemes/seed-fonts" target="_blank">uploading your web fonts to the theme folder</a>.
-Version: 0.9.3
+Version: 0.9.5
 Author: SeedThemes
-Author URI: http://www.seedthemes.com
+Author URI: https://www.seedthemes.com
 License: GPL2
 Text Domain: seed-fonts
 */
@@ -49,15 +49,26 @@ if(!class_exists('Seed_Fonts'))
 
         public static $fonts = array (
         	"athiti" => array(
+        		"font" => "Athiti",
         		"weights" => array( 500, 600)
         		),
-        	"kanit" => array(
-        		"weights" => array( 300, 400, 500,)
+        	"Kanit" => array(
+        		"font" => "Kanit",
+        		"weights" => array( 300, 400, 500 )
+        		),
+        	"mitr" => array(
+        		"font" => "Mitr",
+        		"weights" => array( 300, 400, 500 )
         		),
         	"prompt" => array(
+        		"font" => "Prompt",
         		"weights" => array( 400, 500, 600 )
         		),
-        	);
+        	"THSarabunNew-web" => array(
+				"font" => "TH Sarabun New",
+        		"weights" => array( 400, 700 )
+        		)
+        );
 
         /**
          * Deactivate the plugin
@@ -197,7 +208,7 @@ function seed_fonts_init() {
 
 	echo '<div class="wrap">';
 	echo '<h1>'. __( 'Seed Fonts', 'seed-fonts' ) . '</h1>';
-	echo '<p>'. __( 'This plugin comes with 4 Thai web fonts from <a href="http://cadsondemak.github.io/" target="_blank">Cadson Demak</a>. You can add more by <a href="https://github.com/SeedThemes/seed-fonts" target="_blank">uploading your web fonts to the theme folder</a>.', 'seed-fonts' ) . '</p>';
+	echo '<p>'. __( 'This plugin comes with 5 Thai web fonts. You can add your own collection by <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts" target="_blank">uploading your web fonts to the theme folder</a>.', 'seed-fonts' ) . '</p>';
 
 	echo '<form id="seed-fonts-form" method="post" name="seed_fonts_form" action="'.get_bloginfo( 'url' ).'/wp-admin/admin-post.php" >';
 	echo '<table class="form-table"><tbody>';
@@ -222,7 +233,7 @@ function seed_fonts_init() {
 	echo '<tr><th scope="row">'. __( 'Force using this font?', 'seed-fonts' ) .'</th><td><label for="seed-fonts-is-important"><input id="seed-fonts-is-important" type="checkbox" name="seed_fonts_is_important" value="on"'.( $is_important ? ' checked="checked"' : '').( $is_enabled ? '' : ' disabled' ).' /> '. __( 'Yes (!important added).', 'seed-fonts' ) .'</label></td></tr>';
 	echo '<tr><th scope="row">'. __( 'Generated CSS', 'seed-fonts' ) .'</th><td><textarea id="seed-fonts-css-generated" rows="4" cols="60" class="code" readonly'.( $is_enabled ? '' : ' style="display:none"' ).'></textarea>';
 	echo '<input type="hidden" name="action" value="seed_fonts_save_options" /></td></tr></tbody></table>';
-	echo '<p class="submit"><input id="seed-fonts-submit" type="submit" class="button button-primary" value="'. __( 'Save Changes', 'seed-fonts' ) .'" /></p>';
+	echo '<p class="submit"><button type="button" id="seed-fonts-submit" class="button button-primary">'. __( 'Save Changes', 'seed-fonts' ) .'</button></p>';
 
 	foreach( Seed_fonts::$fonts as $_font_family => $_font ):
 		echo '<select id="seed-fonts-'.$_font_family.'-weights" style="display:none">';

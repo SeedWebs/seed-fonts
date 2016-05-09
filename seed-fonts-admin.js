@@ -8,7 +8,9 @@ jQuery(document).ready(function ($) {
 		inputSelectors = $('#seed-fonts-selectors'),
 		inputFonts = $('#seed-fonts-font'),
 		inputImportant = $('#seed-fonts-is-important'),
-		inputFontWeight = $('#seed-fonts-weight');
+		inputFontWeight = $('#seed-fonts-weight'),
+		buttonSubmit = $('#seed-fonts-submit'),
+		formSeedFonts = $('#seed-fonts-form');
 
 	/**
 	 * Function to ouput CSS
@@ -72,6 +74,15 @@ jQuery(document).ready(function ($) {
 
 	inputSelectors.on('keyup focusout', function () {
 		seed_fonts_generate_css();
+	});
+
+	buttonSubmit.on('click', function () {
+		inputFonts.prop('disabled', false);
+		inputFontWeight.prop('disabled', false);
+		inputSelectors.prop('disabled', false);
+		inputImportant.prop('disabled', false);
+
+		formSeedFonts.submit();
 	});
 
 });
