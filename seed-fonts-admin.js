@@ -10,6 +10,9 @@ jQuery(document).ready(function ($) {
 		inputImportant = $('#seed-fonts-is-important'),
 		inputFontWeight = $('#seed-fonts-weight');
 
+	/**
+	 * Function to ouput CSS
+	 */
 	function seed_fonts_generate_css() {
 		var css = '';
 
@@ -25,6 +28,9 @@ jQuery(document).ready(function ($) {
 		inputCSS.val(css);
 	}
 
+	/**
+	 * Conditional Logic
+	 */
 	function seed_fonts_is_enabled() {
 		var is_enabled = inputEnable.prop('checked');
 
@@ -35,9 +41,15 @@ jQuery(document).ready(function ($) {
 		inputCSS.toggle(is_enabled);
 	}
 
+	/**
+	 * Trigger functions when DOM is ready
+ 	 */
 	seed_fonts_generate_css();
-
 	seed_fonts_is_enabled();
+
+	/**
+	 * Output CSS live
+	 */
 
 	inputEnable.change(function () {
 		seed_fonts_is_enabled();
