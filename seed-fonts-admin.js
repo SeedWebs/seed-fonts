@@ -45,15 +45,11 @@ jQuery(document).ready(function ($) {
 		$('#seed-fonts-css-generated').val(seed_fonts_generate_css());
 	});
 
-	$('#seed-fonts-weight').change(function () {
+	$('#seed-fonts-weight, #seed-fonts-is-important').change(function () {
 		$('#seed-fonts-css-generated').val(seed_fonts_generate_css());
 	});
 
 	$('#seed-fonts-selectors').on('keyup focusout', function() {
-		$('#seed-fonts-css-generated').val(seed_fonts_generate_css());
-	});
-
-	$('#seed-fonts-is-important').change(function () {
 		$('#seed-fonts-css-generated').val(seed_fonts_generate_css());
 	});
 
