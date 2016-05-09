@@ -53,12 +53,4 @@ jQuery(document).ready(function ($) {
 		$('#seed-fonts-css-generated').val(seed_fonts_generate_css());
 	});
 
-	$('#seed-fonts-submit').click(function () {
-		$('#seed-fonts-font').prop('disabled', false);
-		$('#seed-fonts-weight').prop('disabled', false);
-		$('#seed-fonts-selectors').prop('disabled', false);
-		$('#seed-fonts-is-important').prop('disabled', false);
-		$('#seed-fonts-form').submit();
-	});
-
 });

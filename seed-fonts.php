@@ -222,7 +222,7 @@ function seed_fonts_init() {
 	echo '<tr><th scope="row">'. __( 'Force using this font?', 'seed-fonts' ) .'</th><td><label for="seed-fonts-is-important"><input id="seed-fonts-is-important" type="checkbox" name="seed_fonts_is_important" value="on"'.( $is_important ? ' checked="checked"' : '').( $is_enabled ? '' : ' disabled' ).' /> '. __( 'Yes (!important added).', 'seed-fonts' ) .'</label></td></tr>';
 	echo '<tr><th scope="row">'. __( 'Generated CSS', 'seed-fonts' ) .'</th><td><textarea id="seed-fonts-css-generated" rows="4" cols="60" class="code" readonly'.( $is_enabled ? '' : ' style="display:none"' ).'></textarea>';
 	echo '<input type="hidden" name="action" value="seed_fonts_save_options" /></td></tr></tbody></table>';
-	echo '<p class="submit"><input id="seed-fonts-submit" type="button" class="button button-primary" value="'. __( 'Save Changes', 'seed-fonts' ) .'" /></p>';
+	echo '<p class="submit"><input id="seed-fonts-submit" type="submit" class="button button-primary" value="'. __( 'Save Changes', 'seed-fonts' ) .'" /></p>';
 
 	foreach( Seed_fonts::$fonts as $_font_family => $_font ):
 		echo '<select id="seed-fonts-'.$_font_family.'-weights" style="display:none">';
