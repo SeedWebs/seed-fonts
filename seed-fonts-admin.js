@@ -49,11 +49,7 @@ jQuery(document).ready(function ($) {
 		$('#seed-fonts-css-generated').val(seed_fonts_generate_css());
 	});
 
-	$('#seed-fonts-selectors').keyup(function () {
-		$('#seed-fonts-css-generated').val(seed_fonts_generate_css());
-	});
-
-	$('#seed-fonts-selectors').focusout(function () {
+	$('#seed-fonts-selectors').on('keyup focusout', function() {
 		$('#seed-fonts-css-generated').val(seed_fonts_generate_css());
 	});
 
