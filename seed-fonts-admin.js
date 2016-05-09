@@ -43,19 +43,18 @@ jQuery(document).ready(function ($) {
 
 	/**
 	 * Trigger functions when DOM is ready
- 	 */
+	 */
 	seed_fonts_generate_css();
 	seed_fonts_is_enabled();
 
 	/**
 	 * Output CSS live
 	 */
-
-	inputEnable.change(function () {
+	inputEnable.on('change', function () {
 		seed_fonts_is_enabled();
 	});
 
-	inputFonts.change(function () {
+	inputFonts.on('change', function () {
 		var font = inputFonts.val();
 		var weight = inputFontWeight.val();
 
@@ -67,7 +66,7 @@ jQuery(document).ready(function ($) {
 		seed_fonts_generate_css();
 	});
 
-	$('#seed-fonts-weight, #seed-fonts-is-important').change(function () {
+	$('#seed-fonts-weight, #seed-fonts-is-important').on('change', function () {
 		seed_fonts_generate_css();
 	});
 
