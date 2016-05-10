@@ -268,7 +268,7 @@ function seed_fonts_save() {
 
 //		print_r($_POST);
 
-	header("Location: admin.php?page=seed-fonts&saved=true");
+	header("Location: themes.php?page=seed-fonts&saved=true");
 }
 
 function seed_fonts( ) {
