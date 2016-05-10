@@ -52,7 +52,7 @@ if(!class_exists('Seed_Fonts'))
         		"font" => "Athiti",
         		"weights" => array( 500, 600)
         		),
-        	"Kanit" => array(
+        	"kanit" => array(
         		"font" => "Kanit",
         		"weights" => array( 300, 400, 500 )
         		),
@@ -64,7 +64,7 @@ if(!class_exists('Seed_Fonts'))
         		"font" => "Prompt",
         		"weights" => array( 400, 500, 600 )
         		),
-        	"TH-Sarabun-New" => array(
+        	"th-sarabun-new" => array(
 				"font" => "TH Sarabun New",
         		"weights" => array( 400, 700 )
         		)
