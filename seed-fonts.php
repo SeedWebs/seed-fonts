@@ -113,7 +113,7 @@ function seed_fonts_scripts() {
 			if( file_exists( get_stylesheet_directory() . '/vendor/fonts' ) && is_dir( get_stylesheet_directory() . '/vendor/fonts' ) ) {
 				wp_enqueue_style( 'seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $font . '/font.css' , array(  ) );
 			} else {
-				wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . '/fonts/' . $font . '/font.css' , array(  ) );
+				wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $font . '/font.css' , array(  ) );
 			}
 
 			wp_add_inline_style( 'seed-fonts-all', $font_styles );
@@ -157,10 +157,10 @@ function seed_fonts_admin_styles() {
 //			wp_enqueue_style( 'seed-fonts-'.$_font["font-family"], $_font["css"] , array() );
 //		endforeach;
 
-//		wp_enqueue_style( 'seed-fonts-admin', plugin_dir_url( __FILE__ ) . '/seed-fonts-admin.css' , array() );
+//		wp_enqueue_style( 'seed-fonts-admin', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.css' , array() );
 
-	wp_enqueue_script( 'seed-fonts', plugin_dir_url( __FILE__ ) . '/seed-fonts-admin.js' , array( 'jquery' ), '2016-1', true );
-	wp_enqueue_style( 'seed-fonts', plugin_dir_url( __FILE__ ) . '/seed-fonts-admin.css' , array(  ) );
+	wp_enqueue_script( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.js' , array( 'jquery' ), '2016-1', true );
+	wp_enqueue_style( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.css' , array(  ) );
 }
 
 function seed_fonts_init() {
