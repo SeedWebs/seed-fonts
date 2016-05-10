@@ -157,10 +157,8 @@ function seed_fonts_admin_styles() {
 //			wp_enqueue_style( 'seed-fonts-'.$_font["font-family"], $_font["css"] , array() );
 //		endforeach;
 
-//		wp_enqueue_style( 'seed-fonts-admin', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.css' , array() );
-
 	wp_enqueue_script( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.js' , array( 'jquery' ), '2016-1', true );
-	wp_enqueue_style( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.css' , array(  ) );
+//	wp_enqueue_style( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.css' , array(  ) );
 }
 
 function seed_fonts_init() {
