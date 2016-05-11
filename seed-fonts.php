@@ -36,6 +36,7 @@ function seed_fonts_scripts() {
 		$weight = get_option( 'seed_fonts_weight' );
 		$selectors = get_option( 'seed_fonts_selectors' );
 		$is_important = ( get_option( 'seed_fonts_is_important' ) );
+		$font_styles = '';
 
 
 		if( $is_enabled && ( $font !== FALSE ) && ( $font != '' ) ) {
