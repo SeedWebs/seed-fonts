@@ -27,69 +27,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if(!class_exists('Seed_Fonts'))
-{
-	class Seed_Fonts
-	{
-        /**
-         * Construct the plugin object
-         */
-        public function __construct()
-        {
-            // register actions
-        } // END public function __construct
-        
-        /**
-         * Activate the plugin
-         */
-        public static function activate()
-        {
-            // Do nothing
-        } // END public static function activate
-
-        public static $fonts = array (
-        	"athiti" => array(
-        		"font" => "Athiti",
-        		"weights" => array( 500, 600)
-        		),
-        	"kanit" => array(
-        		"font" => "Kanit",
-        		"weights" => array( 300, 400, 500 )
-        		),
-        	"mitr" => array(
-        		"font" => "Mitr",
-        		"weights" => array( 300, 400, 500 )
-        		),
-        	"prompt" => array(
-        		"font" => "Prompt",
-        		"weights" => array( 400, 500, 600 )
-        		),
-        	"th-sarabun-new" => array(
-				"font" => "TH Sarabun New",
-        		"weights" => array( 400, 700 )
-        		)
-        );
-
-        /**
-         * Deactivate the plugin
-         */     
-        public static function deactivate()
-        {
-            // Do nothing
-        } // END public static function deactivate
-    } // END class Seed_Fonts
-} // END if(!class_exists('Seed_Fonts'))
-
-if(class_exists('Seed_Fonts'))
-{
-    // Installation and uninstallation hooks
-	register_activation_hook(__FILE__, array('Seed_Fonts', 'activate'));
-	register_deactivation_hook(__FILE__, array('Seed_Fonts', 'deactivate'));
-
-    // instantiate the plugin class
-	$seed_fonts = new Seed_Fonts();
-}
-
 add_action( 'wp_enqueue_scripts', 'seed_fonts_scripts', 30 );
 
 function seed_fonts_scripts() {
@@ -99,6 +36,7 @@ function seed_fonts_scripts() {
 		$weight = get_option( 'seed_fonts_weight' );
 		$selectors = get_option( 'seed_fonts_selectors' );
 		$is_important = ( get_option( 'seed_fonts_is_important' ) );
+		$font_styles = '';
 
 
 		if( $is_enabled && ( $font !== FALSE ) && ( $font != '' ) ) {
@@ -129,7 +67,7 @@ function seed_fonts_body_class( $classes ) {
 	$weight = get_option( 'seed_fonts_weight' );
 
 	if( $font === FALSE )
-		$font = key ( Seed_fonts::$fonts );
+		$font = key ( seed_fonts_get_fonts() );
 
 	if( $weight === FALSE )
 		$weight = '';
@@ -161,117 +99,355 @@ function seed_fonts_admin_styles() {
 //	wp_enqueue_style( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.css' , array(  ) );
 }
 
-function seed_fonts_init() {
+function seed_fonts_init() { ?>
 
-	if( file_exists( get_stylesheet_directory() . '/vendor/fonts' ) && is_dir( get_stylesheet_directory() . '/vendor/fonts' ) ) {
+	<div class="wrap">
+		<div class="icon32" id="icon-options-general"></div>
+		<h2><?php esc_html_e( 'Seed Fonts', 'seed-fonts' ); ?></h2>
+
+		<?php
+		if( isset( $_GET['settings-updated'] ) ) {
+			?><div class="updated"><p><strong><?php esc_html_e( 'Settings updated successfully.', 'seed-fonts' ); ?></strong></div><?php
+		}
+		?>
+		<p>
+			<?php printf( wp_kses( __( 'This plugin comes with 5 Thai web fonts. You can add your own collection by <a href="%1$s" target="_blank">uploading your web fonts to the theme folder</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts' ) ); ?>
+		</p>
+		<form action="<?php echo admin_url( 'options.php' ); ?>" method="post" id="seed-fonts-form">
+			<?php
+			settings_fields( 'seed-fonts' );
+			do_settings_sections( 'seed-fonts' );
+			submit_button();
+			?>
+		</form>
+	</div>
+
+<?php }
+
+/**
+ * Get the list of available fonts
+ *
+ * @since 0.10.0
+ * @return array
+ */
+function seed_fonts_get_fonts() {
+
+	$fonts = array(
+		"athiti"         => array(
+			"font"    => "Athiti",
+			"weights" => array( 500, 600 )
+		),
+		"kanit"          => array(
+			"font"    => "Kanit",
+			"weights" => array( 300, 400, 500 )
+		),
+		"mitr"           => array(
+			"font"    => "Mitr",
+			"weights" => array( 300, 400, 500 )
+		),
+		"prompt"         => array(
+			"font"    => "Prompt",
+			"weights" => array( 400, 500, 600 )
+		),
+		"th-sarabun-new" => array(
+			"font"    => "TH Sarabun New",
+			"weights" => array( 400, 700 )
+		)
+	);
+
+	// This is where we add custom fonts
+	if ( file_exists( get_stylesheet_directory() . '/vendor/fonts' ) && is_dir( get_stylesheet_directory() . '/vendor/fonts' ) ) {
+
 		$d_handle = opendir( get_stylesheet_directory() . '/vendor/fonts' );
 
-		$fonts = array();
+		while ( false !== ( $entry = readdir( $d_handle ) ) ) {
 
-		while( FALSE !== ( $entry = readdir( $d_handle ) ) ) {
-			if ( is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $entry ) && ( file_exists ( get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css' ) ) ) {
-				$headers = get_file_data ( get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css' , array( 'font' => 'Font Name', 'weights' => 'Weights' ) );
+			if ( is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $entry ) && ( file_exists( get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css' ) ) ) {
 
-				$_font = array();
+				$headers = get_file_data( get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css', array(
+					'font'    => 'Font Name',
+					'weights' => 'Weights'
+				) );
 
-				if( $headers['font'] == '' )
-					$_font['font'] = $entry;
-				else
-					$_font['font'] = $headers['font'];
+				$_font = array(
+					'font'    => empty( $headers['font'] ) ? $entry : $headers['font'],
+					'weights' => empty( $headers['weights'] ) ? array() : array_map( 'trim', explode( ',', $headers['weights'] ) ),
+				);
 
-				if( $headers['weights'] != '' )
-					$_font['weights'] = array_map( 'trim', explode( ',', $headers['weights'] ) );
-
-				$fonts[$entry] = $_font;
+				$fonts[ $entry ] = $_font;
 			}
 		}
 
-		Seed_fonts::$fonts = $fonts;
 	}
 
-	$is_enabled = get_option( 'seed_fonts_is_enabled' );
-	$font = get_option( 'seed_fonts_font' );
-	$weight = get_option( 'seed_fonts_weight' );
-	$selectors = get_option( 'seed_fonts_selectors' );
-	$is_important = get_option( 'seed_fonts_is_important' );
+	return apply_filters( 'seed_fonts_fonts', $fonts );
 
-	if( $font === FALSE )
-		$font = key ( Seed_fonts::$fonts );
+}
 
-	if( $weight === FALSE )
-		$weight = '';
+/**
+ * Get the list of fonts formatted for use in a dropdown
+ *
+ * @since 0.10.0
+ * @return array
+ */
+function seed_fonts_get_fonts_option_list() {
 
-	if( $selectors === FALSE )
-		$selectors = 'h1, h2, h3, h4, h5, h6, ._heading';
+	$list = array();
 
-	echo '<div class="wrap">';
-	echo '<h1>'. __( 'Seed Fonts', 'seed-fonts' ) . '</h1>';
-	echo '<p>'. __( 'This plugin comes with 5 Thai web fonts. You can add your own collection by <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts" target="_blank">uploading your web fonts to the theme folder</a>.', 'seed-fonts' ) . '</p>';
-
-	echo '<form id="seed-fonts-form" method="post" name="seed_fonts_form" action="'.get_bloginfo( 'url' ).'/wp-admin/admin-post.php" >';
-	echo '<table class="form-table"><tbody>';
-	echo '<tr><th scope="row">'. __( 'Enable?', 'seed-fonts' ) .'</th><td><label for="seed-fonts-is-enabled"><input id="seed-fonts-is-enabled" type="checkbox" name="seed_fonts_is_enabled" value="on"'.( $is_enabled ? ' checked="checked"' : '').' /></label></td></tr>';
-	echo '<tr><th scope="row">'. __( 'Font', 'seed-fonts' ) .'</th><td><select id="seed-fonts-font" name="seed_fonts_font"'.( $is_enabled ? '' : ' disabled' ).'>';
-	foreach( Seed_fonts::$fonts as $_font_family => $_font ):
-		echo '<option value="'.$_font_family.'" '.(($font == $_font_family) ? ' selected="selected"' : '').'>'.( array_key_exists( 'font', $_font ) ? $_font['font'] : $_font_family ).'</option>';
-	endforeach;
-	echo '</select></td></tr>';
-
-	echo '<tr><th scope="row">'. __( 'Weight', 'seed-fonts' ) .'</th><td><select id="seed-fonts-weight" name="seed_fonts_weight"'.( $is_enabled ? '' : ' disabled' ).'>';
-	echo '<option value=""></option>';
-
-	if( array_key_exists( 'weights', Seed_fonts::$fonts[$font] ) ) {
-		foreach( Seed_fonts::$fonts[$font]['weights'] as $_weight ):
-			echo '<option value="'.$_weight.'" '.(($weight == $_weight) ? ' selected="selected"' : '').'>'.$_weight.'</option>';
-		endforeach;
+	foreach ( seed_fonts_get_fonts() as $id => $data ) {
+		$list[ $id ] = $data['font'];
 	}
-	echo '</select><p class="description">'. __( '400 = Normal, 700 = Bold. For more detail, please see <a href="https://www.w3.org/TR/css-fonts-3/#font-weight-prop" target="_blank">W3.org</a>', 'seed-fonts' ) .'</p></td></tr>';
 
-	echo '<tr><th scope="row">'. __( 'Selectors', 'seed-fonts' ) .'</th><td><input id="seed-fonts-selectors" class="regular-text" type="text" name="seed_fonts_selectors" value="'.htmlspecialchars( $selectors ).'"'.( $is_enabled ? '' : ' disabled' ).' /></td></tr>';
-	echo '<tr><th scope="row">'. __( 'Force using this font?', 'seed-fonts' ) .'</th><td><label for="seed-fonts-is-important"><input id="seed-fonts-is-important" type="checkbox" name="seed_fonts_is_important" value="on"'.( $is_important ? ' checked="checked"' : '').( $is_enabled ? '' : ' disabled' ).' /> '. __( 'Yes (!important added).', 'seed-fonts' ) .'</label></td></tr>';
-	echo '<tr><th scope="row">'. __( 'Generated CSS', 'seed-fonts' ) .'</th><td><textarea id="seed-fonts-css-generated" rows="4" cols="60" class="code" readonly'.( $is_enabled ? '' : ' style="display:none"' ).'></textarea>';
-	echo '<input type="hidden" name="action" value="seed_fonts_save_options" /></td></tr></tbody></table>';
-	echo '<p class="submit"><button type="button" id="seed-fonts-submit" class="button button-primary">'. __( 'Save Changes', 'seed-fonts' ) .'</button></p>';
+	return $list;
 
-	foreach( Seed_fonts::$fonts as $_font_family => $_font ):
-		echo '<select id="seed-fonts-'.$_font_family.'-weights" style="display:none">';
-		echo '<option value=""></option>';
-		foreach( $_font['weights'] as $_weight ):
-			echo '<option value="'.$_weight.'">'.$_weight.'</option>';
-		endforeach;
-		echo '</select>';
-	endforeach;
-
-	echo '</form>';
-	
-	echo '</div>';
 }
 
-add_action( 'admin_post_seed_fonts_save_options', 'seed_fonts_save' );
+/**
+ * Get the list of font weights formatted for use in a dropdown
+ *
+ * @since 0.10.0
+ *
+ * @param string $font Name of the font
+ *
+ * @return array
+ */
+function seed_fonts_get_fonts_weights_option_list( $font ) {
 
-function seed_fonts_save() {
-	if( array_key_exists( 'seed_fonts_is_enabled', $_POST ) && ( $_POST['seed_fonts_is_enabled'] == 'on' ) )
-		update_option( 'seed_fonts_is_enabled' , true );
-	else
-		update_option( 'seed_fonts_is_enabled' , false );
+	$font = seed_fonts_get_font( $font );
 
-	update_option( 'seed_fonts_font' , $_POST['seed_fonts_font'] );
-	update_option( 'seed_fonts_weight' , $_POST['seed_fonts_weight'] );
-	update_option( 'seed_fonts_selectors' , $_POST['seed_fonts_selectors'] );
+	if ( ! isset( $font['weights'] ) || empty( $font['weights'] ) ) {
+		return array();
+	}
 
-	if( array_key_exists( 'seed_fonts_is_important', $_POST ) && ( $_POST['seed_fonts_is_important'] == 'on' ) )
-		update_option( 'seed_fonts_is_important' , true );
-	else
-		update_option( 'seed_fonts_is_important' , false );
+	$list = array();
 
-//		print_r($_POST);
+	foreach ( $font['weights'] as $weight ) {
+		$list[ $weight ] = $weight;
+	}
 
-	header("Location: themes.php?page=seed-fonts&saved=true");
+	return $list;
+
 }
 
-function seed_fonts( ) {
+/**
+ * Get font data
+ *
+ * @since 0.10.0
+ *
+ * @param string $font Name of the font to retrieve
+ *
+ * @return bool|array
+ */
+function seed_fonts_get_font( $font ) {
+
+	if ( empty( $font ) ) {
+		return false;
+	}
+
+	$fonts = seed_fonts_get_fonts();
+
+	if ( array_key_exists( $font, $fonts ) ) {
+		return $fonts[ $font ];
+	}
+
+	return false;
+
+}
+
+/**
+ * Quick helper function that prefixes an option ID
+ *
+ * This makes it easier to maintain and makes it super easy to change the options prefix without breaking the options
+ * registered with the Settings API.
+ *
+ * @since 0.10.0
+ *
+ * @param string $name Unprefixed name of the option
+ *
+ * @return string
+ */
+function seed_fonts_get_option_id( $name ) {
+	return 'seed_fonts_' . $name;
+}
+
+/**
+ * Get the plugin settings
+ *
+ * @since 0.10.0
+ * @return array
+ */
+function seed_fonts_get_settings() {
+
+	$settings = array(
+		array(
+			'id'      => 'seed_fonts_settings',
+			'title'   => __( 'Fonts Settings', 'seed-fonts' ),
+			'options' => array(
+				array(
+					'id'      => seed_fonts_get_option_id( 'is_enabled' ),
+					'title'   => esc_html__( 'Enable?', 'seed-fonts' ),
+					'type'    => 'checkbox',
+					'options' => array( 'on' => esc_html__( 'Yes', 'seed-fonts' ) )
+				),
+				array(
+					'id'      => seed_fonts_get_option_id( 'font' ),
+					'title'   => esc_html__( 'Font', 'seed-fonts' ),
+					'type'    => 'dropdown',
+					'options' => seed_fonts_get_fonts_option_list()
+				),
+				array(
+					'id'      => seed_fonts_get_option_id( 'weight' ),
+					'title'   => esc_html__( 'Weight', 'seed-fonts' ),
+					'desc'    => wp_kses( sprintf( __( '400 = Normal, 700 = Bold. For more detail, please see <a href="%1$s" target="_blank">W3.org</a>', 'seed-fonts' ), esc_url( 'https://www.w3.org/TR/css-fonts-3/#font-weight-prop' ) ), array(
+						'a' => array(
+							'href'   => array(),
+							'target' => array()
+						)
+					) ),
+					'type'    => 'dropdown',
+					'options' => seed_fonts_get_fonts_weights_option_list( get_option( 'seed_fonts_font' ) )
+				),
+				array(
+					'id'      => seed_fonts_get_option_id( 'selectors' ),
+					'title'   => esc_html__( 'Selectors', 'seed-fonts' ),
+					'type'    => 'text',
+					'desc'    => esc_html__( 'Separate selectors with commas', 'seed-fonts' ),
+					'default' => 'h1, h2, h3, h4, h5, h6, ._heading'
+				),
+				array(
+					'id'      => seed_fonts_get_option_id( 'is_important' ),
+					'title'   => esc_html__( 'Force Using This Font?', 'seed-fonts' ),
+					'type'    => 'checkbox',
+					'options' => array( 'on' => esc_html__( 'Yes (!important added)', 'seed-fonts' ) )
+				),
+				array(
+					'id'       => seed_fonts_get_option_id( 'css-generated' ),
+					'title'    => esc_html__( 'Generated CSS', 'seed-fonts' ),
+					'type'     => 'textarea_code'
+				),
+			),
+		),
+	);
+
+	return $settings;
+
+}
+
+add_action( 'admin_init', 'seed_fonts_register_plugin_settings' );
+/**
+ * Register plugin settings
+ *
+ * This function dynamically registers plugin settings.
+ *
+ * @since 0.10.0
+ * @see   seed_fonts_get_settings
+ * @return void
+ */
+function seed_fonts_register_plugin_settings() {
+
+	$settings = seed_fonts_get_settings();
+
+	foreach ( $settings as $key => $section ) {
+
+		/* We add the sections and then loop through the corresponding options */
+		add_settings_section( $section['id'], $section['title'], false, 'seed-fonts' );
+
+		/* Get the options now */
+		foreach ( $section['options'] as $k => $option ) {
+
+			$field_args = array(
+				'name'    => $option['id'],
+				'title'   => $option['title'],
+				'type'    => $option['type'],
+				'desc'    => isset( $option['desc'] ) ? $option['desc'] : '',
+				'default' => isset( $option['default'] ) ? $option['default'] : '',
+				'options' => isset( $option['options'] ) ? $option['options'] : array(),
+				'group'   => 'seed-fonts'
+			);
+
+			register_setting( 'seed-fonts', $option['id'] );
+			add_settings_field( $option['id'], $option['title'], 'seed_fonts_output_settings_field', 'seed-fonts', $section['id'], $field_args );
+
+		}
+	}
+
+}
+
+/**
+ * Generate the option field output
+ *
+ * @since 0.10.0
+ *
+ * @param array $option The current option array
+ *
+ * @return void
+ */
+function seed_fonts_output_settings_field( $option ) {
+
+	$current    = get_option( $option['name'], $option['default'] );
+	$field_type = $option['type'];
+	$id         = str_replace( '_', '-', $option['name'] );
+
+	// Because disabling the options when "Enable" is unchecked saved empty values we need to make sure the default is taken into account
+	if ( empty( $current ) && ! empty( $option['default'] ) ) {
+		$current = $option['default'];
+	}
+
+	switch( $field_type ):
+
+		case 'text': ?>
+			<input type="text" name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" value="<?php echo $current; ?>" class="regular-text" />
+			<?php break;
+
+		case 'checkbox': ?>
+			<?php foreach( $option['options'] as $val => $choice ):
+
+				if ( count( $option['options'] ) > 1 ) {
+					$id = "{$id}_{$val}";
+				}
+
+				$selected = is_array( $current ) && in_array( $val, $current ) ? 'checked="checked"' : '';  ?>
+				<label for="<?php echo $id; ?>">
+					<input type="checkbox" name="<?php echo $option['name']; ?>[]" value="<?php echo $val; ?>" id="<?php echo $id; ?>" <?php echo $selected; ?> />
+					<?php echo $choice; ?>
+				</label>
+			<?php endforeach;
+			break;
+
+		case 'dropdown': ?>
+			<label for="<?php echo $option['name']; ?>">
+				<select name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>">
+
+					<?php foreach( $option['options'] as $val => $choice ):
+						if( $val == $current )
+							$selected = 'selected="selected"';
+						else
+							$selected = ''; ?>
+						<option value="<?php echo $val; ?>" <?php echo $selected; ?>><?php echo $choice; ?></option>
+
+					<?php endforeach; ?>
+
+				</select>
+			</label>
+			<?php break;
+
+		case 'textarea':
+			if( !$current && isset($option['std']) ) { $current = $option['std']; } ?>
+			<textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="8" cols="70"><?php echo $current; ?></textarea>
+			<?php break;
+
+		case 'textarea_code':
+			if( !$current && isset($option['std']) ) { $current = $option['std']; } ?>
+			<textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="4" cols="60" class="code" readonly><?php echo $current; ?></textarea>
+			<?php break;
+
+	endswitch;
+
+	// Add the field description
+	if ( isset( $option['desc'] ) && $option['desc'] != '' ) {
+		echo wp_kses_post( sprintf( '<p class="description">%1$s</p>', $option['desc'] ) );
+	};
+
 }
 
 load_plugin_textdomain('seed-fonts', false, basename( dirname( __FILE__ ) ) . '/languages' );
-
-?>
