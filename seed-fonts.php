@@ -450,26 +450,4 @@ function seed_fonts_output_settings_field( $option ) {
 
 }
 
-//add_action( 'admin_post_seed_fonts_save_options', 'seed_fonts_save' );
-
-function seed_fonts_save() {
-	if( array_key_exists( 'seed_fonts_is_enabled', $_POST ) && ( $_POST['seed_fonts_is_enabled'] == 'on' ) )
-		update_option( 'seed_fonts_is_enabled' , true );
-	else
-		update_option( 'seed_fonts_is_enabled' , false );
-
-	update_option( 'seed_fonts_font' , $_POST['seed_fonts_font'] );
-	update_option( 'seed_fonts_weight' , $_POST['seed_fonts_weight'] );
-	update_option( 'seed_fonts_selectors' , $_POST['seed_fonts_selectors'] );
-
-	if( array_key_exists( 'seed_fonts_is_important', $_POST ) && ( $_POST['seed_fonts_is_important'] == 'on' ) )
-		update_option( 'seed_fonts_is_important' , true );
-	else
-		update_option( 'seed_fonts_is_important' , false );
-
-//		print_r($_POST);
-
-	header("Location: themes.php?page=seed-fonts&saved=true");
-}
-
 load_plugin_textdomain('seed-fonts', false, basename( dirname( __FILE__ ) ) . '/languages' );
