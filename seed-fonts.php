@@ -27,69 +27,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if(!class_exists('Seed_Fonts'))
-{
-	class Seed_Fonts
-	{
-        /**
-         * Construct the plugin object
-         */
-        public function __construct()
-        {
-            // register actions
-        } // END public function __construct
-        
-        /**
-         * Activate the plugin
-         */
-        public static function activate()
-        {
-            // Do nothing
-        } // END public static function activate
-
-        public static $fonts = array (
-        	"athiti" => array(
-        		"font" => "Athiti",
-        		"weights" => array( 500, 600)
-        		),
-        	"kanit" => array(
-        		"font" => "Kanit",
-        		"weights" => array( 300, 400, 500 )
-        		),
-        	"mitr" => array(
-        		"font" => "Mitr",
-        		"weights" => array( 300, 400, 500 )
-        		),
-        	"prompt" => array(
-        		"font" => "Prompt",
-        		"weights" => array( 400, 500, 600 )
-        		),
-        	"th-sarabun-new" => array(
-				"font" => "TH Sarabun New",
-        		"weights" => array( 400, 700 )
-        		)
-        );
-
-        /**
-         * Deactivate the plugin
-         */     
-        public static function deactivate()
-        {
-            // Do nothing
-        } // END public static function deactivate
-    } // END class Seed_Fonts
-} // END if(!class_exists('Seed_Fonts'))
-
-if(class_exists('Seed_Fonts'))
-{
-    // Installation and uninstallation hooks
-	register_activation_hook(__FILE__, array('Seed_Fonts', 'activate'));
-	register_deactivation_hook(__FILE__, array('Seed_Fonts', 'deactivate'));
-
-    // instantiate the plugin class
-	$seed_fonts = new Seed_Fonts();
-}
-
 add_action( 'wp_enqueue_scripts', 'seed_fonts_scripts', 30 );
 
 function seed_fonts_scripts() {
