@@ -67,7 +67,7 @@ function seed_fonts_body_class( $classes ) {
 	$weight = get_option( 'seed_fonts_weight' );
 
 	if( $font === FALSE )
-		$font = key ( Seed_fonts::$fonts );
+		$font = key ( seed_fonts_get_fonts() );
 
 	if( $weight === FALSE )
 		$weight = '';
