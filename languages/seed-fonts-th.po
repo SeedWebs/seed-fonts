@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Seed Fonts\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Sat May 07 2016 19:06:50 GMT+0700 (ICT)\n"
-"PO-Revision-Date: Sun May 08 2016 11:58:35 GMT+0700 (ICT)\n"
+"PO-Revision-Date: Sat May 14 2016 05:56:54 GMT+0700 (ICT)\n"
 "Last-Translator: root <info@mennstudio.com>\n"
 "Language-Team: \n"
 "Language: Thai\n"
@@ -22,15 +22,59 @@ msgstr ""
 "X-Loco-Target-Locale: th_TH\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: ../seed-fonts.php:183
+#. Description of the plugin
+msgid ""
+"Enable web fonts on Appearance -> Fonts. You can add more by <a href=\"https:"
+"//www.seedthemes.com/plugin/seed-fonts/\" target=\"_blank\">uploading your web "
+"fonts to the theme folder</a>."
+msgstr ""
+"เปิดการใช้งานฟอนต์สำหรับเว็บที่ รูปแบบบล็อก -> ฟอนต์ "
+"หากต้องการเพิ่มฟอนต์สามารถ <a href=\"https://www.seedthemes.com/plugin/seed-"
+"fonts/#upload-your-fonts\" target=\"_blank\">อัพโหลดไปไว้ในธีม</a> ได้"
+
+#: ../seed-fonts.php:105
+msgid "Settings updated successfully."
+msgstr "ตั้งค่าเรียบร้อย"
+
+#: ../seed-fonts.php:109
+#, php-format
 msgid ""
 "This plugin comes with 5 Thai web fonts. You can add your own collection by "
-"<a href=\"https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts\" "
-"target=\"_blank\">uploading your web fonts to the theme folder</a>."
+"<a href=\"%1$s\" target=\"_blank\">uploading your web fonts to the theme "
+"folder</a>"
 msgstr ""
 "ปลั๊กอินนี้มาพร้อมกับฟอนต์ไทย 5 ฟอนต์ หากต้องการใช้ฟอนต์อื่น "
 "ให้สร้างฟอนต์สำหรับเว็บแล้ว <a href=\"https://www.seedthemes.com/plugin/seed-"
 "fonts/#upload-your-fonts\" target=\"_blank\">อัพโหลดไปไว้ในธีม</a>"
+
+#: ../seed-fonts.php:307
+msgid "Fonts Settings"
+msgstr "ตั้งค่าฟอนต์"
+
+#: ../seed-fonts.php:313
+msgid "Yes"
+msgstr "ใช่"
+
+#: ../seed-fonts.php:324
+#, php-format
+msgid ""
+"400 = Normal, 700 = Bold. For more detail, please see <a href=\"%1$s\" "
+"target=\"_blank\">W3.org</a>"
+msgstr ""
+"400 = ตัวธรรมดา, 700 = ตัวหนา. รายละเอียดเพิ่มเติม ดูที่ <a href=\"%1$s\" "
+"target=\"_blank\">W3.org</a>\n"
+
+#: ../seed-fonts.php:337
+msgid "Separate selectors with commas"
+msgstr "คั่นระหว่าง Selector ด้วยเครื่องหมาย \",\""
+
+#: ../seed-fonts.php:342
+msgid "Force Using This Font?"
+msgstr "บังคับใช้ฟอนต์นี้?"
+
+#: ../seed-fonts.php:344
+msgid "Yes (!important added)"
+msgstr "ใช่ (เพิ่มคำสั่ง !important)"
 
 #. Name of the plugin
 msgid "Seed Fonts"
@@ -40,17 +84,6 @@ msgstr "Seed Fonts"
 msgid "https://www.seedthemes.com/plugin/seed-fonts"
 msgstr "https://www.seedthemes.com/plugin/seed-fonts"
 
-#. Description of the plugin
-msgid ""
-"Enable web fonts on Appearance -> Fonts. You can add more by <a href=\"https:"
-"//github.com/SeedThemes/seed-fonts\" target=\"_blank\">uploading your web fonts "
-"to the theme folder</a>."
-msgstr ""
-"เปิดใช้ฟอนต์สำหรับเว็บที่เมนู \"รูปแบบบล็อก\" -> \"ฟอนต์\" "
-"หากต้องการเพิ่มฟอนต์อื่นๆ ดูรายละเอียดที่ <a href=\"https://github."
-"com/SeedThemes/seed-fonts\" "
-"target=\"_blank\">การอัพโหลดฟอนต์สำหรับเว็บไปใช้ในธีม</a>."
-
 #. Author of the plugin
 msgid "SeedThemes"
 msgstr "SeedThemes"
@@ -59,46 +92,26 @@ msgstr "SeedThemes"
 msgid "https://www.seedthemes.com"
 msgstr "https://www.seedthemes.com"
 
-#: ../seed-fonts.php:122
+#: ../seed-fonts.php:88
 msgid "Fonts"
 msgstr "ฟอนต์"
 
-#: ../seed-fonts.php:187
+#: ../seed-fonts.php:311
 msgid "Enable?"
 msgstr "เปิดใช้งาน?"
 
-#: ../seed-fonts.php:188
+#: ../seed-fonts.php:317
 msgid "Font"
 msgstr "ฟอนต์"
 
-#: ../seed-fonts.php:194
+#: ../seed-fonts.php:323
 msgid "Weight"
 msgstr "น้ำหนัก"
 
-#: ../seed-fonts.php:202
-msgid ""
-"400 = Normal, 700 = Bold. For more detail, please see <a href=\"https://www."
-"w3.org/TR/css-fonts-3/#font-weight-prop\" target=\"_blank\">W3.org</a>"
-msgstr ""
-"400 = ตัวธรรมดา, 700 = ตัวหนา, รายละเอียดดูที่ <a href=\"https://www.w3."
-"org/TR/css-fonts-3/#font-weight-prop\" target=\"_blank\">W3.org</a>\n"
-
-#: ../seed-fonts.php:204
+#: ../seed-fonts.php:335
 msgid "Selectors"
 msgstr "Selectors"
 
-#: ../seed-fonts.php:205
-msgid "Force using this font?"
-msgstr "บังคับใช้ฟอนต์นี้?"
-
-#: ../seed-fonts.php:205
-msgid "Yes (!important added)."
-msgstr "ใช่ (เพิ่มโค้ด !important)"
-
-#: ../seed-fonts.php:206
+#: ../seed-fonts.php:348
 msgid "Generated CSS"
 msgstr "CSS ที่สร้างขึ้น"
-
-#: ../seed-fonts.php:208
-msgid "Save Changes"
-msgstr "บันทึก"
