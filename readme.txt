@@ -4,7 +4,7 @@ Donate link: http://seedthemes.com/
 Tags: webfont,web fonts, @font-face embed, typography
 Requires at least: 4.0.1
 Tested up to: 4.5.2
-Stable tag: 0.9.5
+Stable tag: 0.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,11 +37,20 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 
 == Changelog ==
 
+= 0.9.6 =
+* Use Settings API.
+* Fix double trailing slash after plugin_dir_url().
+* Add body class (.seed-fonts-FONT-NAME).
+* Optimize code.
+
 = 0.9.5 =
 * First public version.
 
 
 == Upgrade Notice ==
+
+= 0.9.6 =
+Use Settings API & Optimize code.
 
 = 0.9.5 =
 Just start.
