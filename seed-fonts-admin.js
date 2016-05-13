@@ -75,4 +75,11 @@ jQuery(document).ready(function ($) {
 		seed_fonts_generate_css();
 	});
 
+	formSeedFonts.on( 'submit', function ( event ) {
+		inputFonts.prop( 'disabled', false );
+		inputFontWeight.prop( 'disabled', false );
+		inputSelectors.prop( 'disabled', false );
+		inputImportant.prop( 'disabled', false );
+	});
+
 });

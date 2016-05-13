@@ -91,12 +91,7 @@ function seed_fonts_setup_menu() {
 }
 
 function seed_fonts_admin_styles() {
-//		foreach( Seed_fonts::$fonts as $_font ):
-//			wp_enqueue_style( 'seed-fonts-'.$_font["font-family"], $_font["css"] , array() );
-//		endforeach;
-
 	wp_enqueue_script( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.js' , array( 'jquery' ), '2016-1', true );
-//	wp_enqueue_style( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.css' , array(  ) );
 }
 
 function seed_fonts_init() { ?>
@@ -118,11 +113,34 @@ function seed_fonts_init() { ?>
 			settings_fields( 'seed-fonts' );
 			do_settings_sections( 'seed-fonts' );
 			submit_button();
+
+			seed_fonts_hidden_weight_options();
+
 			?>
 		</form>
 	</div>
 
 <?php }
+
+/**
+seed_fonts_get_fonts
+ * Put font weight options
+ *
+ * @since 0.10.0
+ */
+function seed_fonts_hidden_weight_options() {
+	$fonts = seed_fonts_get_fonts();
+
+	foreach( $fonts as $_font => $_font_desc ) { ?>
+
+	<select id="seed-fonts-<?php esc_html_e( $_font, 'seed-fonts' ); ?>-weights" style="display:none">
+		<option value=""></option><?php
+		foreach( $_font_desc["weights"] as $_weight ) { ?>		
+		<option value="<?php esc_html_e( $_weight, 'seed-fonts' ); ?>"><?php esc_html_e( $_weight, 'seed-fonts' ); ?></option><?php		
+		} ?>
+	</select> <?
+	}
+}
 
 /**
  * Get the list of available fonts
@@ -158,6 +176,8 @@ function seed_fonts_get_fonts() {
 	// This is where we add custom fonts
 	if ( file_exists( get_stylesheet_directory() . '/vendor/fonts' ) && is_dir( get_stylesheet_directory() . '/vendor/fonts' ) ) {
 
+		$custom_fonts = array();
+
 		$d_handle = opendir( get_stylesheet_directory() . '/vendor/fonts' );
 
 		while ( false !== ( $entry = readdir( $d_handle ) ) ) {
@@ -174,9 +194,12 @@ function seed_fonts_get_fonts() {
 					'weights' => empty( $headers['weights'] ) ? array() : array_map( 'trim', explode( ',', $headers['weights'] ) ),
 				);
 
-				$fonts[ $entry ] = $_font;
+				$custom_fonts[ $entry ] = $_font;
 			}
 		}
+
+		if( count( $custom_fonts ) > 0 )
+			$fonts = $custom_fonts;
 
 	}
 
@@ -219,7 +242,7 @@ function seed_fonts_get_fonts_weights_option_list( $font ) {
 		return array();
 	}
 
-	$list = array();
+	$list = array( "" => "" );
 
 	foreach ( $font['weights'] as $weight ) {
 		$list[ $weight ] = $weight;
