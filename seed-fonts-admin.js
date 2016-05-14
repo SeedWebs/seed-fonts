@@ -17,12 +17,12 @@ jQuery(document).ready(function ($) {
 	function seed_fonts_generate_css() {
 		var css = '';
 
-		if (inputSelectors.val() != '')
+		if ( (inputSelectors.val() != null) && (inputSelectors.val() != '') )
 			css += inputSelectors.val() + ' ';
 
 		css += '{\r\n';
 		css += '  font-family: "' + inputFonts.val() + '", san-serif' + ((inputImportant.prop('checked')) ? ' !important' : '') + ';\n';
-		if (inputFontWeight.val() != '')
+		if ( (inputFontWeight.val() != null) && (inputFontWeight.val() != '') )
 			css += '  font-weight: ' + inputFontWeight.val() + ((inputImportant.prop('checked')) ? ' !important' : '') + ';\n';
 		css += '}';
 
