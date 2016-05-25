@@ -138,7 +138,7 @@ function seed_fonts_hidden_weight_options() {
 		foreach( $_font_desc["weights"] as $_weight ) { ?>		
 		<option value="<?php esc_html_e( $_weight, 'seed-fonts' ); ?>"><?php esc_html_e( $_weight, 'seed-fonts' ); ?></option><?php		
 		} ?>
-	</select> <?
+	</select> <?php
 	}
 }
 
