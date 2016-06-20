@@ -1,5 +1,7 @@
 jQuery(document).ready(function ($) {
 
+    $( "#seed-fonts-tabs" ).tabs();
+
 	/**
 	 * Cache selectors
 	 */
@@ -9,6 +11,14 @@ jQuery(document).ready(function ($) {
 		inputFonts = $('#seed-fonts-font'),
 		inputImportant = $('#seed-fonts-is-important'),
 		inputFontWeight = $('#seed-fonts-weight'),
+
+		inputBodyEnable = $('#seed-fonts-body-is-enabled'),
+		inputBodyCSS = $('#seed-fonts-body-css-generated'),
+		inputBodySelectors = $('#seed-fonts-body-selectors'),
+		inputBodyFonts = $('#seed-fonts-body-font'),
+		inputBodyImportant = $('#seed-fonts-body-is-important'),
+		inputBodyFontWeight = $('#seed-fonts-body-weight'),
+
 		formSeedFonts = $('#seed-fonts-form');
 
 	/**
@@ -29,6 +39,21 @@ jQuery(document).ready(function ($) {
 		inputCSS.val(css);
 	}
 
+	function seed_fonts_body_generate_css() {
+		css = '';
+
+		if ( (inputBodySelectors.val() != null) && (inputBodySelectors.val() != '') )
+			css += inputBodySelectors.val() + ' ';
+
+		css += '{\r\n';
+		css += '  font-family: "' + inputBodyFonts.val() + '", san-serif' + ((inputBodyImportant.prop('checked')) ? ' !important' : '') + ';\n';
+		if ( (inputBodyFontWeight.val() != null) && (inputBodyFontWeight.val() != '') )
+			css += '  font-weight: ' + inputBodyFontWeight.val() + ((inputBodyImportant.prop('checked')) ? ' !important' : '') + ';\n';
+		css += '}';
+
+		inputBodyCSS.val(css);
+	}
+
 	/**
 	 * Conditional Logic
 	 */
@@ -42,11 +67,23 @@ jQuery(document).ready(function ($) {
 		inputCSS.toggle(is_enabled);
 	}
 
+	function seed_fonts_body_is_enabled() {
+		var body_is_enabled = inputBodyEnable.prop('checked');
+
+		inputBodyFonts.prop('disabled', !body_is_enabled);
+		inputBodyFontWeight.prop('disabled', !body_is_enabled);
+		inputBodySelectors.prop('disabled', !body_is_enabled);
+		inputBodyImportant.prop('disabled', !body_is_enabled);
+		inputBodyCSS.toggle(body_is_enabled);
+	}
+
 	/**
 	 * Trigger functions when DOM is ready
 	 */
 	seed_fonts_generate_css();
+	seed_fonts_body_generate_css();
 	seed_fonts_is_enabled();
+	seed_fonts_body_is_enabled();
 
 	/**
 	 * Output CSS live
@@ -75,11 +112,40 @@ jQuery(document).ready(function ($) {
 		seed_fonts_generate_css();
 	});
 
+	inputBodyEnable.on('change', function () {
+		seed_fonts_body_is_enabled();
+	});
+
+	inputBodyFonts.on('change', function () {
+		var font = inputBodyFonts.val();
+		var weight = inputBodyFontWeight.val();
+
+		inputBodyFontWeight.empty().append($('#seed-fonts-body-' + font + '-weights').children().clone()).val(weight);
+
+		if (inputBodyFontWeight.val() == null)
+			$("#seed-fonts-body-weight option:first").attr('selected', 'selected');
+
+		seed_fonts_body_generate_css();
+	});
+
+	$('#seed-fonts-body-weight, #seed-fonts-body-is-important').on('change', function () {
+		seed_fonts_body_generate_css();
+	});
+
+	inputBodySelectors.on('keyup focusout', function () {
+		seed_fonts_body_generate_css();
+	});
+
 	formSeedFonts.on( 'submit', function ( event ) {
 		inputFonts.prop( 'disabled', false );
 		inputFontWeight.prop( 'disabled', false );
 		inputSelectors.prop( 'disabled', false );
 		inputImportant.prop( 'disabled', false );
+
+		inputBodyFonts.prop( 'disabled', false );
+		inputBodyFontWeight.prop( 'disabled', false );
+		inputBodySelectors.prop( 'disabled', false );
+		inputBodyImportant.prop( 'disabled', false );
 	});
 
 });

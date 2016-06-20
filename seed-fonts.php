@@ -3,7 +3,7 @@
 Plugin Name: Seed Fonts
 Plugin URI: https://www.seedthemes.com/plugin/seed-fonts
 Description: Enable web fonts on Appearance -> Fonts. You can add more by <a href="https://www.seedthemes.com/plugin/seed-fonts/" target="_blank">uploading your web fonts to the theme folder</a>.
-Version: 1.0.1
+Version: 1.1
 Author: SeedThemes
 Author URI: https://www.seedthemes.com
 License: GPL2
@@ -38,7 +38,6 @@ function seed_fonts_scripts() {
 		$is_important = ( get_option( 'seed_fonts_is_important' ) );
 		$font_styles = '';
 
-
 		if( $is_enabled && ( $font !== FALSE ) && ( $font != '' ) ) {
 			if( $selectors != '' )
 				$font_styles = $selectors.' ';
@@ -55,6 +54,31 @@ function seed_fonts_scripts() {
 			}
 
 			wp_add_inline_style( 'seed-fonts-all', $font_styles );
+		}
+
+		$body_is_enabled = ( get_option( 'seed_fonts_body_is_enabled' ) );
+		$body_font = get_option( 'seed_fonts_body_font' );
+		$body_weight = get_option( 'seed_fonts_body_weight' );
+		$body_selectors = get_option( 'seed_fonts_body_selectors' );
+		$body_is_important = ( get_option( 'seed_fonts_body_is_important' ) );
+		$body_font_styles = '';
+
+		if( $body_is_enabled && ( $body_font !== FALSE ) && ( $body_font != '' ) ) {
+			if( $body_selectors != '' )
+				$body_font_styles = $body_selectors.' ';
+
+			$body_font_styles .= '{font-family: "'.$body_font.'",  sans-serif'.( $body_is_important ? ' !important' : '' ).';';
+			if( $body_weight != '' )
+				$body_font_styles .= ' font-weight: '.$body_weight.( $body_is_important ? ' !important' : '' ).';';
+			$body_font_styles .= ' }';
+
+			if( file_exists( get_stylesheet_directory() . '/vendor/fonts' ) && is_dir( get_stylesheet_directory() . '/vendor/fonts' ) ) {
+				wp_enqueue_style( 'seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $body_font . '/font.css' , array(  ) );
+			} else {
+				wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $body_font . '/font.css' , array(  ) );
+			}
+
+			wp_add_inline_style( 'seed-fonts-all', $body_font_styles );
 		}
 	}
 }
@@ -91,7 +115,8 @@ function seed_fonts_setup_menu() {
 }
 
 function seed_fonts_admin_styles() {
-	wp_enqueue_script( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.js' , array( 'jquery' ), '2016-1', true );
+	wp_enqueue_style( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.css' , array(), '2016-1', true );
+	wp_enqueue_script( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.js' , array( 'jquery', 'jquery-ui-tabs' ), '2016-1', true );
 }
 
 function seed_fonts_init() { ?>
@@ -109,14 +134,23 @@ function seed_fonts_init() { ?>
 			<?php printf( wp_kses( __( 'This plugin comes with 5 Thai web fonts. You can add your own collection by <a href="%1$s" target="_blank">uploading your web fonts to the theme folder</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts' ) ); ?>
 		</p>
 		<form action="<?php echo admin_url( 'options.php' ); ?>" method="post" id="seed-fonts-form">
+			<div id="seed-fonts-tabs">
+			<ul>
+			<li><a href="#seed-fonts-header">Header</a></li>
+			<li><a href="#seed-fonts-body">Body</a></li>
+			</ul>
+
+			<div class="dummy">
 			<?php
-			settings_fields( 'seed-fonts' );
-			do_settings_sections( 'seed-fonts' );
-			submit_button();
-
-			seed_fonts_hidden_weight_options();
-
+				settings_fields( 'seed-fonts' );
+				do_settings_sections( 'seed-fonts' );
+				submit_button();
 			?>
+			</div>
+
+			</div>
+
+			<?php seed_fonts_hidden_weight_options(); ?>
 		</form>
 	</div>
 
@@ -294,17 +328,17 @@ function seed_fonts_get_option_id( $name ) {
 }
 
 /**
- * Get the plugin settings
+ * Get the plugin settings in header tab
  *
  * @since 0.10.0
  * @return array
  */
-function seed_fonts_get_settings() {
+function seed_fonts_get_header_settings() {
 
 	$settings = array(
 		array(
-			'id'      => 'seed_fonts_settings',
-			'title'   => __( 'Fonts Settings', 'seed-fonts' ),
+			'id'      => 'seed-fonts-header',
+			'title'   => __( 'Fonts Settings - Header', 'seed-fonts' ),
 			'options' => array(
 				array(
 					'id'      => seed_fonts_get_option_id( 'is_enabled' ),
@@ -356,7 +390,71 @@ function seed_fonts_get_settings() {
 
 }
 
+/**
+ * Get the plugin settings in body tab
+ *
+ * @since 0.10.0
+ * @return array
+ */
+function seed_fonts_get_body_settings() {
+
+	$settings = array(
+		array(
+			'id'      => 'seed-fonts-body',
+			'title'   => __( 'Fonts Settings - Body', 'seed-fonts' ),
+			'options' => array(
+				array(
+					'id'      => seed_fonts_get_option_id( 'body_is_enabled' ),
+					'title'   => esc_html__( 'Enable?', 'seed-fonts' ),
+					'type'    => 'checkbox',
+					'options' => array( 'on' => esc_html__( 'Yes', 'seed-fonts' ) )
+				),
+				array(
+					'id'      => seed_fonts_get_option_id( 'body_font' ),
+					'title'   => esc_html__( 'Font', 'seed-fonts' ),
+					'type'    => 'dropdown',
+					'options' => seed_fonts_get_fonts_option_list()
+				),
+				array(
+					'id'      => seed_fonts_get_option_id( 'body_weight' ),
+					'title'   => esc_html__( 'Weight', 'seed-fonts' ),
+					'desc'    => wp_kses( sprintf( __( '400 = Normal, 700 = Bold. For more detail, please see <a href="%1$s" target="_blank">W3.org</a>', 'seed-fonts' ), esc_url( 'https://www.w3.org/TR/css-fonts-3/#font-weight-prop' ) ), array(
+						'a' => array(
+							'href'   => array(),
+							'target' => array()
+						)
+					) ),
+					'type'    => 'dropdown',
+					'options' => seed_fonts_get_fonts_weights_option_list( get_option( 'seed_fonts_font' ) )
+				),
+				array(
+					'id'      => seed_fonts_get_option_id( 'body_selectors' ),
+					'title'   => esc_html__( 'Selectors', 'seed-fonts' ),
+					'type'    => 'text',
+					'desc'    => esc_html__( 'Separate selectors with commas', 'seed-fonts' ),
+					'default' => 'body'
+				),
+				array(
+					'id'      => seed_fonts_get_option_id( 'body_is_important' ),
+					'title'   => esc_html__( 'Force Using This Font?', 'seed-fonts' ),
+					'type'    => 'checkbox',
+					'options' => array( 'on' => esc_html__( 'Yes (!important added)', 'seed-fonts' ) )
+				),
+				array(
+					'id'       => seed_fonts_get_option_id( 'body-css-generated' ),
+					'title'    => esc_html__( 'Generated CSS', 'seed-fonts' ),
+					'type'     => 'textarea_code'
+				),
+			),
+		),
+	);
+
+	return $settings;
+
+}
+
 add_action( 'admin_init', 'seed_fonts_register_plugin_settings' );
+
 /**
  * Register plugin settings
  *
@@ -368,12 +466,12 @@ add_action( 'admin_init', 'seed_fonts_register_plugin_settings' );
  */
 function seed_fonts_register_plugin_settings() {
 
-	$settings = seed_fonts_get_settings();
+	$header_settings = seed_fonts_get_header_settings();
 
-	foreach ( $settings as $key => $section ) {
+	foreach ( $header_settings as $key => $section ) {
 
 		/* We add the sections and then loop through the corresponding options */
-		add_settings_section( $section['id'], $section['title'], false, 'seed-fonts' );
+		add_settings_section( $section['id'], $section['title'], 'seed_fonts_section', 'seed-fonts' );
 
 		/* Get the options now */
 		foreach ( $section['options'] as $k => $option ) {
@@ -388,12 +486,54 @@ function seed_fonts_register_plugin_settings() {
 				'group'   => 'seed-fonts'
 			);
 
-			register_setting( 'seed-fonts', $option['id'] );
+			register_setting( 'seed-fonts-header', $option['id'] );
 			add_settings_field( $option['id'], $option['title'], 'seed_fonts_output_settings_field', 'seed-fonts', $section['id'], $field_args );
 
 		}
 	}
 
+	$body_settings = seed_fonts_get_body_settings();
+
+	foreach ( $body_settings as $key => $section ) {
+
+		/* We add the sections and then loop through the corresponding options */
+		add_settings_section( $section['id'], $section['title'], 'seed_fonts_section', 'seed-fonts' );
+
+		/* Get the options now */
+		foreach ( $section['options'] as $k => $option ) {
+
+			$field_args = array(
+				'name'    => $option['id'],
+				'title'   => $option['title'],
+				'type'    => $option['type'],
+				'desc'    => isset( $option['desc'] ) ? $option['desc'] : '',
+				'default' => isset( $option['default'] ) ? $option['default'] : '',
+				'options' => isset( $option['options'] ) ? $option['options'] : array(),
+				'group'   => 'seed-fonts'
+			);
+
+			register_setting( 'seed-fonts-body', $option['id'] );
+			add_settings_field( $option['id'], $option['title'], 'seed_fonts_output_settings_field', 'seed-fonts', $section['id'], $field_args );
+
+		}
+	}
+
+}
+
+/**
+ * Generate new section
+ *
+ * This callback function set div for a new section
+ *
+ * @since 0.10.0
+ * @see   seed_fonts_register_plugin_settings
+ * @return void
+ */
+function seed_fonts_section( $section ) {
+?>
+</div><div id="<?php echo $section['id'] ?>">
+<h2><?php echo $section['title'] ?></h2>
+<?php
 }
 
 /**
