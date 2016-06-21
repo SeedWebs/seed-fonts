@@ -1,0 +1,46 @@
+#seed-fonts-tabs h2 { display: none; }
+
+.ui-tabs-nav {
+    border-bottom: 1px solid #DDDDDD;
+}
+.ui-tabs-nav > li {
+    float: left;
+    margin-bottom: -1px;
+}
+.ui-tabs-nav > li > a {
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 4px 4px 0 0;
+    line-height: 1.42857;
+    margin-right: 2px;
+}
+.ui-tabs-nav > li > a:hover {
+    border-color: #EEEEEE #EEEEEE #DDDDDD;
+}
+.ui-tabs-nav > li.active > a, .ui-tabs-nav > li.active > a:hover, .ui-tabs-nav > li.active > a:focus {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #FFFFFF;
+    border-color: #DDDDDD #DDDDDD rgba(0, 0, 0, 0);
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    color: #555555;
+    cursor: default;
+}
+.ui-tabs-nav.nav-justified {
+    border-bottom: 0 none;
+    width: 100%;
+}
+.ui-tabs-nav.nav-justified > li {
+    float: none;
+}
+.ui-tabs-nav.nav-justified > li > a {
+    margin-bottom: 5px;
+    text-align: center;
+}
+.ui-tabs-nav.nav-justified > .dropdown .dropdown-menu {
+    left: auto;
+    top: auto;
+}

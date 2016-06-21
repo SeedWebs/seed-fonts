@@ -115,7 +115,7 @@ function seed_fonts_setup_menu() {
 }
 
 function seed_fonts_admin_styles() {
-	wp_enqueue_style( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.css' , array(), '2016-1', true );
+	wp_enqueue_style( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.css' , array(), '2016-1' );
 	wp_enqueue_script( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.js' , array( 'jquery', 'jquery-ui-tabs' ), '2016-1', true );
 }
 
@@ -144,9 +144,10 @@ function seed_fonts_init() { ?>
 			<?php
 				settings_fields( 'seed-fonts' );
 				do_settings_sections( 'seed-fonts' );
-				submit_button();
 			?>
 			</div>
+
+			<?php submit_button(); ?>
 
 			</div>
 
@@ -486,7 +487,7 @@ function seed_fonts_register_plugin_settings() {
 				'group'   => 'seed-fonts'
 			);
 
-			register_setting( 'seed-fonts-header', $option['id'] );
+			register_setting( 'seed-fonts', $option['id'] );
 			add_settings_field( $option['id'], $option['title'], 'seed_fonts_output_settings_field', 'seed-fonts', $section['id'], $field_args );
 
 		}
@@ -512,7 +513,7 @@ function seed_fonts_register_plugin_settings() {
 				'group'   => 'seed-fonts'
 			);
 
-			register_setting( 'seed-fonts-body', $option['id'] );
+			register_setting( 'seed-fonts', $option['id'] );
 			add_settings_field( $option['id'], $option['title'], 'seed_fonts_output_settings_field', 'seed-fonts', $section['id'], $field_args );
 
 		}
@@ -532,7 +533,6 @@ function seed_fonts_register_plugin_settings() {
 function seed_fonts_section( $section ) {
 ?>
 </div><div id="<?php echo $section['id'] ?>">
-<h2><?php echo $section['title'] ?></h2>
 <?php
 }
 
