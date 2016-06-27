@@ -202,13 +202,17 @@ function seed_fonts_get_fonts() {
 			"font"    => "Prompt",
 			"weights" => array( 400, 500, 600 )
 		),
-		"th-sarabun-new" => array(
-			"font"    => "TH Sarabun New",
-			"weights" => array( 400, 700 )
-		),
 		"cloud" => array(
 			"font"    => "Cloud",
 			"weights" => array( 300, 700 )
+		),
+		"th-sarabun-new" => array(
+			"font"    => "TH Sarabun New (Loop: มีหัว)",
+			"weights" => array( 400, 700 )
+		),
+		"cs-prajad" => array(
+			"font"    => "CS Prajad (Loop: มีหัว)",
+			"weights" => array( 400, 700 )
 		)
 	);
 
