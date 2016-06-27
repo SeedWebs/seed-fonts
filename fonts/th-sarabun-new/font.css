@@ -4,7 +4,7 @@
 */
 
 @font-face {
-    font-family: 'TH-Sarabun-New';
+    font-family: 'th-sarabun-new';
     src: url('thsarabunnew-webfont.eot');
     src: url('thsarabunnew-webfont.eot?#iefix') format('embedded-opentype'),
          url('thsarabunnew-webfont.woff') format('woff'),
@@ -13,7 +13,7 @@
     font-style: normal;
 }
 @font-face {
-    font-family: 'TH-Sarabun-New';
+    font-family: 'th-sarabun-new';
     src: url('thsarabunnewbold-webfont.eot');
     src: url('thsarabunnewbold-webfont.eot?#iefix') format('embedded-opentype'),
          url('thsarabunnewbold-webfont.woff') format('woff'),

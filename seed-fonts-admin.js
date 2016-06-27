@@ -17,7 +17,6 @@ jQuery(document).ready(function ($) {
 		inputBodySelectors = $('#seed-fonts-body-selectors'),
 		inputBodyFonts = $('#seed-fonts-body-font'),
 		inputBodyImportant = $('#seed-fonts-body-is-important'),
-		inputBodyFontWeight = $('#seed-fonts-body-weight'),
 
 		formSeedFonts = $('#seed-fonts-form');
 
@@ -117,18 +116,10 @@ jQuery(document).ready(function ($) {
 	});
 
 	inputBodyFonts.on('change', function () {
-		var font = inputBodyFonts.val();
-		var weight = inputBodyFontWeight.val();
-
-		inputBodyFontWeight.empty().append($('#seed-fonts-body-' + font + '-weights').children().clone()).val(weight);
-
-		if (inputBodyFontWeight.val() == null)
-			$("#seed-fonts-body-weight option:first").attr('selected', 'selected');
-
 		seed_fonts_body_generate_css();
 	});
 
-	$('#seed-fonts-body-weight, #seed-fonts-body-is-important').on('change', function () {
+	$('#seed-fonts-body-is-important').on('change', function () {
 		seed_fonts_body_generate_css();
 	});
 
@@ -143,7 +134,6 @@ jQuery(document).ready(function ($) {
 		inputImportant.prop( 'disabled', false );
 
 		inputBodyFonts.prop( 'disabled', false );
-		inputBodyFontWeight.prop( 'disabled', false );
 		inputBodySelectors.prop( 'disabled', false );
 		inputBodyImportant.prop( 'disabled', false );
 	});

@@ -421,18 +421,6 @@ function seed_fonts_get_body_settings() {
 					'options' => seed_fonts_get_fonts_option_list()
 				),
 				array(
-					'id'      => seed_fonts_get_option_id( 'body_weight' ),
-					'title'   => esc_html__( 'Weight', 'seed-fonts' ),
-					'desc'    => wp_kses( sprintf( __( '400 = Normal, 700 = Bold. For more detail, please see <a href="%1$s" target="_blank">W3.org</a>', 'seed-fonts' ), esc_url( 'https://www.w3.org/TR/css-fonts-3/#font-weight-prop' ) ), array(
-						'a' => array(
-							'href'   => array(),
-							'target' => array()
-						)
-					) ),
-					'type'    => 'dropdown',
-					'options' => seed_fonts_get_fonts_weights_option_list( get_option( 'seed_fonts_font' ) )
-				),
-				array(
 					'id'      => seed_fonts_get_option_id( 'body_selectors' ),
 					'title'   => esc_html__( 'Selectors', 'seed-fonts' ),
 					'type'    => 'text',
