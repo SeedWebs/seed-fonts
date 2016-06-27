@@ -3,7 +3,7 @@
 Plugin Name: Seed Fonts
 Plugin URI: https://www.seedthemes.com/plugin/seed-fonts
 Description: Enable web fonts on Appearance -> Fonts. You can add more by <a href="https://www.seedthemes.com/plugin/seed-fonts/" target="_blank">uploading your web fonts to the theme folder</a>.
-Version: 1.1
+Version: 1.1.0
 Author: SeedThemes
 Author URI: https://www.seedthemes.com
 License: GPL2
@@ -135,7 +135,7 @@ function seed_fonts_init() { ?>
 		</p>
 		<form action="<?php echo admin_url( 'options.php' ); ?>" method="post" id="seed-fonts-form">
 			<div id="seed-fonts-tabs">
-			<ul>
+			<ul class="wp-clearfix">
 			<li><a href="#seed-fonts-header">Header</a></li>
 			<li><a href="#seed-fonts-body">Body</a></li>
 			</ul>
@@ -203,8 +203,12 @@ function seed_fonts_get_fonts() {
 			"weights" => array( 400, 500, 600 )
 		),
 		"th-sarabun-new" => array(
-			"font"    => "TH Sarabun New",
+			"font"    => "TH Sarabun New (Loop: มีหัว)",
 			"weights" => array( 400, 700 )
+		),
+		"cloud" => array(
+			"font"    => "Cloud",
+			"weights" => array( 300, 700 )
 		)
 	);
 
@@ -370,7 +374,7 @@ function seed_fonts_get_header_settings() {
 					'title'   => esc_html__( 'Selectors', 'seed-fonts' ),
 					'type'    => 'text',
 					'desc'    => esc_html__( 'Separate selectors with commas', 'seed-fonts' ),
-					'default' => 'h1, h2, h3, h4, h5, h6, ._heading'
+					'default' => 'h1, h2, h3, h4, h5, h6, .menu, ._heading'
 				),
 				array(
 					'id'      => seed_fonts_get_option_id( 'is_important' ),
