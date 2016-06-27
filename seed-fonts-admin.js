@@ -46,8 +46,6 @@ jQuery(document).ready(function ($) {
 
 		css += '{\r\n';
 		css += '  font-family: "' + inputBodyFonts.val() + '", san-serif' + ((inputBodyImportant.prop('checked')) ? ' !important' : '') + ';\n';
-		if ( (inputBodyFontWeight.val() != null) && (inputBodyFontWeight.val() != '') )
-			css += '  font-weight: ' + inputBodyFontWeight.val() + ((inputBodyImportant.prop('checked')) ? ' !important' : '') + ';\n';
 		css += '}';
 
 		inputBodyCSS.val(css);
@@ -70,7 +68,6 @@ jQuery(document).ready(function ($) {
 		var body_is_enabled = inputBodyEnable.prop('checked');
 
 		inputBodyFonts.prop('disabled', !body_is_enabled);
-		inputBodyFontWeight.prop('disabled', !body_is_enabled);
 		inputBodySelectors.prop('disabled', !body_is_enabled);
 		inputBodyImportant.prop('disabled', !body_is_enabled);
 		inputBodyCSS.toggle(body_is_enabled);
