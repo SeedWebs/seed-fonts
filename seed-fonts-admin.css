@@ -1,46 +1,35 @@
 #seed-fonts-tabs h2 { display: none; }
-
 .ui-tabs-nav {
-    border-bottom: 1px solid #DDDDDD;
+    border-bottom: 1px solid #ccc;
+    margin: 0;
+    padding-top: 9px;
+    padding-bottom: 0;
+    line-height: inherit;
 }
-.ui-tabs-nav > li {
+.ui-tabs-nav > li {margin-bottom: -1px;float: left;}
+.ui-tabs-nav > li > a {
     float: left;
-    margin-bottom: -1px;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    margin-left: .5em;
+    padding: 5px 10px;
+    font-size: 14px;
+    line-height: 24px;
+    background: #e5e5e5;
+    color: #555;
 }
 .ui-tabs-nav > li > a {
-    border: 1px solid rgba(0, 0, 0, 0);
-    border-radius: 4px 4px 0 0;
-    line-height: 1.42857;
-    margin-right: 2px;
+    color: #23282d;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: none !important;
 }
-.ui-tabs-nav > li > a:hover {
-    border-color: #EEEEEE #EEEEEE #DDDDDD;
+#seed-fonts-tabs .ui-tabs-nav > li.ui-state-active > a {
+    border-bottom: 1px solid #f1f1f1;
+    background: #f1f1f1;
+    color: #000;
 }
-.ui-tabs-nav > li.active > a, .ui-tabs-nav > li.active > a:hover, .ui-tabs-nav > li.active > a:focus {
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    background-color: #FFFFFF;
-    border-color: #DDDDDD #DDDDDD rgba(0, 0, 0, 0);
-    border-image: none;
-    border-style: solid;
-    border-width: 1px;
-    color: #555555;
-    cursor: default;
-}
-.ui-tabs-nav.nav-justified {
-    border-bottom: 0 none;
-    width: 100%;
-}
-.ui-tabs-nav.nav-justified > li {
-    float: none;
-}
-.ui-tabs-nav.nav-justified > li > a {
-    margin-bottom: 5px;
-    text-align: center;
-}
-.ui-tabs-nav.nav-justified > .dropdown .dropdown-menu {
-    left: auto;
-    top: auto;
+.ui-tabs-nav > li.ui-state-hover a {
+    background-color: #fff;
+    color: #444;
 }
