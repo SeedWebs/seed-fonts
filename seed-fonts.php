@@ -58,7 +58,6 @@ function seed_fonts_scripts() {
 
 		$body_is_enabled = ( get_option( 'seed_fonts_body_is_enabled' ) );
 		$body_font = get_option( 'seed_fonts_body_font' );
-		$body_weight = get_option( 'seed_fonts_body_weight' );
 		$body_selectors = get_option( 'seed_fonts_body_selectors' );
 		$body_is_important = ( get_option( 'seed_fonts_body_is_important' ) );
 		$body_font_styles = '';
@@ -68,14 +67,12 @@ function seed_fonts_scripts() {
 				$body_font_styles = $body_selectors.' ';
 
 			$body_font_styles .= '{font-family: "'.$body_font.'",  sans-serif'.( $body_is_important ? ' !important' : '' ).';';
-			if( $body_weight != '' )
-				$body_font_styles .= ' font-weight: '.$body_weight.( $body_is_important ? ' !important' : '' ).';';
 			$body_font_styles .= ' }';
 
 			if( file_exists( get_stylesheet_directory() . '/vendor/fonts' ) && is_dir( get_stylesheet_directory() . '/vendor/fonts' ) ) {
-				wp_enqueue_style( 'seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $body_font . '/font.css' , array(  ) );
+				wp_enqueue_style( 'seed-fonts-body-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $body_font . '/font.css' , array(  ) );
 			} else {
-				wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $body_font . '/font.css' , array(  ) );
+				wp_enqueue_style( 'seed-fonts-body-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $body_font . '/font.css' , array(  ) );
 			}
 
 			wp_add_inline_style( 'seed-fonts-all', $body_font_styles );
@@ -115,8 +112,8 @@ function seed_fonts_setup_menu() {
 }
 
 function seed_fonts_admin_styles() {
-	wp_enqueue_style( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.css' , array(), '2016-06-27' );
-	wp_enqueue_script( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.js' , array( 'jquery', 'jquery-ui-tabs' ), '2016-06-27', true );
+	wp_enqueue_style( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.css' , array(), '2016-1' );
+	wp_enqueue_script( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.js' , array( 'jquery', 'jquery-ui-tabs' ), '2016-1', true );
 }
 
 function seed_fonts_init() { ?>
