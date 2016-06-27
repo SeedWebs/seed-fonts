@@ -203,7 +203,7 @@ function seed_fonts_get_fonts() {
 			"weights" => array( 400, 500, 600 )
 		),
 		"th-sarabun-new" => array(
-			"font"    => "TH Sarabun New (Loop: มีหัว)",
+			"font"    => "TH Sarabun New",
 			"weights" => array( 400, 700 )
 		),
 		"cloud" => array(
