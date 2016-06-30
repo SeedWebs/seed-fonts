@@ -100,6 +100,16 @@ function seed_fonts_body_class( $classes ) {
 			$classes[] = 'seed-fonts-weight-'.$weight;
 	}
 
+	$is_body_enabled = get_option( 'seed_fonts_body_is_enabled' );
+	$body_font = get_option( 'seed_fonts_body_font' );
+
+	if( $body_font === FALSE )
+		$body_font = key ( seed_fonts_get_fonts() );
+
+	if( $is_body_enabled ) {
+		$classes[] = 'seed-fonts-body-'.$body_font;
+	}
+
 	return $classes;
 }
 
