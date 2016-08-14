@@ -8,12 +8,12 @@ Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Use web fonts (@font-face) by choosing from 5 ready-generated Thai-English fonts or upload your own web fonts to theme folder.
+Use web fonts (@font-face) by choosing from 8 ready-generated Thai-English fonts or upload your own web fonts to theme folder.
 
 
 == Description ==
 
-Seed Fonts is WordPress plugin that helps you use web fonts (@font-face embed) easier. You can choose from 5 ready-generated Thai-English web fonts, or use your own web fonts (such as generated from <a href="https://www.fontsquirrel.com/tools/webfont-generator" target="_blank">Font Squirrel’s Webfont Generator</a>) by uploading to theme folder (/wp-content/YOUR-THEME-NAME/vendor/fonts/YOUR-FONT-NAME).
+Seed Fonts is WordPress plugin that helps you use web fonts (@font-face embed) easier. You can choose from 8 ready-generated Thai-English web fonts, or use your own web fonts (such as generated from <a href="https://www.fontsquirrel.com/tools/webfont-generator" target="_blank">Font Squirrel’s Webfont Generator</a>) by uploading to theme folder (/wp-content/YOUR-THEME-NAME/vendor/fonts/YOUR-FONT-NAME).
 
 
 == Installation ==
@@ -38,9 +38,9 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 == Changelog ==
 
 = 1.1.1 =
-* Fix Body css when unchecking the Header font
-* Add Font Size and font Size Unit for Body font
-* Change custom fonts from replacing the defaults to addition
+* Fix Body CSS when unchecking the heading font.
+* Add font size and font size unit for body font
+* Change custom fonts handler from replacing the defaults to adding all fonts together.
 
 = 1.1.0 =
 * Add body font settings and more Thai Loop fonts.
