@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Seed Fonts\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Sat May 07 2016 19:06:50 GMT+0700 (ICT)\n"
-"POT-Revision-Date: Sun Aug 14 2016 21:43:07 GMT+0700 (ICT)\n"
+"POT-Revision-Date: Sun Aug 14 2016 21:51:50 GMT+0700 (ICT)\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -61,6 +61,14 @@ msgid ""
 "This plugin comes with 8 Thai web fonts. You can add your own collection by "
 "<a href=\"%1$s\" target=\"_blank\">uploading your web fonts to the theme "
 "folder</a>"
+msgstr ""
+
+#: ../seed-fonts.php:151
+msgid "Heading"
+msgstr ""
+
+#: ../seed-fonts.php:152
+msgid "Body"
 msgstr ""
 
 #: ../seed-fonts.php:360

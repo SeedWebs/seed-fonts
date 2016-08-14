@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Seed Fonts\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Sat May 07 2016 19:06:50 GMT+0700 (ICT)\n"
-"PO-Revision-Date: Sun Aug 14 2016 21:43:58 GMT+0700 (ICT)\n"
+"PO-Revision-Date: Sun Aug 14 2016 22:01:05 GMT+0700 (ICT)\n"
 "Last-Translator: wp <info@seedthemes.com>\n"
 "Language-Team: \n"
 "Language: Thai\n"
@@ -22,16 +22,13 @@ msgstr ""
 "X-Loco-Target-Locale: th_TH\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: ../seed-fonts.php:146
-#, php-format
-msgid ""
-"This plugin comes with 8 Thai web fonts. You can add your own collection by "
-"<a href=\"%1$s\" target=\"_blank\">uploading your web fonts to the theme "
-"folder</a>"
-msgstr ""
-"ปลั๊กอินนี้มาพร้อมกับฟอนต์ไทย 8 ฟอนต์ หากต้องการใช้ฟอนต์อื่น ให้ <a "
-"href=\"https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts\" "
-"target=\"_blank\">สร้างฟอนต์สำหรับเว็บแล้วอัพโหลดไปไว้ในธีม</a>"
+#: ../seed-fonts.php:151
+msgid "Heading"
+msgstr "พาดหัว"
+
+#: ../seed-fonts.php:152
+msgid "Body"
+msgstr "ส่วนเนื้อหา"
 
 #. Name of the plugin
 msgid "Seed Fonts"
@@ -66,6 +63,17 @@ msgstr "ฟอนต์"
 #: ../seed-fonts.php:142
 msgid "Settings updated successfully."
 msgstr "ตั้งค่าเรียบร้อย"
+
+#: ../seed-fonts.php:146
+#, php-format
+msgid ""
+"This plugin comes with 8 Thai web fonts. You can add your own collection by "
+"<a href=\"%1$s\" target=\"_blank\">uploading your web fonts to the theme "
+"folder</a>"
+msgstr ""
+"ปลั๊กอินนี้มาพร้อมกับฟอนต์ไทย 8 ฟอนต์ หากต้องการใช้ฟอนต์อื่น ให้ <a "
+"href=\"https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts\" "
+"target=\"_blank\">สร้างฟอนต์สำหรับเว็บแล้วอัพโหลดไปไว้ในธีม</a>"
 
 #: ../seed-fonts.php:360
 msgid "Fonts Settings - Heading"
