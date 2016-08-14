@@ -58,6 +58,8 @@ function seed_fonts_scripts() {
 
 		$body_is_enabled = ( get_option( 'seed_fonts_body_is_enabled' ) );
 		$body_font = get_option( 'seed_fonts_body_font' );
+		$body_size = get_option( 'seed_fonts_body_size' );
+		$body_size_unit = get_option( 'seed_fonts_body_size_unit' );
 		$body_selectors = get_option( 'seed_fonts_body_selectors' );
 		$body_is_important = ( get_option( 'seed_fonts_body_is_important' ) );
 		$body_font_styles = '';
@@ -67,6 +69,9 @@ function seed_fonts_scripts() {
 				$body_font_styles = $body_selectors.' ';
 
 			$body_font_styles .= '{font-family: "'.$body_font.'",  sans-serif'.( $body_is_important ? ' !important' : '' ).';';
+			if( $body_size != '' )
+				$body_font_styles .= ' font-size: '.$body_size.$body_size_unit.( $is_important ? ' !important' : '' ).';';
+
 			$body_font_styles .= ' }';
 
 			if( file_exists( get_stylesheet_directory() . '/vendor/fonts' ) && is_dir( get_stylesheet_directory() . '/vendor/fonts' ) ) {
@@ -434,6 +439,17 @@ function seed_fonts_get_body_settings() {
 					'title'   => esc_html__( 'Font', 'seed-fonts' ),
 					'type'    => 'dropdown',
 					'options' => seed_fonts_get_fonts_option_list()
+				),
+				array(
+					'id'      => seed_fonts_get_option_id( 'body_size' ),
+					'title'   => esc_html__( 'Size', 'seed-fonts' ),
+					'type'    => 'text'
+				),
+				array(
+					'id'      => seed_fonts_get_option_id( 'body_size_unit' ),
+					'title'   => esc_html__( 'Size Unit', 'seed-fonts' ),
+					'type'    => 'dropdown',
+					'options' => array( 'px' => esc_html__( 'px', 'seed-fonts' ), 'em' => esc_html__( 'em', 'seed-fonts' ), '%' => esc_html__( '%', 'seed-fonts' ) )
 				),
 				array(
 					'id'      => seed_fonts_get_option_id( 'body_selectors' ),

@@ -16,6 +16,8 @@ jQuery(document).ready(function ($) {
 		inputBodyCSS = $('#seed-fonts-body-css-generated'),
 		inputBodySelectors = $('#seed-fonts-body-selectors'),
 		inputBodyFonts = $('#seed-fonts-body-font'),
+		inputBodySize = $('#seed-fonts-body-size'),
+		inputBodySizeUnit = $('#seed-fonts-body-size-unit'),
 		inputBodyImportant = $('#seed-fonts-body-is-important'),
 
 		formSeedFonts = $('#seed-fonts-form');
@@ -46,6 +48,8 @@ jQuery(document).ready(function ($) {
 
 		css += '{\r\n';
 		css += '  font-family: "' + inputBodyFonts.val() + '", san-serif' + ((inputBodyImportant.prop('checked')) ? ' !important' : '') + ';\n';
+		if ( (inputBodySize.val() != null) && (inputBodySize.val() != '') )
+			css += '  font-size: ' + inputBodySize.val() + inputBodySizeUnit.val() + ((inputBodyImportant.prop('checked')) ? ' !important' : '') + ';\n';
 		css += '}';
 
 		inputBodyCSS.val(css);
@@ -68,6 +72,8 @@ jQuery(document).ready(function ($) {
 		var body_is_enabled = inputBodyEnable.prop('checked');
 
 		inputBodyFonts.prop('disabled', !body_is_enabled);
+		inputBodySize.prop('disabled', !body_is_enabled);
+		inputBodySizeUnit.prop('disabled', !body_is_enabled);
 		inputBodySelectors.prop('disabled', !body_is_enabled);
 		inputBodyImportant.prop('disabled', !body_is_enabled);
 		inputBodyCSS.toggle(body_is_enabled);
@@ -116,6 +122,14 @@ jQuery(document).ready(function ($) {
 		seed_fonts_body_generate_css();
 	});
 
+	inputBodySize.on('keyup focusout', function () {
+		seed_fonts_body_generate_css();
+	});
+
+	inputBodySizeUnit.on('change', function () {
+		seed_fonts_body_generate_css();
+	});
+
 	$('#seed-fonts-body-is-important').on('change', function () {
 		seed_fonts_body_generate_css();
 	});
@@ -131,6 +145,8 @@ jQuery(document).ready(function ($) {
 		inputImportant.prop( 'disabled', false );
 
 		inputBodyFonts.prop( 'disabled', false );
+		inputBodySize.prop( 'disabled', false );
+		inputBodySizeUnit.prop( 'disabled', false );
 		inputBodySelectors.prop( 'disabled', false );
 		inputBodyImportant.prop( 'disabled', false );
 	});
