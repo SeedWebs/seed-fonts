@@ -47,7 +47,7 @@ function seed_fonts_scripts() {
 				$font_styles .= ' font-weight: '.$weight.( $is_important ? ' !important' : '' ).';';
 			$font_styles .= ' }';
 
-			if( file_exists( get_stylesheet_directory() . '/vendor/fonts' ) && is_dir( get_stylesheet_directory() . '/vendor/fonts' ) ) {
+			if( file_exists( get_stylesheet_directory() . '/vendor/fonts/' . $font ) && is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $font ) ) {
 				wp_enqueue_style( 'seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $font . '/font.css' , array(  ) );
 			} else {
 				wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $font . '/font.css' , array(  ) );
@@ -74,7 +74,7 @@ function seed_fonts_scripts() {
 
 			$body_font_styles .= ' }';
 
-			if( file_exists( get_stylesheet_directory() . '/vendor/fonts' ) && is_dir( get_stylesheet_directory() . '/vendor/fonts' ) ) {
+			if( file_exists( get_stylesheet_directory() . '/vendor/fonts/' . $body_font ) && is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $body_font ) ) {
 				wp_enqueue_style( 'seed-fonts-body-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $body_font . '/font.css' , array(  ) );
 			} else {
 				wp_enqueue_style( 'seed-fonts-body-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $body_font . '/font.css' , array(  ) );
@@ -235,8 +235,6 @@ function seed_fonts_get_fonts() {
 	// This is where we add custom fonts
 	if ( file_exists( get_stylesheet_directory() . '/vendor/fonts' ) && is_dir( get_stylesheet_directory() . '/vendor/fonts' ) ) {
 
-		$custom_fonts = array();
-
 		$d_handle = opendir( get_stylesheet_directory() . '/vendor/fonts' );
 
 		while ( false !== ( $entry = readdir( $d_handle ) ) ) {
@@ -253,13 +251,9 @@ function seed_fonts_get_fonts() {
 					'weights' => empty( $headers['weights'] ) ? array() : array_map( 'trim', explode( ',', $headers['weights'] ) ),
 				);
 
-				$custom_fonts[ $entry ] = $_font;
+				$fonts[ $entry ] = $_font;
 			}
 		}
-
-		if( count( $custom_fonts ) > 0 )
-			$fonts = $custom_fonts;
-
 	}
 
 	return apply_filters( 'seed_fonts_fonts', $fonts );
