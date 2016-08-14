@@ -75,7 +75,7 @@ function seed_fonts_scripts() {
 				wp_enqueue_style( 'seed-fonts-body-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $body_font . '/font.css' , array(  ) );
 			}
 
-			wp_add_inline_style( 'seed-fonts-all', $body_font_styles );
+			wp_add_inline_style( 'seed-fonts-body-all', $body_font_styles );
 		}
 	}
 }
