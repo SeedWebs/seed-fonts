@@ -143,7 +143,7 @@ function seed_fonts_init() { ?>
 		<form action="<?php echo admin_url( 'options.php' ); ?>" method="post" id="seed-fonts-form">
 			<div id="seed-fonts-tabs">
 			<ul class="wp-clearfix">
-			<li><a href="#seed-fonts-header">Header</a></li>
+			<li><a href="#seed-fonts-header">Heading</a></li>
 			<li><a href="#seed-fonts-body">Body</a></li>
 			</ul>
 
