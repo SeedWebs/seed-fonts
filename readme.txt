@@ -4,7 +4,7 @@ Donate link: http://seedthemes.com/
 Tags: webfont,web fonts, @font-face embed, typography
 Requires at least: 4.0.1
 Tested up to: 4.6
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,11 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 
 == Changelog ==
 
+= 1.1.1 =
+* Fix Body css when unchecking the Header font
+* Add Font Size and font Size Unit for Body font
+* Change custom fonts from replacing the defaults to addition
+
 = 1.1.0 =
 * Add body font settings and more Thai Loop fonts.
 
@@ -54,6 +59,11 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 
 
 == Upgrade Notice ==
+
+= 1.1.1 =
+* Fix Body css when unchecking the Header font
+* Add Font Size and font Size Unit for Body font
+* Change custom fonts from replacing the defaults to addition
 
 = 1.1.0 =
 * Add body font settings and more Thai Loop fonts.
