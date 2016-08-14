@@ -217,6 +217,10 @@ function seed_fonts_get_fonts() {
 			"font"    => "TH Sarabun New (Loop: มีหัว)",
 			"weights" => array( 400, 700 )
 		),
+		"boon" => array(
+			"font"    => "Boon (Loop: มีหัว)",
+			"weights" => array( 400, 500, 600 )
+		),
 		"cs-prajad" => array(
 			"font"    => "CS Prajad (Loop: มีหัว)",
 			"weights" => array( 400, 700 )
