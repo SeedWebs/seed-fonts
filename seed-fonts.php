@@ -385,7 +385,7 @@ function seed_fonts_get_header_settings() {
 					'title'   => esc_html__( 'Selectors', 'seed-fonts' ),
 					'type'    => 'text',
 					'desc'    => esc_html__( 'Separate selectors with commas', 'seed-fonts' ),
-					'default' => 'h1, h2, h3, h4, h5, h6, .menu, ._heading'
+					'default' => 'h1, h2, h3, h4, h5, h6, nav, .menu, .button, .price, ._heading'
 				),
 				array(
 					'id'      => seed_fonts_get_option_id( 'is_important' ),
