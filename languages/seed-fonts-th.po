@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Seed Fonts\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Sat May 07 2016 19:06:50 GMT+0700 (ICT)\n"
-"PO-Revision-Date: Sat May 14 2016 05:56:54 GMT+0700 (ICT)\n"
-"Last-Translator: root <info@mennstudio.com>\n"
+"PO-Revision-Date: Sun Aug 14 2016 21:43:58 GMT+0700 (ICT)\n"
+"Last-Translator: wp <info@seedthemes.com>\n"
 "Language-Team: \n"
 "Language: Thai\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -22,6 +22,25 @@ msgstr ""
 "X-Loco-Target-Locale: th_TH\n"
 "X-Generator: Loco - https://localise.biz/"
 
+#: ../seed-fonts.php:146
+#, php-format
+msgid ""
+"This plugin comes with 8 Thai web fonts. You can add your own collection by "
+"<a href=\"%1$s\" target=\"_blank\">uploading your web fonts to the theme "
+"folder</a>"
+msgstr ""
+"ปลั๊กอินนี้มาพร้อมกับฟอนต์ไทย 8 ฟอนต์ หากต้องการใช้ฟอนต์อื่น ให้ <a "
+"href=\"https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts\" "
+"target=\"_blank\">สร้างฟอนต์สำหรับเว็บแล้วอัพโหลดไปไว้ในธีม</a>"
+
+#. Name of the plugin
+msgid "Seed Fonts"
+msgstr "Seed Fonts"
+
+#. URI of the plugin
+msgid "https://www.seedthemes.com/plugin/seed-fonts"
+msgstr "https://www.seedthemes.com/plugin/seed-fonts"
+
 #. Description of the plugin
 msgid ""
 "Enable web fonts on Appearance -> Fonts. You can add more by <a href=\"https:"
@@ -32,58 +51,6 @@ msgstr ""
 "หากต้องการเพิ่มฟอนต์สามารถ <a href=\"https://www.seedthemes.com/plugin/seed-"
 "fonts/#upload-your-fonts\" target=\"_blank\">อัพโหลดไปไว้ในธีม</a> ได้"
 
-#: ../seed-fonts.php:105
-msgid "Settings updated successfully."
-msgstr "ตั้งค่าเรียบร้อย"
-
-#: ../seed-fonts.php:109
-#, php-format
-msgid ""
-"This plugin comes with 5 Thai web fonts. You can add your own collection by "
-"<a href=\"%1$s\" target=\"_blank\">uploading your web fonts to the theme "
-"folder</a>"
-msgstr ""
-"ปลั๊กอินนี้มาพร้อมกับฟอนต์ไทย 5 ฟอนต์ หากต้องการใช้ฟอนต์อื่น "
-"ให้สร้างฟอนต์สำหรับเว็บแล้ว <a href=\"https://www.seedthemes.com/plugin/seed-"
-"fonts/#upload-your-fonts\" target=\"_blank\">อัพโหลดไปไว้ในธีม</a>"
-
-#: ../seed-fonts.php:307
-msgid "Fonts Settings"
-msgstr "ตั้งค่าฟอนต์"
-
-#: ../seed-fonts.php:313
-msgid "Yes"
-msgstr "ใช่"
-
-#: ../seed-fonts.php:324
-#, php-format
-msgid ""
-"400 = Normal, 700 = Bold. For more detail, please see <a href=\"%1$s\" "
-"target=\"_blank\">W3.org</a>"
-msgstr ""
-"400 = ตัวธรรมดา, 700 = ตัวหนา. รายละเอียดเพิ่มเติม ดูที่ <a href=\"%1$s\" "
-"target=\"_blank\">W3.org</a>\n"
-
-#: ../seed-fonts.php:337
-msgid "Separate selectors with commas"
-msgstr "คั่นระหว่าง Selector ด้วยเครื่องหมาย \",\""
-
-#: ../seed-fonts.php:342
-msgid "Force Using This Font?"
-msgstr "บังคับใช้ฟอนต์นี้?"
-
-#: ../seed-fonts.php:344
-msgid "Yes (!important added)"
-msgstr "ใช่ (เพิ่มคำสั่ง !important)"
-
-#. Name of the plugin
-msgid "Seed Fonts"
-msgstr "Seed Fonts"
-
-#. URI of the plugin
-msgid "https://www.seedthemes.com/plugin/seed-fonts"
-msgstr "https://www.seedthemes.com/plugin/seed-fonts"
-
 #. Author of the plugin
 msgid "SeedThemes"
 msgstr "SeedThemes"
@@ -92,26 +59,83 @@ msgstr "SeedThemes"
 msgid "https://www.seedthemes.com"
 msgstr "https://www.seedthemes.com"
 
-#: ../seed-fonts.php:88
+#: ../seed-fonts.php:124
 msgid "Fonts"
 msgstr "ฟอนต์"
 
-#: ../seed-fonts.php:311
+#: ../seed-fonts.php:142
+msgid "Settings updated successfully."
+msgstr "ตั้งค่าเรียบร้อย"
+
+#: ../seed-fonts.php:360
+msgid "Fonts Settings - Heading"
+msgstr "ตั้งค่าฟอนต์ - ส่วนพาดหัว"
+
+#: ../seed-fonts.php:364 ../seed-fonts.php:427
 msgid "Enable?"
 msgstr "เปิดใช้งาน?"
 
-#: ../seed-fonts.php:317
+#: ../seed-fonts.php:366 ../seed-fonts.php:429
+msgid "Yes"
+msgstr "ใช่"
+
+#: ../seed-fonts.php:370 ../seed-fonts.php:433
 msgid "Font"
 msgstr "ฟอนต์"
 
-#: ../seed-fonts.php:323
+#: ../seed-fonts.php:376
 msgid "Weight"
 msgstr "น้ำหนัก"
 
-#: ../seed-fonts.php:335
+#: ../seed-fonts.php:377
+#, php-format
+msgid ""
+"400 = Normal, 700 = Bold. For more detail, please see <a href=\"%1$s\" "
+"target=\"_blank\">W3.org</a>"
+msgstr ""
+"400 = ตัวธรรมดา, 700 = ตัวหนา. รายละเอียดเพิ่มเติม ดูที่ <a href=\"%1$s\" "
+"target=\"_blank\">W3.org</a>\n"
+
+#: ../seed-fonts.php:388 ../seed-fonts.php:452
 msgid "Selectors"
 msgstr "Selectors"
 
-#: ../seed-fonts.php:348
+#: ../seed-fonts.php:390 ../seed-fonts.php:454
+msgid "Separate selectors with commas"
+msgstr "คั่นระหว่าง Selector ด้วยเครื่องหมาย \",\""
+
+#: ../seed-fonts.php:395 ../seed-fonts.php:459
+msgid "Force Using This Font?"
+msgstr "บังคับใช้ฟอนต์นี้?"
+
+#: ../seed-fonts.php:397 ../seed-fonts.php:461
+msgid "Yes (!important added)"
+msgstr "ใช่ (เพิ่มคำสั่ง !important)"
+
+#: ../seed-fonts.php:401 ../seed-fonts.php:465
 msgid "Generated CSS"
 msgstr "CSS ที่สร้างขึ้น"
+
+#: ../seed-fonts.php:423
+msgid "Fonts Settings - Body"
+msgstr "ตั้งค่าฟอนต์ - ส่วนเนื้อหา"
+
+#: ../seed-fonts.php:439
+msgid "Size"
+msgstr "ขนาดตัวอักษร"
+
+#: ../seed-fonts.php:445
+msgid "Size Unit"
+msgstr "หน่วย"
+
+#: ../seed-fonts.php:447
+msgid "px"
+msgstr "px"
+
+#: ../seed-fonts.php:447
+msgid "em"
+msgstr "em"
+
+#: ../seed-fonts.php:447
+msgid "%"
+msgstr "%"
