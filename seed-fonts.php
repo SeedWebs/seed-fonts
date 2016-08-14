@@ -143,7 +143,7 @@ function seed_fonts_init() { ?>
 		}
 		?>
 		<p>
-			<?php printf( wp_kses( __( 'This plugin comes with 5 Thai web fonts. You can add your own collection by <a href="%1$s" target="_blank">uploading your web fonts to the theme folder</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts' ) ); ?>
+			<?php printf( wp_kses( __( 'This plugin comes with 8 Thai web fonts. You can add your own collection by <a href="%1$s" target="_blank">uploading your web fonts to the theme folder</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts' ) ); ?>
 		</p>
 		<form action="<?php echo admin_url( 'options.php' ); ?>" method="post" id="seed-fonts-form">
 			<div id="seed-fonts-tabs">
@@ -357,7 +357,7 @@ function seed_fonts_get_header_settings() {
 	$settings = array(
 		array(
 			'id'      => 'seed-fonts-header',
-			'title'   => __( 'Fonts Settings - Header', 'seed-fonts' ),
+			'title'   => __( 'Fonts Settings - Heading', 'seed-fonts' ),
 			'options' => array(
 				array(
 					'id'      => seed_fonts_get_option_id( 'is_enabled' ),
