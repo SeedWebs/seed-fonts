@@ -1,0 +1,51 @@
+@font-face {
+    font-family: 'boon';
+    src: url('boon-300.eot');
+    src: url('boon-300.eot?#iefix') format('embedded-opentype'),
+         url('boon-300.woff2') format('woff2'),
+         url('boon-300.woff') format('woff'),
+         url('boon-300.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'boon';
+    src: url('boon-400.eot');
+    src: url('boon-400.eot?#iefix') format('embedded-opentype'),
+         url('boon-400.woff2') format('woff2'),
+         url('boon-400.woff') format('woff'),
+         url('boon-400.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'boon';
+    src: url('boon-500.eot');
+    src: url('boon-500.eot?#iefix') format('embedded-opentype'),
+         url('boon-500.woff2') format('woff2'),
+         url('boon-500.woff') format('woff'),
+         url('boon-500.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'boon';
+    src: url('boon-600.eot');
+    src: url('boon-600.eot?#iefix') format('embedded-opentype'),
+         url('boon-600.woff2') format('woff2'),
+         url('boon-600.woff') format('woff'),
+         url('boon-600.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'boon';
+    src: url('boon-700.eot');
+    src: url('boon-700.eot?#iefix') format('embedded-opentype'),
+         url('boon-700.woff2') format('woff2'),
+         url('boon-700.woff') format('woff'),
+         url('boon-700.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
