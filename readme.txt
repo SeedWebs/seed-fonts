@@ -3,8 +3,8 @@ Contributors: SeedThemes
 Donate link: http://seedthemes.com/
 Tags: webfont,web fonts, @font-face embed, typography
 Requires at least: 4.0.1
-Tested up to: 4.6
-Stable tag: 1.1.1
+Tested up to: 4.7
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ Use web fonts (@font-face) by choosing from 8 ready-generated Thai-English fonts
 
 == Description ==
 
-Seed Fonts is WordPress plugin that helps you use web fonts (@font-face embed) easier. You can choose from 8 ready-generated Thai-English web fonts, or use your own web fonts (such as generated from <a href="https://www.fontsquirrel.com/tools/webfont-generator" target="_blank">Font Squirrel’s Webfont Generator</a>) by uploading to theme folder (/wp-content/YOUR-THEME-NAME/vendor/fonts/YOUR-FONT-NAME).
+Seed Fonts is WordPress plugin that helps you use web fonts (@font-face embed) easier. You can choose from 8 ready-generated Thai-English web fonts, or use your own web fonts (such as generated from <a href="https://www.fontsquirrel.com/tools/webfont-generator" target="_blank">Font Squirrel’s Webfont Generator</a>) by uploading web fonts to theme folder (/wp-content/YOUR-THEME-NAME/vendor/fonts/YOUR-FONT-NAME).
 
 
 == Installation ==
@@ -21,7 +21,7 @@ Seed Fonts is WordPress plugin that helps you use web fonts (@font-face embed) e
 
 1. Upload the plugin files to the `/wp-content/plugins/seed-fonts` directory, or install the plugin through the WordPress plugins screen directly.
 1. Activate the plugin through the 'Plugins' screen in WordPress
-1. Go to Appearance -> Fonts to set you web fonts. Thais use รูปแบบบล็อก -> ฟอนต์
+1. Go to Appearance -> Fonts to set you web fonts. Thais use รูปแบบเว็บ -> ฟอนต์
 
 
 == Frequently Asked Questions ==
@@ -36,6 +36,9 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 
 
 == Changelog ==
+
+= 1.1.2 =
+* Fix Boon font error loading.
 
 = 1.1.1 =
 * Fix Body CSS when unchecking the heading font.
@@ -59,6 +62,9 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 
 
 == Upgrade Notice ==
+
+= 1.1.2 =
+* Fix Boon font error loading.
 
 = 1.1.1 =
 * Fix Body css when unchecking the Header font
