@@ -1,0 +1,12 @@
+/*
+Font Name: CS Chatthai UI
+Weights: 400
+*/
+@font-face {
+    font-family: 'cs-chatthai-ui';
+    src: url('cschatthaiui-webfont.woff2') format('woff2'),
+         url('cschatthaiui-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
