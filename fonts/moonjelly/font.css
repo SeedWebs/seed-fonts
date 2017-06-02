@@ -1,0 +1,20 @@
+/*
+Font Name: Moonjelly
+Weights: 300, 700
+*/
+@font-face {
+    font-family: 'Moonjelly';
+    src: url('moonjelly-light.woff2') format('woff2'),
+         url('moonjelly-light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'Moonjelly';
+    src: url('moonjelly-bold.woff2') format('woff2'),
+         url('moonjelly-bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+
+}
