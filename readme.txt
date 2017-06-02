@@ -3,8 +3,8 @@ Contributors: SeedThemes
 Donate link: http://seedthemes.com/
 Tags: webfont,web fonts, @font-face embed, typography
 Requires at least: 4.0.1
-Tested up to: 4.7
-Stable tag: 1.1.2
+Tested up to: 4.8
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ Use web fonts (@font-face) by choosing from 8 ready-generated Thai-English fonts
 
 == Description ==
 
-Seed Fonts is WordPress plugin that helps you use web fonts (@font-face embed) easier. You can choose from 8 ready-generated Thai-English web fonts, or use your own web fonts (such as generated from <a href="https://www.fontsquirrel.com/tools/webfont-generator" target="_blank">Font Squirrel’s Webfont Generator</a>) by uploading web fonts to theme folder (/wp-content/YOUR-THEME-NAME/vendor/fonts/YOUR-FONT-NAME).
+Seed Fonts is WordPress plugin that helps you use web fonts (@font-face embed) easier. You can choose from 10 ready-generated Thai-English web fonts, or use your own web fonts (such as generated from <a href="https://www.fontsquirrel.com/tools/webfont-generator" target="_blank">Font Squirrel’s Webfont Generator</a>) by uploading web fonts to current theme folder (/wp-content/YOUR-THEME-NAME/vendor/fonts/YOUR-FONT-NAME) or to upload folder (/wp-content/uploads/fonts/YOUR-FONT-NAME).
 
 
 == Installation ==
@@ -36,6 +36,11 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 
 
 == Changelog ==
+
+= 1.1.3 =
+* Add Moonjelly and CS Chatthai UI fonts.
+* Remove old font files (.eot and .ttf). Now using only .woff and .woff2.
+* Now we can upload fonts to /wp-content/uploads/fonts/FONT-NAME.
 
 = 1.1.2 =
 * Fix Boon font error loading.
@@ -63,20 +68,10 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 
 == Upgrade Notice ==
 
+= 1.1.3 =
+* Add Moonjelly and CS Chatthai UI fonts.
+* Remove old font files (.eot and .ttf). Now using only .woff and .woff2.
+* Now we can upload fonts to /wp-content/uploads/fonts/FONT-NAME.
+
 = 1.1.2 =
 * Fix Boon font error loading.
-
-= 1.1.1 =
-* Fix Body css when unchecking the Header font
-* Add Font Size and font Size Unit for Body font
-* Change custom fonts from replacing the defaults to addition
-
-= 1.1.0 =
-* Add body font settings and more Thai Loop fonts.
-
-
-= 1.0.0 =
-Use Settings API & Optimize code.
-
-= 0.9.5 =
-Just start.
