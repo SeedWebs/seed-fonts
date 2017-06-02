@@ -47,12 +47,14 @@ function seed_fonts_scripts() {
 				$font_styles .= ' font-weight: '.$weight.( $is_important ? ' !important' : '' ).';';
 			$font_styles .= ' }';
 
+			$upload_dir = wp_upload_dir();
 			if( file_exists( get_stylesheet_directory() . '/vendor/fonts/' . $font ) && is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $font ) ) {
 				wp_enqueue_style( 'seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $font . '/font.css' , array(  ) );
+			} elseif( file_exists( $upload_dir['basedir'] . '/fonts/'  . $font ) && is_dir( $upload_dir['basedir'] . '/fonts/' . $font ) ) {
+				wp_enqueue_style( 'seed-fonts-all', $upload_dir['baseurl'] . '/fonts/'  . $font . '/font.css' , array(  ) );
 			} else {
 				wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $font . '/font.css' , array(  ) );
 			}
-
 			wp_add_inline_style( 'seed-fonts-all', $font_styles );
 		}
 
@@ -73,9 +75,11 @@ function seed_fonts_scripts() {
 				$body_font_styles .= ' font-size: '.$body_size.$body_size_unit.( $is_important ? ' !important' : '' ).';';
 
 			$body_font_styles .= ' }';
-
+			$upload_dir = wp_upload_dir();
 			if( file_exists( get_stylesheet_directory() . '/vendor/fonts/' . $body_font ) && is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $body_font ) ) {
 				wp_enqueue_style( 'seed-fonts-body-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $body_font . '/font.css' , array(  ) );
+			} elseif( file_exists( $upload_dir['basedir'] . '/fonts/' . $body_font ) && is_dir( $upload_dir['basedir'] . '/fonts/' . $body_font ) ) {
+				wp_enqueue_style( 'seed-fonts-body-all', $upload_dir['basedir'] . '/fonts/' . $body_font . '/font.css' , array(  ) );
 			} else {
 				wp_enqueue_style( 'seed-fonts-body-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $body_font . '/font.css' , array(  ) );
 			}
@@ -218,6 +222,10 @@ function seed_fonts_get_fonts() {
 			"font"    => "Cloud",
 			"weights" => array( 300, 700 )
 		),
+		"moonjelly" => array(
+			"font"    => "Moonjelly",
+			"weights" => array( 300, 700 )
+		),
 		"th-sarabun-new" => array(
 			"font"    => "TH Sarabun New (Loop: มีหัว)",
 			"weights" => array( 400, 700 )
@@ -229,28 +237,44 @@ function seed_fonts_get_fonts() {
 		"cs-prajad" => array(
 			"font"    => "CS Prajad (Loop: มีหัว)",
 			"weights" => array( 400, 700 )
+		),
+		"cs-chatthai-ui" => array(
+			"font"    => "CS Chatthai UI (Loop: มีหัว)",
+			"weights" => array( 400 )
 		)
 	);
 
 	// This is where we add custom fonts
 	if ( file_exists( get_stylesheet_directory() . '/vendor/fonts' ) && is_dir( get_stylesheet_directory() . '/vendor/fonts' ) ) {
-
 		$d_handle = opendir( get_stylesheet_directory() . '/vendor/fonts' );
-
 		while ( false !== ( $entry = readdir( $d_handle ) ) ) {
-
 			if ( is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $entry ) && ( file_exists( get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css' ) ) ) {
-
 				$headers = get_file_data( get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css', array(
 					'font'    => 'Font Name',
 					'weights' => 'Weights'
 				) );
-
 				$_font = array(
 					'font'    => empty( $headers['font'] ) ? $entry : $headers['font'],
 					'weights' => empty( $headers['weights'] ) ? array() : array_map( 'trim', explode( ',', $headers['weights'] ) ),
 				);
-
+				$fonts[ $entry ] = $_font;
+			}
+		}
+	}
+	// add more custom fonts from /upload/fonts/
+	$upload_dir = wp_upload_dir();
+	if ( file_exists( $upload_dir['basedir'] . '/fonts/' ) && is_dir( $upload_dir['basedir'] . '/fonts/' ) ) {
+		$d_handle = opendir( $upload_dir['basedir'] . '/fonts/'  );
+		while ( false !== ( $entry = readdir( $d_handle ) ) ) {
+			if ( is_dir( $upload_dir['basedir'] . '/fonts/'  . $entry ) && ( file_exists( $upload_dir['basedir'] . '/fonts/'  . $entry . '/font.css' ) ) ) {
+				$headers = get_file_data( $upload_dir['basedir'] . '/fonts/'  . $entry . '/font.css', array(
+					'font'    => 'Font Name',
+					'weights' => 'Weights'
+				) );
+				$_font = array(
+					'font'    => empty( $headers['font'] ) ? $entry : $headers['font'],
+					'weights' => empty( $headers['weights'] ) ? array() : array_map( 'trim', explode( ',', $headers['weights'] ) ),
+				);
 				$fonts[ $entry ] = $_font;
 			}
 		}
