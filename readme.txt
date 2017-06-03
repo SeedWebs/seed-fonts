@@ -32,7 +32,8 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 
 == Screenshots ==
 
-1. Example Thai fonts.
+1. Settings: Heading Font.
+1. Settings: Body Font.
 
 
 == Changelog ==
