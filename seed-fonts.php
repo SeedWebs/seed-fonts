@@ -147,7 +147,7 @@ function seed_fonts_init() { ?>
 		}
 		?>
 		<p>
-			<?php printf( wp_kses( __( 'This plugin comes with 8 Thai web fonts. You can add your own collection by <a href="%1$s" target="_blank">uploading your web fonts to the theme folder</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts' ) ); ?>
+			<?php printf( wp_kses( __( 'This plugin comes with 10 Thai web fonts. You can add your own collection by <a href="%1$s" target="_blank">uploading your web fonts to the theme folder</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts' ) ); ?>
 		</p>
 		<form action="<?php echo admin_url( 'options.php' ); ?>" method="post" id="seed-fonts-form">
 			<div id="seed-fonts-tabs">
