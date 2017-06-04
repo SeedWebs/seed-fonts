@@ -15,7 +15,7 @@ Use web fonts (@font-face) by choosing from 8 ready-generated Thai-English fonts
 
 Seed Fonts is WordPress plugin that helps you use web fonts (@font-face embed) easier. You can choose from 10 ready-generated Thai-English web fonts, or use your own web fonts (such as generated from <a href="https://www.fontsquirrel.com/tools/webfont-generator" target="_blank">Font Squirrel’s Webfont Generator</a>) by uploading web fonts to current theme folder (/wp-content/YOUR-THEME-NAME/vendor/fonts/YOUR-FONT-NAME) or to upload folder (/wp-content/uploads/fonts/YOUR-FONT-NAME).
 
-The GitHub repository can be found at https://github.com/SeedThemes/seed-fonts. 
+The GitHub repository can be found at <a href="https://github.com/SeedThemes/seed-fonts" target="_blank">https://github.com/SeedThemes/seed-fonts</a>. 
 
 
 == Installation ==
