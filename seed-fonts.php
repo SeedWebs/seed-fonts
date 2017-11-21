@@ -31,6 +31,8 @@ add_action( 'wp_enqueue_scripts', 'seed_fonts_scripts', 30 );
 
 function seed_fonts_scripts() {
 	if( ! is_admin() ) {
+		$fonts = seed_fonts_get_fonts();
+
 		$is_enabled = ( get_option( 'seed_fonts_is_enabled' ) );
 		$font = get_option( 'seed_fonts_font' );
 		$weight = get_option( 'seed_fonts_weight' );
@@ -38,7 +40,12 @@ function seed_fonts_scripts() {
 		$is_important = ( get_option( 'seed_fonts_is_important' ) );
 		$font_styles = '';
 
+		$is_google_font = false;
+
 		if( $is_enabled && ( $font !== FALSE ) && ( $font != '' ) ) {
+			if( array_key_exists( 'is_google_font', $fonts[ $font ] ) )
+				$is_google_font = $fonts[ $font ]['is_google_font'];
+
 			if( $selectors != '' )
 				$font_styles = $selectors.' ';
 
@@ -47,14 +54,22 @@ function seed_fonts_scripts() {
 				$font_styles .= ' font-weight: '.$weight.( $is_important ? ' !important' : '' ).';';
 			$font_styles .= ' }';
 
-			$upload_dir = wp_upload_dir();
-			if( file_exists( get_stylesheet_directory() . '/vendor/fonts/' . $font ) && is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $font ) ) {
-				wp_enqueue_style( 'seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $font . '/font.css' , array(  ) );
-			} elseif( file_exists( $upload_dir['basedir'] . '/fonts/'  . $font ) && is_dir( $upload_dir['basedir'] . '/fonts/' . $font ) ) {
-				wp_enqueue_style( 'seed-fonts-all', $upload_dir['baseurl'] . '/fonts/'  . $font . '/font.css' , array(  ) );
+			if( $is_google_font ) {
+				if( $weight != '' )				
+					wp_enqueue_style( 'seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font.':'.$weight, false ); 
+				else
+					wp_enqueue_style( 'seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font, false ); 
 			} else {
-				wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $font . '/font.css' , array(  ) );
+				$upload_dir = wp_upload_dir();
+				if( file_exists( get_stylesheet_directory() . '/vendor/fonts/' . $font ) && is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $font ) ) {
+					wp_enqueue_style( 'seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $font . '/font.css' , array(  ) );
+				} elseif( file_exists( $upload_dir['basedir'] . '/fonts/'  . $font ) && is_dir( $upload_dir['basedir'] . '/fonts/' . $font ) ) {
+					wp_enqueue_style( 'seed-fonts-all', $upload_dir['baseurl'] . '/fonts/'  . $font . '/font.css' , array(  ) );
+				} else {
+					wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $font . '/font.css' , array(  ) );
+				}
 			}
+
 			wp_add_inline_style( 'seed-fonts-all', $font_styles );
 		}
 
@@ -66,7 +81,12 @@ function seed_fonts_scripts() {
 		$body_is_important = ( get_option( 'seed_fonts_body_is_important' ) );
 		$body_font_styles = '';
 
+		$body_is_google_font = false;
+
 		if( $body_is_enabled && ( $body_font !== FALSE ) && ( $body_font != '' ) ) {
+			if( array_key_exists( 'is_google_font', $fonts[ $body_font ] ) )
+				$body_is_google_font = $fonts[ $body_font ]['is_google_font'];
+
 			if( $body_selectors != '' )
 				$body_font_styles = $body_selectors.' ';
 
@@ -75,13 +95,21 @@ function seed_fonts_scripts() {
 				$body_font_styles .= ' font-size: '.$body_size.$body_size_unit.( $is_important ? ' !important' : '' ).';';
 
 			$body_font_styles .= ' }';
-			$upload_dir = wp_upload_dir();
-			if( file_exists( get_stylesheet_directory() . '/vendor/fonts/' . $body_font ) && is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $body_font ) ) {
-				wp_enqueue_style( 'seed-fonts-body-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $body_font . '/font.css' , array(  ) );
-			} elseif( file_exists( $upload_dir['basedir'] . '/fonts/' . $body_font ) && is_dir( $upload_dir['basedir'] . '/fonts/' . $body_font ) ) {
-				wp_enqueue_style( 'seed-fonts-body-all', $upload_dir['baseurl'] . '/fonts/' . $body_font . '/font.css' , array(  ) );
+
+			if( $body_is_google_font ) {
+				if( $body_weight != '' )				
+					wp_enqueue_style( 'seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font.':'.$body_weight, false );
+				else
+					wp_enqueue_style( 'seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font, false );
 			} else {
-				wp_enqueue_style( 'seed-fonts-body-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $body_font . '/font.css' , array(  ) );
+				$upload_dir = wp_upload_dir();
+				if( file_exists( get_stylesheet_directory() . '/vendor/fonts/' . $body_font ) && is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $body_font ) ) {
+					wp_enqueue_style( 'seed-fonts-body-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $body_font . '/font.css' , array(  ) );
+				} elseif( file_exists( $upload_dir['basedir'] . '/fonts/' . $body_font ) && is_dir( $upload_dir['basedir'] . '/fonts/' . $body_font ) ) {
+					wp_enqueue_style( 'seed-fonts-body-all', $upload_dir['baseurl'] . '/fonts/' . $body_font . '/font.css' , array(  ) );
+				} else {
+					wp_enqueue_style( 'seed-fonts-body-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $body_font . '/font.css' , array(  ) );
+				}
 			}
 
 			wp_add_inline_style( 'seed-fonts-body-all', $body_font_styles );
@@ -201,23 +229,70 @@ function seed_fonts_hidden_weight_options() {
  */
 function seed_fonts_get_fonts() {
 
+	$google_fonts = array(
+		"Kanit" => array(
+			"font"    => "Kanit (Google Fonts)",
+			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900 ),
+			"is_google_font" => true
+		),
+		"Prompt" => array(
+			"font"    => "Prompt (Google Fonts)",
+			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900 ),
+			"is_google_font" => true
+		),
+		"Itim" => array(
+			"font"    => "Itim (Google Fonts)",
+			"weights" => array( 400 ),
+			"is_google_font" => true
+		),
+		"Pridi" => array(
+			"font"    => "Pridi (Google Fonts)",
+			"weights" => array( 200, 300, 400, 500, 600, 700 ),
+			"is_google_font" => true
+		),
+		"Taviraj" => array(
+			"font"    => "Taviraj (Google Fonts)",
+			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900 ),
+			"is_google_font" => true
+		),
+		"Trirong" => array(
+			"font"    => "Trirong (Google Fonts)",
+			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900 ),
+			"is_google_font" => true
+		),
+		"Mitr" => array(
+			"font"    => "Mitr (Google Fonts)",
+			"weights" => array( 200, 300, 400, 500, 600, 700 ),
+			"is_google_font" => true
+		),
+		"Athiti" => array(
+			"font"    => "Athiti (Google Fonts)",
+			"weights" => array( 200, 300, 400, 500, 600, 700 ),
+			"is_google_font" => true
+		),
+		"Maitree" => array(
+			"font"    => "Maitree (Google Fonts)",
+			"weights" => array( 200, 300, 400, 500, 600, 700 ),
+			"is_google_font" => true
+		),
+		"Pattaya" => array(
+			"font"    => "Pattaya (Google Fonts)",
+			"weights" => array( 400 ),
+			"is_google_font" => true
+		),
+		"Sriracha" => array(
+			"font"    => "Sriracha (Google Fonts)",
+			"weights" => array( 400 ),
+			"is_google_font" => true
+		),
+		"Chonburi" => array(
+			"font"    => "Chonburi (Google Fonts)",
+			"weights" => array( 400 ),
+			"is_google_font" => true
+		)
+	);
+
 	$fonts = array(
-		"athiti"         => array(
-			"font"    => "Athiti",
-			"weights" => array( 500, 600 )
-		),
-		"kanit"          => array(
-			"font"    => "Kanit",
-			"weights" => array( 300, 400, 500 )
-		),
-		"mitr"           => array(
-			"font"    => "Mitr",
-			"weights" => array( 300, 400, 500 )
-		),
-		"prompt"         => array(
-			"font"    => "Prompt",
-			"weights" => array( 400, 500, 600 )
-		),
 		"cloud" => array(
 			"font"    => "Cloud",
 			"weights" => array( 300, 700 )
@@ -279,6 +354,8 @@ function seed_fonts_get_fonts() {
 			}
 		}
 	}
+
+	$fonts = $google_fonts + $fonts;
 
 	return apply_filters( 'seed_fonts_fonts', $fonts );
 
