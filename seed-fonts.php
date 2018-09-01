@@ -165,39 +165,39 @@ function seed_fonts_admin_styles() {
 
 function seed_fonts_init() { ?>
 
-	<div class="wrap">
-		<div class="icon32" id="icon-options-general"></div>
-		<h2><?php esc_html_e( 'Seed Fonts', 'seed-fonts' ); ?></h2>
+<div class="wrap">
+	<div class="icon32" id="icon-options-general"></div>
+	<h2><?php esc_html_e( 'Seed Fonts', 'seed-fonts' ); ?></h2>
 
-		<?php
-		if( isset( $_GET['settings-updated'] ) ) {
-			?><div class="updated"><p><strong><?php esc_html_e( 'Settings updated successfully.', 'seed-fonts' ); ?></strong></div><?php
-		}
-		?>
-		<p>
-			<?php printf( wp_kses( __( 'This plugin comes with 10 Thai web fonts. You can add your own collection by <a href="%1$s" target="_blank">uploading your web fonts to the theme folder</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts' ) ); ?>
-		</p>
-		<form action="<?php echo admin_url( 'options.php' ); ?>" method="post" id="seed-fonts-form">
-			<div id="seed-fonts-tabs">
+	<?php
+	if( isset( $_GET['settings-updated'] ) ) {
+		?><div class="updated"><p><strong><?php esc_html_e( 'Settings updated successfully.', 'seed-fonts' ); ?></strong></div><?php
+	}
+	?>
+	<p>
+		<?php printf( wp_kses( __( 'This plugin comes with 10 Thai web fonts. You can add your own collection by <a href="%1$s" target="_blank">uploading your web fonts to the theme folder</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts' ) ); ?>
+	</p>
+	<form action="<?php echo admin_url( 'options.php' ); ?>" method="post" id="seed-fonts-form">
+		<div id="seed-fonts-tabs">
 			<ul class="wp-clearfix">
-			<li><a href="#seed-fonts-header"><?php esc_html_e( 'Heading', 'seed-fonts' ); ?></a></li>
-			<li><a href="#seed-fonts-body"><?php esc_html_e( 'Body', 'seed-fonts' ); ?></a></li>
+				<li><a href="#seed-fonts-header"><?php esc_html_e( 'Heading', 'seed-fonts' ); ?></a></li>
+				<li><a href="#seed-fonts-body"><?php esc_html_e( 'Body', 'seed-fonts' ); ?></a></li>
 			</ul>
 
 			<div class="dummy">
-			<?php
+				<?php
 				settings_fields( 'seed-fonts' );
 				do_settings_sections( 'seed-fonts' );
-			?>
+				?>
 			</div>
 
 			<?php submit_button(); ?>
 
-			</div>
+		</div>
 
-			<?php seed_fonts_hidden_weight_options(); ?>
-		</form>
-	</div>
+		<?php seed_fonts_hidden_weight_options(); ?>
+	</form>
+</div>
 
 <?php }
 
@@ -216,9 +216,9 @@ function seed_fonts_hidden_weight_options() {
 		<option value=""></option><?php
 		foreach( $_font_desc["weights"] as $_weight ) { ?>		
 		<option value="<?php esc_html_e( $_weight, 'seed-fonts' ); ?>"><?php esc_html_e( $_weight, 'seed-fonts' ); ?></option><?php		
-		} ?>
+	} ?>
 	</select> <?php
-	}
+}
 }
 
 /**
@@ -467,22 +467,45 @@ function seed_fonts_get_header_settings() {
 					'options' => array( 'on' => esc_html__( 'Yes', 'seed-fonts' ) )
 				),
 				array(
+					'id'      => seed_fonts_get_option_id( 'use_google_fonts' ),
+					'title'   => esc_html__( 'Use Google Fonts?', 'seed-fonts' ),
+					'type'    => 'checkbox',
+					'options' => array( 'on' => esc_html__( 'Yes', 'seed-fonts' ) ),
+					'default' => true
+				),
+				array(
+					'id'      => seed_fonts_get_option_id( 'google_font_name' ),
+					'title'   => esc_html__( 'Google Font Name', 'seed-fonts' ),
+					'type'    => 'text',
+					'desc'    => wp_kses( sprintf( __( 'Only one font name from <a href="%1$s" target="_blank">fonts.google.com</a>, such as <b>Roboto</b>, <b>Open Sans</b>.', 'seed-fonts' ), esc_url( 'https://fonts.google.com/' ) ), array(
+						'a' => array(
+							'href'   => array(),
+							'target' => array()
+						),
+						'b' => array()
+					) ),
+					'default' => esc_html__( 'Open Sans', 'seed-fonts' ),
+				),
+				array(
 					'id'      => seed_fonts_get_option_id( 'font' ),
-					'title'   => esc_html__( 'Font', 'seed-fonts' ),
+					'title'   => esc_html__( 'Bundled Font', 'seed-fonts' ),
 					'type'    => 'dropdown',
 					'options' => seed_fonts_get_fonts_option_list()
 				),
 				array(
 					'id'      => seed_fonts_get_option_id( 'weight' ),
 					'title'   => esc_html__( 'Weight', 'seed-fonts' ),
-					'desc'    => wp_kses( sprintf( __( '400 = Normal, 700 = Bold. For more detail, please see <a href="%1$s" target="_blank">W3.org</a>', 'seed-fonts' ), esc_url( 'https://www.w3.org/TR/css-fonts-3/#font-weight-prop' ) ), array(
-						'a' => array(
-							'href'   => array(),
-							'target' => array()
-						)
-					) ),
+					'desc'    => esc_html__( 'Most fonts have only Regular and Bold.', 'seed-fonts' ),
 					'type'    => 'dropdown',
-					'options' => seed_fonts_get_fonts_weights_option_list( get_option( 'seed_fonts_font' ) )
+					'options' => array(
+						400 => 'Regular 400',
+						700 => 'Bold 700',
+						300 => 'Light 300',
+						500 => 'Medium 500',
+						600 => 'Semi-Bold 600',
+						800 => 'Extra-Bold 800',
+						900 => 'Black 900',
+					)
 				),
 				array(
 					'id'      => seed_fonts_get_option_id( 'selectors' ),
@@ -533,7 +556,7 @@ function seed_fonts_get_body_settings() {
 					'id'      => seed_fonts_get_option_id( 'body_font' ),
 					'title'   => esc_html__( 'Font', 'seed-fonts' ),
 					'type'    => 'dropdown',
-					'options' => seed_fonts_get_fonts_option_list()
+					'options' => seed_fonts_get_fonts_option_list(),
 				),
 				array(
 					'id'      => seed_fonts_get_option_id( 'body_size' ),
@@ -651,9 +674,9 @@ function seed_fonts_register_plugin_settings() {
  * @return void
  */
 function seed_fonts_section( $section ) {
-?>
+	?>
 </div><div id="<?php echo $section['id'] ?>">
-<?php
+	<?php
 }
 
 /**
@@ -678,58 +701,58 @@ function seed_fonts_output_settings_field( $option ) {
 
 	switch( $field_type ):
 
-		case 'text': ?>
-			<input type="text" name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" value="<?php echo $current; ?>" class="regular-text" />
-			<?php break;
+	case 'text': ?>
+	<input type="text" name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" value="<?php echo $current; ?>" class="regular-text" />
+	<?php break;
 
-		case 'checkbox': ?>
-			<?php foreach( $option['options'] as $val => $choice ):
+	case 'checkbox': ?>
+	<?php foreach( $option['options'] as $val => $choice ):
 
-				if ( count( $option['options'] ) > 1 ) {
-					$id = "{$id}_{$val}";
-				}
+	if ( count( $option['options'] ) > 1 ) {
+		$id = "{$id}_{$val}";
+	}
 
-				$selected = is_array( $current ) && in_array( $val, $current ) ? 'checked="checked"' : '';  ?>
-				<label for="<?php echo $id; ?>">
-					<input type="checkbox" name="<?php echo $option['name']; ?>[]" value="<?php echo $val; ?>" id="<?php echo $id; ?>" <?php echo $selected; ?> />
-					<?php echo $choice; ?>
-				</label>
-			<?php endforeach;
-			break;
+	$selected = is_array( $current ) && in_array( $val, $current ) ? 'checked="checked"' : '';  ?>
+	<label for="<?php echo $id; ?>">
+		<input type="checkbox" name="<?php echo $option['name']; ?>[]" value="<?php echo $val; ?>" id="<?php echo $id; ?>" <?php echo $selected; ?> />
+		<?php echo $choice; ?>
+	</label>
+<?php endforeach;
+break;
 
-		case 'dropdown': ?>
-			<label for="<?php echo $option['name']; ?>">
-				<select name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>">
+case 'dropdown': ?>
+<label for="<?php echo $option['name']; ?>">
+	<select name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>">
 
-					<?php foreach( $option['options'] as $val => $choice ):
-						if( $val == $current )
-							$selected = 'selected="selected"';
-						else
-							$selected = ''; ?>
-						<option value="<?php echo $val; ?>" <?php echo $selected; ?>><?php echo $choice; ?></option>
+		<?php foreach( $option['options'] as $val => $choice ):
+		if( $val == $current )
+			$selected = 'selected="selected"';
+		else
+			$selected = ''; ?>
+		<option value="<?php echo $val; ?>" <?php echo $selected; ?>><?php echo $choice; ?></option>
 
-					<?php endforeach; ?>
+	<?php endforeach; ?>
 
-				</select>
-			</label>
-			<?php break;
+</select>
+</label>
+<?php break;
 
-		case 'textarea':
-			if( !$current && isset($option['std']) ) { $current = $option['std']; } ?>
-			<textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="8" cols="70"><?php echo $current; ?></textarea>
-			<?php break;
+case 'textarea':
+if( !$current && isset($option['std']) ) { $current = $option['std']; } ?>
+<textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="8" cols="70"><?php echo $current; ?></textarea>
+<?php break;
 
-		case 'textarea_code':
-			if( !$current && isset($option['std']) ) { $current = $option['std']; } ?>
-			<textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="4" cols="60" class="code" readonly><?php echo $current; ?></textarea>
-			<?php break;
+case 'textarea_code':
+if( !$current && isset($option['std']) ) { $current = $option['std']; } ?>
+<textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="4" cols="60" class="code" readonly><?php echo $current; ?></textarea>
+<?php break;
 
-	endswitch;
+endswitch;
 
 	// Add the field description
-	if ( isset( $option['desc'] ) && $option['desc'] != '' ) {
-		echo wp_kses_post( sprintf( '<p class="description">%1$s</p>', $option['desc'] ) );
-	};
+if ( isset( $option['desc'] ) && $option['desc'] != '' ) {
+	echo wp_kses_post( sprintf( '<p class="description">%1$s</p>', $option['desc'] ) );
+};
 
 }
 

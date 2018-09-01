@@ -1,30 +1,29 @@
 jQuery(document).ready(function ($) {
 
-    $( "#seed-fonts-tabs" ).tabs();
+	$( "#seed-fonts-tabs" ).tabs();
 
-	/**
-	 * Cache selectors
-	 */
+	/* Cache selectors */
 	var inputEnable = $('#seed-fonts-is-enabled'),
-		inputCSS = $('#seed-fonts-css-generated'),
-		inputSelectors = $('#seed-fonts-selectors'),
-		inputFonts = $('#seed-fonts-font'),
-		inputImportant = $('#seed-fonts-is-important'),
-		inputFontWeight = $('#seed-fonts-weight'),
+	inputCSS = $('#seed-fonts-css-generated'),
+	inputSelectors = $('#seed-fonts-selectors'),
+	inputGoogleFonts = $('#seed-fonts-use-google-fonts'),
+	inputGoogleFontName = $('#seed-fonts-google-font-name'),
+	inputFonts = $('#seed-fonts-font'),
 
-		inputBodyEnable = $('#seed-fonts-body-is-enabled'),
-		inputBodyCSS = $('#seed-fonts-body-css-generated'),
-		inputBodySelectors = $('#seed-fonts-body-selectors'),
-		inputBodyFonts = $('#seed-fonts-body-font'),
-		inputBodySize = $('#seed-fonts-body-size'),
-		inputBodySizeUnit = $('#seed-fonts-body-size-unit'),
-		inputBodyImportant = $('#seed-fonts-body-is-important'),
+	inputImportant = $('#seed-fonts-is-important'),
+	inputFontWeight = $('#seed-fonts-weight'),
 
-		formSeedFonts = $('#seed-fonts-form');
+	inputBodyEnable = $('#seed-fonts-body-is-enabled'),
+	inputBodyCSS = $('#seed-fonts-body-css-generated'),
+	inputBodySelectors = $('#seed-fonts-body-selectors'),
+	inputBodyFonts = $('#seed-fonts-body-font'),
+	inputBodySize = $('#seed-fonts-body-size'),
+	inputBodySizeUnit = $('#seed-fonts-body-size-unit'),
+	inputBodyImportant = $('#seed-fonts-body-is-important'),
 
-	/**
-	 * Function to ouput CSS
-	 */
+	formSeedFonts = $('#seed-fonts-form');
+
+	/* Function to ouput CSS */
 	function seed_fonts_generate_css() {
 		var css = '';
 
@@ -55,17 +54,29 @@ jQuery(document).ready(function ($) {
 		inputBodyCSS.val(css);
 	}
 
-	/**
-	 * Conditional Logic
-	 */
+	/* Conditional Logic */
 	function seed_fonts_is_enabled() {
 		var is_enabled = inputEnable.prop('checked');
 
 		inputFonts.prop('disabled', !is_enabled);
+		inputGoogleFonts.prop('disabled', !is_enabled);
+		inputGoogleFontName.prop('disabled', !is_enabled);
 		inputFontWeight.prop('disabled', !is_enabled);
 		inputSelectors.prop('disabled', !is_enabled);
 		inputImportant.prop('disabled', !is_enabled);
 		inputCSS.toggle(is_enabled);
+	}
+
+	function seed_fonts_use_google_fonts() {
+		var use_googlefonts = inputGoogleFonts.prop('checked');
+		if (use_googlefonts) {
+			$('#seed-fonts-google-font-name').closest('tr').show();
+			$('#seed-fonts-font').closest('tr').hide();
+		} else {
+			$('#seed-fonts-google-font-name').closest('tr').hide();
+			$('#seed-fonts-font').closest('tr').show();
+		}
+		
 	}
 
 	function seed_fonts_body_is_enabled() {
@@ -79,21 +90,23 @@ jQuery(document).ready(function ($) {
 		inputBodyCSS.toggle(body_is_enabled);
 	}
 
-	/**
-	 * Trigger functions when DOM is ready
-	 */
+	/* Trigger functions when DOM is ready */
 	seed_fonts_generate_css();
 	seed_fonts_body_generate_css();
 	seed_fonts_is_enabled();
+	seed_fonts_use_google_fonts();
 	seed_fonts_body_is_enabled();
 
-	/**
-	 * Output CSS live
-	 */
+
+	/* If using Google Fonts */
+	inputGoogleFonts.on('change', function () {
+		seed_fonts_use_google_fonts();
+	});
+
+	/* Output CSS live */
 	inputEnable.on('change', function () {
 		seed_fonts_is_enabled();
 	});
-
 	inputFonts.on('change', function () {
 		var font = inputFonts.val();
 		var weight = inputFontWeight.val();
