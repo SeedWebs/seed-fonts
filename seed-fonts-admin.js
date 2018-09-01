@@ -95,6 +95,7 @@ jQuery(document).ready(function ($) {
 		var body_is_enabled = inputBodyEnable.prop('checked');
 
 		inputBodyGoogleFonts.prop('disabled', !body_is_enabled);
+		inputBodyGoogleFontName.prop('disabled', !body_is_enabled);
 		inputBodyFonts.prop('disabled', !body_is_enabled);
 		inputBodyWeight.prop('disabled', !body_is_enabled);
 		inputBodySize.prop('disabled', !body_is_enabled);
