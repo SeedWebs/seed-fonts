@@ -193,7 +193,7 @@ function seed_fonts_init() { ?>
 	}
 	?>
 	<p>
-		<?php printf( wp_kses( __( 'This plugin allow you to use Google fonts, bundled Thai fonts, or your own custom fonts. For more information, please visit <a href="%1$s" target="_blank">Seed Fonts by SeedThemes.com</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://www.seedthemes.com/plugin/seed-fonts/' ) ); ?>
+		<?php printf( wp_kses( __( 'This plugin allows you to use Google fonts, bundled Thai fonts, or your own custom fonts. For more information, please visit <a href="%1$s" target="_blank">Seed Fonts by SeedThemes.com</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://www.seedthemes.com/plugin/seed-fonts/' ) ); ?>
 	</p>
 	<form action="<?php echo admin_url( 'options.php' ); ?>" method="post" id="seed-fonts-form">
 		<div id="seed-fonts-tabs">
