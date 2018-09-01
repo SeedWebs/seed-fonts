@@ -34,6 +34,7 @@
     color: #444;
 }
 
-#seed-fonts-body-size {
+#seed-fonts-body-size,
+#seed-fonts-body-lineheight {
 	width: 50px;
 }

@@ -2,56 +2,56 @@
 Font Name: Sarabun
 */
 @font-face {
-	font-family: 'Sarabun';
-	src: url('Sarabun-ExtraLight.woff2') format('woff2'),
-		  url('Sarabun-ExtraLight.woff') format('woff');
+	font-family: 'sarabun';
+	src: url('Sarabun-Thin.woff2') format('woff2'),
+		  url('Sarabun-Thin.woff') format('woff');
 	font-weight: 100;
 	font-style: normal;
 }
 @font-face {
-	font-family: 'Sarabun';
-	src: url('Sarabun-Thin.woff2') format('woff2'),
-		  url('Sarabun-Thin.woff') format('woff');
+	font-family: 'sarabun';
+	src: url('Sarabun-ExtraLight.woff2') format('woff2'),
+		  url('Sarabun-ExtraLight.woff') format('woff');
 	font-weight: 200;
 	font-style: normal;
 }
 @font-face {
-	font-family: 'Sarabun';
+	font-family: 'sarabun';
 	src: url('Sarabun-Light.woff2') format('woff2'),
 		  url('Sarabun-Light.woff') format('woff');
 	font-weight: 300;
 	font-style: normal;
 }
 @font-face {
-	font-family: 'Sarabun';
+	font-family: 'sarabun';
 	src: url('Sarabun-Regular.woff2') format('woff2'),
 		  url('Sarabun-Regular.woff') format('woff');
 	font-weight: 400;
 	font-style: normal;
 }
 @font-face {
-	font-family: 'Sarabun';
+	font-family: 'sarabun';
 	src: url('Sarabun-Medium.woff2') format('woff2'),
 		  url('Sarabun-Medium.woff') format('woff');
 	font-weight: 500;
 	font-style: normal;
 }
 @font-face {
-	font-family: 'Sarabun';
+	font-family: 'sarabun';
 	src: url('Sarabun-SemiBold.woff2') format('woff2'),
 		  url('Sarabun-SemiBold.woff') format('woff');
 	font-weight: 600;
 	font-style: normal;
 }
 @font-face {
-	font-family: 'Sarabun';
+	font-family: 'sarabun';
 	src: url('Sarabun-Bold.woff2') format('woff2'),
 		  url('Sarabun-Bold.woff') format('woff');
 	font-weight: 700;
 	font-style: normal;
 }
 @font-face {
-	font-family: 'Sarabun';
+	font-family: 'sarabun';
 	src: url('Sarabun-ExtraBold.woff2') format('woff2'),
 		  url('Sarabun-ExtraBold.woff') format('woff');
 	font-weight: 800;

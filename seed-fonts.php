@@ -11,7 +11,7 @@ Text Domain: seed-fonts
 */
 
 /*
-Copyright 2016 SeedThemes  (email : info@seedthemes.com)
+Copyright 2016-2018 SeedThemes  (email : info@seedthemes.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as 
@@ -34,17 +34,21 @@ function seed_fonts_scripts() {
 		$fonts = seed_fonts_get_fonts();
 
 		$is_enabled = ( get_option( 'seed_fonts_is_enabled' ) );
-		$font = get_option( 'seed_fonts_font' );
+		$is_google_font = ( get_option( 'seed_fonts_is_google_fonts' ) );
+		
 		$weight = get_option( 'seed_fonts_weight' );
 		$selectors = get_option( 'seed_fonts_selectors' );
 		$is_important = ( get_option( 'seed_fonts_is_important' ) );
 		$font_styles = '';
 
-		$is_google_font = false;
+		if($is_google_font) {
+			$font = preg_replace('!\s+!', ' ', get_option( 'seed_fonts_google_font_name' ));
+		} else {
+			$font = get_option( 'seed_fonts_font' );
+		}
+		
 
 		if( $is_enabled && ( $font !== FALSE ) && ( $font != '' ) ) {
-			if( array_key_exists( 'is_google_font', $fonts[ $font ] ) )
-				$is_google_font = $fonts[ $font ]['is_google_font'];
 
 			if( $selectors != '' )
 				$font_styles = $selectors.' ';
@@ -74,26 +78,35 @@ function seed_fonts_scripts() {
 		}
 
 		$body_is_enabled = ( get_option( 'seed_fonts_body_is_enabled' ) );
-		$body_font = get_option( 'seed_fonts_body_font' );
+		$body_is_google_font = ( get_option( 'seed_fonts_body_is_google_fonts' ) );
+
+		$body_weight = get_option( 'seed_fonts_body_weight' );
 		$body_size = get_option( 'seed_fonts_body_size' );
 		$body_size_unit = get_option( 'seed_fonts_body_size_unit' );
+		$body_lineheight = get_option( 'seed_fonts_body_lineheight' );
 		$body_selectors = get_option( 'seed_fonts_body_selectors' );
 		$body_is_important = ( get_option( 'seed_fonts_body_is_important' ) );
 		$body_font_styles = '';
 
-		$body_is_google_font = false;
+		if($body_is_google_font) {
+			$body_font = preg_replace('!\s+!', ' ', get_option( 'seed_fonts_body_google_font_name' ));
+		} else {
+			$body_font = get_option( 'seed_fonts_body_font' );
+		}
 
 		if( $body_is_enabled && ( $body_font !== FALSE ) && ( $body_font != '' ) ) {
-			if( array_key_exists( 'is_google_font', $fonts[ $body_font ] ) )
-				$body_is_google_font = $fonts[ $body_font ]['is_google_font'];
 
 			if( $body_selectors != '' )
 				$body_font_styles = $body_selectors.' ';
 
-			$body_font_styles .= '{font-family: "'.$body_font.'",  sans-serif'.( $body_is_important ? ' !important' : '' ).';';
-			if( $body_size != '' )
-				$body_font_styles .= ' font-size: '.$body_size.$body_size_unit.( $is_important ? ' !important' : '' ).';';
 
+			$body_font_styles .= '{font-family: "'.$body_font.'",  sans-serif'.( $body_is_important ? ' !important' : '' ).';';
+			if( $body_weight != '' )
+				$body_font_styles .= ' font-weight: '.$body_weight.( $body_is_important ? ' !important' : '' ).';';
+			if( $body_size != '' )
+				$body_font_styles .= ' font-size: '.$body_size.$body_size_unit.( $body_is_important ? ' !important' : '' ).';';
+			if( $body_lineheight != '' )
+				$body_font_styles .= ' line-height: '.$body_lineheight.( $body_is_important ? ' !important' : '' ).';';
 			$body_font_styles .= ' }';
 
 			if( $body_is_google_font ) {
@@ -116,6 +129,10 @@ function seed_fonts_scripts() {
 		}
 	}
 }
+
+/*
+แสดงชื่อฟอนต์ใน Body Class
+คิดว่าพอใช้ Google Font ได้ มันจะยากไปหน่อย ดังนั้นไม่ใส่ดีกว่า
 
 add_filter( 'body_class', 'seed_fonts_body_class' );
 
@@ -149,6 +166,7 @@ function seed_fonts_body_class( $classes ) {
 
 	return $classes;
 }
+*/
 
 add_action( 'admin_menu', 'seed_fonts_setup_menu' );
 
@@ -159,8 +177,8 @@ function seed_fonts_setup_menu() {
 }
 
 function seed_fonts_admin_styles() {
-	wp_enqueue_style( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.css' , array(), '2016-1' );
-	wp_enqueue_script( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.js' , array( 'jquery', 'jquery-ui-tabs' ), '2016-1', true );
+	wp_enqueue_style( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.css' , array(), '2018-1' );
+	wp_enqueue_script( 'seed-fonts', plugin_dir_url( __FILE__ ) . 'seed-fonts-admin.js' , array( 'jquery', 'jquery-ui-tabs' ), '2018-1', true );
 }
 
 function seed_fonts_init() { ?>
@@ -175,7 +193,7 @@ function seed_fonts_init() { ?>
 	}
 	?>
 	<p>
-		<?php printf( wp_kses( __( 'This plugin comes with 10 Thai web fonts. You can add your own collection by <a href="%1$s" target="_blank">uploading your web fonts to the theme folder</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts' ) ); ?>
+		<?php printf( wp_kses( __( 'This plugin allow you to use Google fonts, bundled Thai fonts, or your own custom fonts. For more information, please visit <a href="%1$s" target="_blank">Seed Fonts by SeedThemes.com</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://www.seedthemes.com/plugin/seed-fonts/' ) ); ?>
 	</p>
 	<form action="<?php echo admin_url( 'options.php' ); ?>" method="post" id="seed-fonts-form">
 		<div id="seed-fonts-tabs">
@@ -228,7 +246,7 @@ function seed_fonts_hidden_weight_options() {
  * @return array
  */
 function seed_fonts_get_fonts() {
-
+	$loop = __(' (Thai Loop)', 'seed-fonts');
 	$fonts = array(
 		"cloud" => array(
 			"font"    => "Cloud",
@@ -238,20 +256,20 @@ function seed_fonts_get_fonts() {
 			"font"    => "Moonjelly",
 			"weights" => array( 300, 700 )
 		),
-		"th-sarabun-new" => array(
-			"font"    => "TH Sarabun New (Loop: มีหัว)",
-			"weights" => array( 400, 700 )
+		"sarabun" => array(
+			"font"    => "Sarabun" . $loop,
+			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800)
 		),
 		"boon" => array(
-			"font"    => "Boon (Loop: มีหัว)",
+			"font"    => "Boon" . $loop,
 			"weights" => array( 400, 500, 600 )
 		),
 		"cs-prajad" => array(
-			"font"    => "CS Prajad (Loop: มีหัว)",
+			"font"    => "CS Prajad" . $loop,
 			"weights" => array( 400, 700 )
 		),
 		"cs-chatthai-ui" => array(
-			"font"    => "CS Chatthai UI (Loop: มีหัว)",
+			"font"    => "CS Chatthai UI" . $loop,
 			"weights" => array( 400 )
 		)
 	);
@@ -323,12 +341,21 @@ function seed_fonts_get_fonts_option_list() {
  *
  * @return array
  */
-function seed_fonts_get_fonts_weights_option_list( $font ) {
-
+function seed_fonts_get_fonts_weights_option_list( $font , $is_google_fonts) {
 	$font = seed_fonts_get_font( $font );
-
-	if ( ! isset( $font['weights'] ) || empty( $font['weights'] ) ) {
-		return array();
+	if ( ($is_google_fonts) || (! isset( $font['weights'] )) || empty( $font['weights'] ) ) {
+		return array(
+			'' => '',
+			100 => 'Thin 100',
+			200 => 'Extra Light 200',
+			300 => 'Light 300',
+			400 => 'Regular 400',
+			500 => 'Medium 500',
+			600 => 'Semi-Bold 600',
+			700 => 'Bold 700',
+			800 => 'Extra-Bold 800',
+			900 => 'Black 900',
+		);
 	}
 
 	$list = array( "" => "" );
@@ -397,22 +424,21 @@ function seed_fonts_get_header_settings() {
 			'options' => array(
 				array(
 					'id'      => seed_fonts_get_option_id( 'is_enabled' ),
-					'title'   => esc_html__( 'Enable?', 'seed-fonts' ),
+					'title'   => esc_html__( 'Enable Heading Font?', 'seed-fonts' ),
 					'type'    => 'checkbox',
 					'options' => array( 'on' => esc_html__( 'Yes', 'seed-fonts' ) )
 				),
 				array(
-					'id'      => seed_fonts_get_option_id( 'use_google_fonts' ),
+					'id'      => seed_fonts_get_option_id( 'is_google_fonts' ),
 					'title'   => esc_html__( 'Use Google Fonts?', 'seed-fonts' ),
 					'type'    => 'checkbox',
-					'options' => array( 'on' => esc_html__( 'Yes', 'seed-fonts' ) ),
-					'default' => true
+					'options' => array( 'on' => esc_html__( 'Yes', 'seed-fonts' ) )
 				),
 				array(
 					'id'      => seed_fonts_get_option_id( 'google_font_name' ),
 					'title'   => esc_html__( 'Google Font Name', 'seed-fonts' ),
 					'type'    => 'text',
-					'desc'    => wp_kses( sprintf( __( 'Choose one font from <a href="%1$s" target="_blank">fonts.google.com</a>, such as <b>Roboto</b>, <b>Open Sans</b>.', 'seed-fonts' ), esc_url( 'https://fonts.google.com/' ) ), array(
+					'desc'    => wp_kses( sprintf( __( 'Use font name from <a href="%1$s" target="_blank">fonts.google.com</a>, such as <b>Roboto</b>, <b>Open Sans</b> (case-sensitive).', 'seed-fonts' ), esc_url( 'https://fonts.google.com/' ) ), array(
 						'a' => array(
 							'href'   => array(),
 							'target' => array()
@@ -430,24 +456,23 @@ function seed_fonts_get_header_settings() {
 				array(
 					'id'      => seed_fonts_get_option_id( 'weight' ),
 					'title'   => esc_html__( 'Weight', 'seed-fonts' ),
-					'desc'    => esc_html__( 'Most fonts have only Regular and Bold.', 'seed-fonts' ),
+					'desc'    => esc_html__( 'Many fonts have only Regular (400) and Bold (700).', 'seed-fonts' ),
 					'type'    => 'dropdown',
-					'options' => array(
-						400 => 'Regular 400',
-						700 => 'Bold 700',
-						300 => 'Light 300',
-						500 => 'Medium 500',
-						600 => 'Semi-Bold 600',
-						800 => 'Extra-Bold 800',
-						900 => 'Black 900',
-					)
+					'options' => seed_fonts_get_fonts_weights_option_list( get_option( 'seed_fonts_font' ) , get_option( 'seed_fonts_is_google_fonts' ))
 				),
 				array(
 					'id'      => seed_fonts_get_option_id( 'selectors' ),
 					'title'   => esc_html__( 'Selectors', 'seed-fonts' ),
 					'type'    => 'text',
-					'desc'    => esc_html__( 'Separate selectors with commas', 'seed-fonts' ),
-					'default' => 'h1, h2, h3, h4, h5, h6, nav, .menu, .button, .price, ._heading'
+					'desc'    => esc_html__( 'Separate selectors with commas such as h1, h2, .button.', 'seed-fonts' ),
+					'desc'    => wp_kses( __( 'Separate selectors with commas such as <b>h1, h2, .button</b>.', 'seed-fonts' ), array(
+						'a' => array(
+							'href'   => array(),
+							'target' => array()
+						),
+						'b' => array()
+					) ),
+					'default' => 'h1, h2, h3, h4, h5, h6, nav, .nav, .menu, button, .button, .btn, .price, ._heading, blockquote, label, legend'
 				),
 				array(
 					'id'      => seed_fonts_get_option_id( 'is_important' ),
@@ -483,15 +508,45 @@ function seed_fonts_get_body_settings() {
 			'options' => array(
 				array(
 					'id'      => seed_fonts_get_option_id( 'body_is_enabled' ),
-					'title'   => esc_html__( 'Enable?', 'seed-fonts' ),
+					'title'   => esc_html__( 'Enable Body Font?', 'seed-fonts' ),
 					'type'    => 'checkbox',
 					'options' => array( 'on' => esc_html__( 'Yes', 'seed-fonts' ) )
 				),
 				array(
+					'id'      => seed_fonts_get_option_id( 'body_is_google_fonts' ),
+					'title'   => esc_html__( 'Use Google Fonts?', 'seed-fonts' ),
+					'type'    => 'checkbox',
+					'options' => array( 'on' => esc_html__( 'Yes', 'seed-fonts' ) )
+				),
+				array(
+					'id'      => seed_fonts_get_option_id( 'body_google_font_name' ),
+					'title'   => esc_html__( 'Google Font Name', 'seed-fonts' ),
+					'type'    => 'text',
+					'desc'    => wp_kses( sprintf( __( 'Use font name from <a href="%1$s" target="_blank">fonts.google.com</a>, such as <b>Roboto</b>, <b>Open Sans</b> (case-sensitive).', 'seed-fonts' ), esc_url( 'https://fonts.google.com/' ) ), array(
+						'a' => array(
+							'href'   => array(),
+							'target' => array()
+						),
+						'b' => array()
+					) ),
+					'default' => esc_html__( 'Open Sans', 'seed-fonts' ),
+				),
+				array(
 					'id'      => seed_fonts_get_option_id( 'body_font' ),
-					'title'   => esc_html__( 'Font', 'seed-fonts' ),
+					'title'   => esc_html__( 'Bundled Font', 'seed-fonts' ),
 					'type'    => 'dropdown',
 					'options' => seed_fonts_get_fonts_option_list(),
+				),
+				array(
+					'id'      => seed_fonts_get_option_id( 'body_weight' ),
+					'title'   => esc_html__( 'Weight', 'seed-fonts' ),
+					'desc'    => esc_html__( 'Many fonts have only Regular (400), not Light (300).', 'seed-fonts' ),
+					'type'    => 'dropdown',
+					'options' => array(
+						'' => '',
+						300 => 'Light 300',
+						400 => 'Regular 400',
+					)
 				),
 				array(
 					'id'      => seed_fonts_get_option_id( 'body_size' ),
@@ -505,6 +560,14 @@ function seed_fonts_get_body_settings() {
 					'type'    => 'dropdown',
 					'options' => array( 'px' => esc_html__( 'px', 'seed-fonts' ), 'em' => esc_html__( 'em', 'seed-fonts' ), '%' => esc_html__( '%', 'seed-fonts' ) ),
 					'default' => 'px'
+				),
+				
+				array(
+					'id'      => seed_fonts_get_option_id( 'body_lineheight' ),
+					'title'   => esc_html__( 'Line Height', 'seed-fonts' ),
+					'type'    => 'text',
+					'desc'    => esc_html__( '1.5-1.8 is recommended.', 'seed-fonts' ),
+					'default' => '1.6'
 				),
 				array(
 					'id'      => seed_fonts_get_option_id( 'body_selectors' ),
@@ -679,7 +742,7 @@ if( !$current && isset($option['std']) ) { $current = $option['std']; } ?>
 
 case 'textarea_code':
 if( !$current && isset($option['std']) ) { $current = $option['std']; } ?>
-<textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="4" cols="60" class="code" readonly><?php echo $current; ?></textarea>
+<textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="6" cols="60" class="code" readonly><?php echo $current; ?></textarea>
 <?php break;
 
 endswitch;
