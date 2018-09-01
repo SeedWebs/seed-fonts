@@ -229,69 +229,6 @@ function seed_fonts_hidden_weight_options() {
  */
 function seed_fonts_get_fonts() {
 
-	$google_fonts = array(
-		"Kanit" => array(
-			"font"    => "Kanit (Google Fonts)",
-			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900 ),
-			"is_google_font" => true
-		),
-		"Prompt" => array(
-			"font"    => "Prompt (Google Fonts)",
-			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900 ),
-			"is_google_font" => true
-		),
-		"Itim" => array(
-			"font"    => "Itim (Google Fonts)",
-			"weights" => array( 400 ),
-			"is_google_font" => true
-		),
-		"Pridi" => array(
-			"font"    => "Pridi (Google Fonts)",
-			"weights" => array( 200, 300, 400, 500, 600, 700 ),
-			"is_google_font" => true
-		),
-		"Taviraj" => array(
-			"font"    => "Taviraj (Google Fonts)",
-			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900 ),
-			"is_google_font" => true
-		),
-		"Trirong" => array(
-			"font"    => "Trirong (Google Fonts)",
-			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900 ),
-			"is_google_font" => true
-		),
-		"Mitr" => array(
-			"font"    => "Mitr (Google Fonts)",
-			"weights" => array( 200, 300, 400, 500, 600, 700 ),
-			"is_google_font" => true
-		),
-		"Athiti" => array(
-			"font"    => "Athiti (Google Fonts)",
-			"weights" => array( 200, 300, 400, 500, 600, 700 ),
-			"is_google_font" => true
-		),
-		"Maitree" => array(
-			"font"    => "Maitree (Google Fonts)",
-			"weights" => array( 200, 300, 400, 500, 600, 700 ),
-			"is_google_font" => true
-		),
-		"Pattaya" => array(
-			"font"    => "Pattaya (Google Fonts)",
-			"weights" => array( 400 ),
-			"is_google_font" => true
-		),
-		"Sriracha" => array(
-			"font"    => "Sriracha (Google Fonts)",
-			"weights" => array( 400 ),
-			"is_google_font" => true
-		),
-		"Chonburi" => array(
-			"font"    => "Chonburi (Google Fonts)",
-			"weights" => array( 400 ),
-			"is_google_font" => true
-		)
-	);
-
 	$fonts = array(
 		"cloud" => array(
 			"font"    => "Cloud",
@@ -354,8 +291,6 @@ function seed_fonts_get_fonts() {
 			}
 		}
 	}
-
-	$fonts = $google_fonts + $fonts;
 
 	return apply_filters( 'seed_fonts_fonts', $fonts );
 
@@ -477,7 +412,7 @@ function seed_fonts_get_header_settings() {
 					'id'      => seed_fonts_get_option_id( 'google_font_name' ),
 					'title'   => esc_html__( 'Google Font Name', 'seed-fonts' ),
 					'type'    => 'text',
-					'desc'    => wp_kses( sprintf( __( 'Only one font name from <a href="%1$s" target="_blank">fonts.google.com</a>, such as <b>Roboto</b>, <b>Open Sans</b>.', 'seed-fonts' ), esc_url( 'https://fonts.google.com/' ) ), array(
+					'desc'    => wp_kses( sprintf( __( 'Choose one font from <a href="%1$s" target="_blank">fonts.google.com</a>, such as <b>Roboto</b>, <b>Open Sans</b>.', 'seed-fonts' ), esc_url( 'https://fonts.google.com/' ) ), array(
 						'a' => array(
 							'href'   => array(),
 							'target' => array()
