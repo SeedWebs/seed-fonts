@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Seed Fonts\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-02 09:21+0000\n"
+"POT-Creation-Date: 2018-09-02 10:10+0000\n"
 "POT-Revision-Date: Sun Aug 14 2016 21:51:50 GMT+0700 (ICT)\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
@@ -166,9 +166,9 @@ msgstr ""
 
 #. Description of the plugin
 msgid ""
-"Enable web fonts on Appearance -> Fonts. You can add more by <a href=\"https:"
-"//www.seedthemes.com/plugin/seed-fonts/\" target=\"_blank\">uploading your "
-"web fonts to the theme folder</a>."
+"Enable web fonts on Appearance -> Fonts. You can use Google Fonts, Bundled "
+"fonts or add your own by <a href=\"https://www.seedthemes.com/plugin/seed-"
+"fonts/\" target=\"_blank\">uploading your web fonts to the theme folder</a>."
 msgstr ""
 
 #. URI of the plugin

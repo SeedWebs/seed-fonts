@@ -3,17 +3,20 @@ Contributors: SeedThemes
 Donate link: http://seedthemes.com/
 Tags: webfont,web fonts, @font-face embed, typography
 Requires at least: 4.0
-Tested up to: 4.9
+Tested up to: 4.9.8
 Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Use web fonts (@font-face) by choosing from 8 ready-generated Thai-English fonts or upload your own web fonts to theme folder.
-
+Use web fonts (@font-face) by choosing from Google Fonts, Bundled Thai-English fonts, and your own web fonts.
 
 == Description ==
 
-Seed Fonts is WordPress plugin that helps you use web fonts (@font-face embed) easier. You can choose from 10 ready-generated Thai-English web fonts, or use your own web fonts (such as generated from <a href="https://www.fontsquirrel.com/tools/webfont-generator" target="_blank">Font Squirrel’s Webfont Generator</a>) by uploading web fonts to current theme folder (/wp-content/YOUR-THEME-NAME/vendor/fonts/YOUR-FONT-NAME) or to upload folder (/wp-content/uploads/fonts/YOUR-FONT-NAME).
+Seed Fonts is WordPress plugin that helps you use web fonts (@font-face embed) easier. You can use by
+
+1. Google Fonts
+2. Bundled Thai-English fonts
+3. Your own web fonts. (Upload to /wp-content/upload/fonts/FontName/ or /wp-content/themes/ThemeName/vendor/fonts/FontName/.)
 
 The GitHub repository can be found at <a href="https://github.com/SeedThemes/seed-fonts" target="_blank">https://github.com/SeedThemes/seed-fonts</a>. 
 
@@ -41,9 +44,9 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 == Changelog ==
 
 = 2.0.0 =
-* Allow using any Google Font and weight.
-* Remove old bundled google font.
-* Add new fonts - Noto Sans Thai and Sarabun
+* Now support Google Fonts. You can choose any font and weight.
+* Remove old bundled Google Fonts.
+* Add new fonts - Noto Sans Thai, Noto Serif Thai and Sarabun.
 * Remove old font - TH Sarabun New.
 
 = 1.1.3 =
@@ -77,10 +80,8 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 
 == Upgrade Notice ==
 
-= 1.1.3 =
-* Add Moonjelly and CS Chatthai UI fonts.
-* Remove old font files (.eot and .ttf). Now using only .woff and .woff2.
-* Now we can upload fonts to /wp-content/uploads/fonts/FONT-NAME.
-
-= 1.1.2 =
-* Fix Boon font error loading.
+= 2.0.0 =
+* Now support Google Fonts. You can choose any font and weight.
+* Remove old bundled Google Fonts.
+* Add new fonts - Noto Sans Thai, Noto Serif Thai and Sarabun.
+* Remove old font - TH Sarabun New.
