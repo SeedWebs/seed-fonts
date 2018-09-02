@@ -500,7 +500,6 @@ function seed_fonts_get_header_settings() {
 					'id'      => seed_fonts_get_option_id( 'selectors' ),
 					'title'   => esc_html__( 'Selectors', 'seed-fonts' ),
 					'type'    => 'text',
-					'desc'    => esc_html__( 'Separate selectors with commas such as h1, h2, .button.', 'seed-fonts' ),
 					'desc'    => wp_kses( __( 'Separate selectors with commas such as <b>h1, h2, .button</b>.', 'seed-fonts' ), array(
 						'a' => array(
 							'href'   => array(),
