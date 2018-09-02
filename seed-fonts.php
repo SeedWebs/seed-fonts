@@ -280,6 +280,10 @@ function seed_fonts_get_fonts() {
 			"font"    => "Noto Sans Thai",
 			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900)
 		),
+		"noto-serif-thai" => array(
+			"font"    => "Noto Serif Thai",
+			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900)
+		),
 		"cloud" => array(
 			"font"    => "Cloud",
 			"weights" => array( 300, 700 )
