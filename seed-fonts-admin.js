@@ -203,22 +203,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	formSeedFonts.on( 'submit', function ( event ) {
-		inputFonts.prop( 'disabled', false );
-		inputGoogleFonts.prop( 'disabled', false );
-		inputGoogleFontName.prop( 'disabled', false );
-		inputFontWeight.prop( 'disabled', false );
-		inputSelectors.prop( 'disabled', false );
-		inputImportant.prop( 'disabled', false );
-
-		inputBodyGoogleFonts.prop( 'disabled', false );
-		inputBodyGoogleFontName.prop( 'disabled', false );
-		inputBodyFonts.prop( 'disabled', false );
-		inputBodyWeight.prop( 'disabled', false );
-		inputBodySize.prop( 'disabled', false );
-		inputBodySizeUnit.prop( 'disabled', false );
-		inputBodyLineheight.prop( 'disabled', false );
-		inputBodySelectors.prop( 'disabled', false );
-		inputBodyImportant.prop( 'disabled', false );
+		formSeedFonts.css('opacity', '0.5');
 	});
 
 });
