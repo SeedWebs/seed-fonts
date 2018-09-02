@@ -9,7 +9,6 @@ jQuery(document).ready(function ($) {
 	inputGoogleFonts = $('#seed-fonts-is-google-fonts'),
 	inputGoogleFontName = $('#seed-fonts-google-font-name'),
 	inputFonts = $('#seed-fonts-font'),
-
 	inputImportant = $('#seed-fonts-is-important'),
 	inputFontWeight = $('#seed-fonts-weight'),
 
@@ -81,13 +80,19 @@ jQuery(document).ready(function ($) {
 
 	function seed_fonts_is_google_fonts() {
 		var is_googlefonts = inputGoogleFonts.prop('checked');
+		var weight = $('#seed-fonts-weight').val();
+		var font = inputFonts.val();
 		if (is_googlefonts) {
 			$('#seed-fonts-google-font-name').closest('tr').show();
 			$('#seed-fonts-font').closest('tr').hide();
+			inputFontWeight.empty().append($('#seed-fonts-all-weights').children().clone()).val(weight);
 		} else {
 			$('#seed-fonts-google-font-name').closest('tr').hide();
 			$('#seed-fonts-font').closest('tr').show();
+			inputFontWeight.empty().append($('#seed-fonts-' + font + '-weights').children().clone()).val(weight);
 		}
+		if (inputFontWeight.val() == null)
+			$("#seed-fonts-weight option:first").attr('selected', 'selected');
 		
 	}
 
@@ -199,13 +204,19 @@ jQuery(document).ready(function ($) {
 
 	formSeedFonts.on( 'submit', function ( event ) {
 		inputFonts.prop( 'disabled', false );
+		inputGoogleFonts.prop( 'disabled', false );
+		inputGoogleFontName.prop( 'disabled', false );
 		inputFontWeight.prop( 'disabled', false );
 		inputSelectors.prop( 'disabled', false );
 		inputImportant.prop( 'disabled', false );
 
+		inputBodyGoogleFonts.prop( 'disabled', false );
+		inputBodyGoogleFontName.prop( 'disabled', false );
 		inputBodyFonts.prop( 'disabled', false );
+		inputBodyWeight.prop( 'disabled', false );
 		inputBodySize.prop( 'disabled', false );
 		inputBodySizeUnit.prop( 'disabled', false );
+		inputBodyLineheight.prop( 'disabled', false );
 		inputBodySelectors.prop( 'disabled', false );
 		inputBodyImportant.prop( 'disabled', false );
 	});

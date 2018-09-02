@@ -2,9 +2,9 @@
 Contributors: SeedThemes
 Donate link: http://seedthemes.com/
 Tags: webfont,web fonts, @font-face embed, typography
-Requires at least: 4.0.1
-Tested up to: 4.8
-Stable tag: 1.1.3
+Requires at least: 4.0
+Tested up to: 4.9
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,12 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 
 
 == Changelog ==
+
+= 2.0.0 =
+* Allow using any Google Font and weight.
+* Remove old bundled google font.
+* Add new fonts - Noto Sans Thai and Sarabun
+* Remove old font - TH Sarabun New.
 
 = 1.1.3 =
 * Add Moonjelly and CS Chatthai UI fonts.

@@ -53,7 +53,13 @@ function seed_fonts_scripts() {
 			if( $selectors != '' )
 				$font_styles = $selectors.' ';
 
-			$font_styles .= '{font-family: "'.$font.'",  sans-serif'.( $is_important ? ' !important' : '' ).';';
+			$other_font = '';
+			if($font == 'noto-sans-thai')
+				$other_font = 'noto-sans, ';
+			if($font == 'noto-serif-thai')
+				$other_font = 'noto-serif, ';
+
+			$font_styles .= '{font-family: "'.$font.'", '. $other_font . 'sans-serif'.( $is_important ? ' !important' : '' ).';';
 			if( $weight != '' )
 				$font_styles .= ' font-weight: '.$weight.( $is_important ? ' !important' : '' ).';';
 			$font_styles .= ' }';
@@ -99,8 +105,14 @@ function seed_fonts_scripts() {
 			if( $body_selectors != '' )
 				$body_font_styles = $body_selectors.' ';
 
+			$body_other_font = '';
+			if($body_font == 'noto-sans-thai')
+				$body_other_font = 'noto-sans, ';
+			if($body_font == 'noto-serif-thai')
+				$body_other_font = 'noto-serif, ';
 
-			$body_font_styles .= '{font-family: "'.$body_font.'",  sans-serif'.( $body_is_important ? ' !important' : '' ).';';
+
+			$body_font_styles .= '{font-family: "'.$body_font.'", '.$body_other_font.'sans-serif'.( $body_is_important ? ' !important' : '' ).';';
 			if( $body_weight != '' )
 				$body_font_styles .= ' font-weight: '.$body_weight.( $body_is_important ? ' !important' : '' ).';';
 			if( $body_size != '' )
@@ -226,28 +238,48 @@ seed_fonts_get_fonts
  * @since 0.10.0
  */
 function seed_fonts_hidden_weight_options() {
+
+
 	$fonts = seed_fonts_get_fonts();
 
-	foreach( $fonts as $_font => $_font_desc ) { ?>
+	foreach( $fonts as $_font => $_font_desc ) { 
+		?>
+		<select id="seed-fonts-<?php esc_html_e( $_font, 'seed-fonts' ); ?>-weights" style="display:none">
+			<option value=""></option><?php
+			foreach( $_font_desc["weights"] as $_weight ) { ?>		
+			<option value="<?php esc_html_e( $_weight, 'seed-fonts' ); ?>"><?php esc_html_e( $_weight, 'seed-fonts' ); ?></option><?php		
+		} ?>
+		</select> <?php
+	}
 
-	<select id="seed-fonts-<?php esc_html_e( $_font, 'seed-fonts' ); ?>-weights" style="display:none">
-		<option value=""></option><?php
-		foreach( $_font_desc["weights"] as $_weight ) { ?>		
-		<option value="<?php esc_html_e( $_weight, 'seed-fonts' ); ?>"><?php esc_html_e( $_weight, 'seed-fonts' ); ?></option><?php		
-	} ?>
-	</select> <?php
-}
+	echo '<select id="seed-fonts-all-weights" style="display:none">
+	<option value=""></option>
+	<option value="100">Thin 100</option>
+	<option value="200">Extra Light 200</option>
+	<option value="300" selected="selected">Light 300</option>
+	<option value="400">Regular 400</option>
+	<option value="500">Medium 500</option>
+	<option value="600">Semi-Bold 600</option>
+	<option value="700">Bold 700</option>
+	<option value="800">Extra-Bold 800</option>
+	<option value="900">Black 900</option>
+	</select>';
 }
 
 /**
- * Get the list of available fonts
+ * Get the list of bundled fonts
  *
  * @since 0.10.0
  * @return array
  */
 function seed_fonts_get_fonts() {
 	$loop = __(' (Thai Loop)', 'seed-fonts');
+
 	$fonts = array(
+		"noto-sans-thai" => array(
+			"font"    => "Noto Sans Thai",
+			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900)
+		),
 		"cloud" => array(
 			"font"    => "Cloud",
 			"weights" => array( 300, 700 )

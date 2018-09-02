@@ -1,0 +1,132 @@
+/*
+Font Name: Noto Sans Thai
+Weights: 100, 200, 300, 400, 500, 600, 700, 800
+*/
+@font-face {
+    font-family: 'noto-sans';
+    src: url('notosans-thin.woff2') format('woff2'),
+          url('notosans-thin.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans';
+    src: url('notosans-extralight.woff2') format('woff2'),
+          url('notosans-extralight.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans';
+    src: url('notosans-light.woff2') format('woff2'),
+          url('notosans-light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans';
+    src: url('notosans-regular.woff2') format('woff2'),
+          url('notosans-regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans';
+    src: url('notosans-medium.woff2') format('woff2'),
+          url('notosans-medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans';
+    src: url('notosans-semibold.woff2') format('woff2'),
+          url('notosans-semibold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans';
+    src: url('notosans-bold.woff2') format('woff2'),
+          url('notosans-bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans';
+    src: url('notosans-extrabold.woff2') format('woff2'),
+          url('notosans-extrabold.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans';
+    src: url('notosans-black.woff2') format('woff2'),
+          url('notosans-black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'noto-sans-thai';
+    src: url('notosansthai-thin.woff2') format('woff2'),
+          url('notosansthai-thin.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans-thai';
+    src: url('notosansthai-extralight.woff2') format('woff2'),
+          url('notosansthai-extralight.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans-thai';
+    src: url('notosansthai-light.woff2') format('woff2'),
+          url('notosansthai-light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans-thai';
+    src: url('notosansthai-regular.woff2') format('woff2'),
+          url('notosansthai-regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans-thai';
+    src: url('notosansthai-medium.woff2') format('woff2'),
+          url('notosansthai-medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans-thai';
+    src: url('notosansthai-semibold.woff2') format('woff2'),
+          url('notosansthai-semibold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans-thai';
+    src: url('notosansthai-bold.woff2') format('woff2'),
+          url('notosansthai-bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans-thai';
+    src: url('notosansthai-extrabold.woff2') format('woff2'),
+          url('notosansthai-extrabold.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'noto-sans-thai';
+    src: url('notosansthai-black.woff2') format('woff2'),
+          url('notosansthai-black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+}
