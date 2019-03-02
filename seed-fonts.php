@@ -3,7 +3,7 @@
 Plugin Name: Seed Fonts
 Plugin URI: https://www.seedthemes.com/plugin/seed-fonts
 Description: Enable web fonts on Appearance -> Fonts. You can use Google Fonts, Bundled fonts or add your own by <a href="https://www.seedthemes.com/plugin/seed-fonts/" target="_blank">uploading your web fonts to the theme folder</a>.
-Version: 2.0.0
+Version: 2.1.0
 Author: SeedThemes
 Author URI: https://www.seedthemes.com
 License: GPL2
@@ -276,6 +276,10 @@ function seed_fonts_get_fonts() {
 	$loop = __(' (Thai Loop)', 'seed-fonts');
 
 	$fonts = array(
+		"anakotmai" => array(
+			"font"    => "Anakotmai",
+			"weights" => array( 300, 500, 700)
+		),
 		"noto-sans-thai" => array(
 			"font"    => "Noto Sans Thai",
 			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900)

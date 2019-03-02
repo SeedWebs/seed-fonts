@@ -43,6 +43,9 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 
 == Changelog ==
 
+= 2.1.0 =
+* New: Anakotmai font.
+
 = 2.0.0 =
 * Now support Google Fonts. You can choose any font and weight.
 * Remove old bundled Google Fonts.

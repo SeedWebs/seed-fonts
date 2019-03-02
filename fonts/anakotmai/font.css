@@ -1,0 +1,25 @@
+/*
+Font Name: Anakotmai
+Weights: 300, 500, 700
+*/
+@font-face {
+    font-family: 'Anakotmai';
+    src: url('anakotmai-light.woff2') format('woff2'),
+         url('anakotmai-light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Anakotmai';
+    src: url('anakotmai-medium.woff2') format('woff2'),
+         url('anakotmai-medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Anakotmai';
+    src: url('anakotmai-bold.woff2') format('woff2'),
+         url('anakotmai-bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
