@@ -511,7 +511,7 @@ function seed_fonts_get_header_settings() {
 						),
 						'b' => array()
 					) ),
-					'default' => 'h1, h2, h3, h4, h5, h6, nav, .nav, .menu, button, .button, .btn, .price, ._heading, blockquote, label, legend'
+					'default' => 'h1, h2, h3, h4, h5, h6, nav, .nav, .menu, button, .button, .btn, .price, ._heading, .wp-block-pullquote blockquote, blockquote, label, legend'
 				),
 				array(
 					'id'      => seed_fonts_get_option_id( 'is_important' ),
