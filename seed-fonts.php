@@ -196,37 +196,39 @@ function seed_fonts_admin_styles() {
 function seed_fonts_init() { ?>
 
 <div class="wrap">
-	<div class="icon32" id="icon-options-general"></div>
-	<h2><?php esc_html_e( 'Seed Fonts', 'seed-fonts' ); ?></h2>
+    <div class="icon32" id="icon-options-general"></div>
+    <h2><?php esc_html_e( 'Seed Fonts', 'seed-fonts' ); ?></h2>
 
-	<?php
+    <?php
 	if( isset( $_GET['settings-updated'] ) ) {
-		?><div class="updated"><p><strong><?php esc_html_e( 'Settings updated successfully.', 'seed-fonts' ); ?></strong></div><?php
+		?><div class="updated">
+        <p><strong><?php esc_html_e( 'Settings updated successfully.', 'seed-fonts' ); ?></strong>
+    </div><?php
 	}
 	?>
-	<p>
-		<?php printf( wp_kses( __( 'This plugin allows you to use Google fonts, bundled Thai fonts, or your own custom fonts. For more information, please visit <a href="%1$s" target="_blank">Seed Fonts by SeedThemes.com</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://www.seedthemes.com/plugin/seed-fonts/' ) ); ?>
-	</p>
-	<form action="<?php echo admin_url( 'options.php' ); ?>" method="post" id="seed-fonts-form">
-		<div id="seed-fonts-tabs">
-			<ul class="wp-clearfix">
-				<li><a href="#seed-fonts-header"><?php esc_html_e( 'Heading', 'seed-fonts' ); ?></a></li>
-				<li><a href="#seed-fonts-body"><?php esc_html_e( 'Body', 'seed-fonts' ); ?></a></li>
-			</ul>
+    <p>
+        <?php printf( wp_kses( __( 'This plugin allows you to use Google fonts, bundled Thai fonts, or your own custom fonts. For more information, please visit <a href="%1$s" target="_blank">Seed Fonts by SeedThemes.com</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://www.seedthemes.com/plugin/seed-fonts/' ) ); ?>
+    </p>
+    <form action="<?php echo admin_url( 'options.php' ); ?>" method="post" id="seed-fonts-form">
+        <div id="seed-fonts-tabs">
+            <ul class="wp-clearfix">
+                <li><a href="#seed-fonts-header"><?php esc_html_e( 'Heading', 'seed-fonts' ); ?></a></li>
+                <li><a href="#seed-fonts-body"><?php esc_html_e( 'Body', 'seed-fonts' ); ?></a></li>
+            </ul>
 
-			<div class="dummy">
-				<?php
+            <div class="dummy">
+                <?php
 				settings_fields( 'seed-fonts' );
 				do_settings_sections( 'seed-fonts' );
 				?>
-			</div>
+            </div>
 
-			<?php submit_button(); ?>
+            <?php submit_button(); ?>
 
-		</div>
+        </div>
 
-		<?php seed_fonts_hidden_weight_options(); ?>
-	</form>
+        <?php seed_fonts_hidden_weight_options(); ?>
+    </form>
 </div>
 
 <?php }
@@ -244,12 +246,13 @@ function seed_fonts_hidden_weight_options() {
 
 	foreach( $fonts as $_font => $_font_desc ) { 
 		?>
-		<select id="seed-fonts-<?php esc_html_e( $_font, 'seed-fonts' ); ?>-weights" style="display:none">
-			<option value=""></option><?php
-			foreach( $_font_desc["weights"] as $_weight ) { ?>		
-			<option value="<?php esc_html_e( $_weight, 'seed-fonts' ); ?>"><?php esc_html_e( $_weight, 'seed-fonts' ); ?></option><?php		
+<select id="seed-fonts-<?php esc_html_e( $_font, 'seed-fonts' ); ?>-weights" style="display:none">
+    <option value=""></option><?php
+			foreach( $_font_desc["weights"] as $_weight ) { ?>
+    <option value="<?php esc_html_e( $_weight, 'seed-fonts' ); ?>"><?php esc_html_e( $_weight, 'seed-fonts' ); ?>
+    </option><?php		
 		} ?>
-		</select> <?php
+</select> <?php
 	}
 
 	echo '<select id="seed-fonts-all-weights" style="display:none">
@@ -276,6 +279,10 @@ function seed_fonts_get_fonts() {
 	$loop = __(' (Thai Loop)', 'seed-fonts');
 
 	$fonts = array(
+		"ibm-plex-thai" => array(
+			"font"    => "IBM Plex Thai",
+			"weights" => array( 300, 400, 500, 700)
+		),
 		"anakotmai" => array(
 			"font"    => "Anakotmai",
 			"weights" => array( 300, 500, 700)
@@ -712,8 +719,9 @@ function seed_fonts_register_plugin_settings() {
  */
 function seed_fonts_section( $section ) {
 	?>
-</div><div id="<?php echo $section['id'] ?>">
-	<?php
+</div>
+<div id="<?php echo $section['id'] ?>">
+    <?php
 }
 
 /**
@@ -739,50 +747,54 @@ function seed_fonts_output_settings_field( $option ) {
 	switch( $field_type ):
 
 	case 'text': ?>
-	<input type="text" name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" value="<?php echo $current; ?>" class="regular-text" />
-	<?php break;
+    <input type="text" name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" value="<?php echo $current; ?>"
+        class="regular-text" />
+    <?php break;
 
 	case 'checkbox': ?>
-	<?php foreach( $option['options'] as $val => $choice ):
+    <?php foreach( $option['options'] as $val => $choice ):
 
 	if ( count( $option['options'] ) > 1 ) {
 		$id = "{$id}_{$val}";
 	}
 
 	$selected = is_array( $current ) && in_array( $val, $current ) ? 'checked="checked"' : '';  ?>
-	<label for="<?php echo $id; ?>">
-		<input type="checkbox" name="<?php echo $option['name']; ?>[]" value="<?php echo $val; ?>" id="<?php echo $id; ?>" <?php echo $selected; ?> />
-		<?php echo $choice; ?>
-	</label>
-<?php endforeach;
+    <label for="<?php echo $id; ?>">
+        <input type="checkbox" name="<?php echo $option['name']; ?>[]" value="<?php echo $val; ?>"
+            id="<?php echo $id; ?>" <?php echo $selected; ?> />
+        <?php echo $choice; ?>
+    </label>
+    <?php endforeach;
 break;
 
 case 'dropdown': ?>
-<label for="<?php echo $option['name']; ?>">
-	<select name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>">
+    <label for="<?php echo $option['name']; ?>">
+        <select name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>">
 
-		<?php foreach( $option['options'] as $val => $choice ):
+            <?php foreach( $option['options'] as $val => $choice ):
 		if( $val == $current )
 			$selected = 'selected="selected"';
 		else
 			$selected = ''; ?>
-		<option value="<?php echo $val; ?>" <?php echo $selected; ?>><?php echo $choice; ?></option>
+            <option value="<?php echo $val; ?>" <?php echo $selected; ?>><?php echo $choice; ?></option>
 
-	<?php endforeach; ?>
+            <?php endforeach; ?>
 
-</select>
-</label>
-<?php break;
+        </select>
+    </label>
+    <?php break;
 
 case 'textarea':
 if( !$current && isset($option['std']) ) { $current = $option['std']; } ?>
-<textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="8" cols="70"><?php echo $current; ?></textarea>
-<?php break;
+    <textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="8"
+        cols="70"><?php echo $current; ?></textarea>
+    <?php break;
 
 case 'textarea_code':
 if( !$current && isset($option['std']) ) { $current = $option['std']; } ?>
-<textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="6" cols="60" class="code" readonly><?php echo $current; ?></textarea>
-<?php break;
+    <textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="6" cols="60" class="code"
+        readonly><?php echo $current; ?></textarea>
+    <?php break;
 
 endswitch;
 
