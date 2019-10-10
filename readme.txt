@@ -3,8 +3,8 @@ Contributors: SeedThemes
 Donate link: http://seedthemes.com/
 Tags: webfont,web fonts, @font-face embed, typography
 Requires at least: 4.0
-Tested up to: 5.2.1
-Stable tag: 2.1.0
+Tested up to: 5.2.3
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,10 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 
 
 == Changelog ==
+
+= 2.1.1 =
+* Date: 10 OCT 2019
+* New: IBM Plex Thai font.
 
 = 2.1.0 =
 * New: Anakotmai font.
