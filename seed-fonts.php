@@ -57,18 +57,22 @@ function seed_fonts_scripts() {
 	if( $is_enabled && ( $font !== FALSE ) && ( $font != '' ) ) {
 
 		if( $selectors != '' )
-			$font_styles = $admin_head_selectors . $selectors.' ';
-
-		$other_font = '';
+			$font_styles = $admin_head_selectors . $selectors;
+			
+		$other_font = ',sans-serif';
 		if($font == 'noto-sans-thai')
-			$other_font = 'noto-sans, ';
+			$other_font = ',noto-sans,sans-serif';
 		if($font == 'noto-serif-thai')
-			$other_font = 'noto-serif, ';
+			$other_font = ',noto-serif,sans-serif';
 
-		$font_styles .= '{font-family: "'.$font.'", '. $other_font . 'sans-serif'.( $is_important ? ' !important' : '' ).';';
+		$font_family = '"' . $font . '"' . $other_font . ( $is_important ? ' !important' : '' );
+		$font_styles .= '{font-family: '. $font_family . ';';
 		if( $weight != '' )
 			$font_styles .= ' font-weight: '.$weight.( $is_important ? ' !important' : '' ).';';
 		$font_styles .= ' }';
+
+		// Add CSS Var
+		$font_styles .= 'body {--s-heading:' . $font_family . '}';
 
 		if( $is_google_font ) {
 			if( $weight != '' )				
@@ -108,16 +112,18 @@ function seed_fonts_scripts() {
 	if( $body_is_enabled && ( $body_font !== FALSE ) && ( $body_font != '' ) ) {
 
 		if( $body_selectors != '' ) {
-			$body_font_styles = $admin_body_selectors . $body_selectors.' ';
+			$body_font_styles = $admin_body_selectors . $body_selectors;
 		}
-		$body_other_font = '';
+		$body_other_font = ',sans-serif';
 		if($body_font == 'noto-sans-thai') {
-			$body_other_font = 'noto-sans, ';
+			$body_other_font = ',noto-sans,sans-serif';
 		}
 		if($body_font == 'noto-serif-thai') {
-			$body_other_font = 'noto-serif, ';
+			$body_other_font = ',noto-serif,sans-serif';
 		}
-		$body_font_styles .= '{font-family: "'.$body_font.'", '.$body_other_font.'sans-serif'.( $body_is_important ? ' !important' : '' ).';';
+		
+		$body_font_family = '"' . $body_font . '"' . $body_other_font . ( $body_is_important ? ' !important' : '' );
+		$body_font_styles .= '{font-family: '. $body_font_family . ';';
 		if( $body_weight != '' ) {
 			$body_font_styles .= ' font-weight: '.$body_weight.( $body_is_important ? ' !important' : '' ).';';
 		}
@@ -128,6 +134,12 @@ function seed_fonts_scripts() {
 			$body_font_styles .= ' line-height: '.$body_lineheight.( $body_is_important ? ' !important' : '' ).';';
 		}
 		$body_font_styles .= ' }';
+
+		// Add CSS Var
+		$body_font_styles .= 'body {--s-body:' . $body_font_family . ';';
+		$body_font_styles .= '--s-body-line-height:' . $body_lineheight . ';';
+		$body_font_styles .= '}';
+
 		if( $body_is_google_font ) {
 			if( $body_weight != '' )				
 				wp_enqueue_style( 'seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font.':'.$body_weight, false );
