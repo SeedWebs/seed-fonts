@@ -3,7 +3,7 @@
 Plugin Name: Seed Fonts
 Plugin URI: https://www.seedthemes.com/plugin/seed-fonts
 Description: Enable web fonts on Appearance -> Fonts. You can use Google Fonts, Bundled fonts or add your own by <a href="https://www.seedthemes.com/plugin/seed-fonts/" target="_blank">uploading your web fonts to the theme folder</a>.
-Version: 2.1.1
+Version: 2.2.0
 Author: SeedThemes
 Author URI: https://www.seedthemes.com
 License: GPL2
@@ -27,117 +27,123 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-add_action( 'wp_enqueue_scripts', 'seed_fonts_scripts', 30 );
+add_action( 'wp_enqueue_scripts', 'seed_fonts_scripts', 30);
+add_action( 'enqueue_block_editor_assets', 'seed_fonts_scripts', 30);
 
 function seed_fonts_scripts() {
-	if( ! is_admin() ) {
-		$fonts = seed_fonts_get_fonts();
 
-		$is_enabled = ( get_option( 'seed_fonts_is_enabled' ) );
-		$is_google_font = ( get_option( 'seed_fonts_is_google_fonts' ) );
-		
-		$weight = get_option( 'seed_fonts_weight' );
-		$selectors = get_option( 'seed_fonts_selectors' );
-		$is_important = ( get_option( 'seed_fonts_is_important' ) );
-		$font_styles = '';
+	$admin_head_selectors = '';
+	$admin_body_selectors = '';
+	
+	if( is_admin()) {
+		$admin_head_selectors = ".editor-post-title__block .editor-post-title__input,";
+		$admin_body_selectors = ".editor-styles-wrapper > *, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper cite, .editor-styles-wrapper figcaption, .editor-styles-wrapper .wp-caption-text,";
+	}
 
-		if($is_google_font) {
-			$font = preg_replace('!\s+!', ' ', get_option( 'seed_fonts_google_font_name' ));
+	$fonts = seed_fonts_get_fonts();
+	$is_enabled = ( get_option( 'seed_fonts_is_enabled' ) );
+	$is_google_font = ( get_option( 'seed_fonts_is_google_fonts' ) );
+	$weight = get_option( 'seed_fonts_weight' );
+	$selectors = get_option( 'seed_fonts_selectors' );
+	$is_important = ( get_option( 'seed_fonts_is_important' ) );
+	$font_styles = '';
+
+	if($is_google_font) {
+		$font = preg_replace('!\s+!', ' ', get_option( 'seed_fonts_google_font_name' ));
+	} else {
+		$font = get_option( 'seed_fonts_font' );
+	}
+
+	if( $is_enabled && ( $font !== FALSE ) && ( $font != '' ) ) {
+
+		if( $selectors != '' )
+			$font_styles = $admin_head_selectors . $selectors.' ';
+
+		$other_font = '';
+		if($font == 'noto-sans-thai')
+			$other_font = 'noto-sans, ';
+		if($font == 'noto-serif-thai')
+			$other_font = 'noto-serif, ';
+
+		$font_styles .= '{font-family: "'.$font.'", '. $other_font . 'sans-serif'.( $is_important ? ' !important' : '' ).';';
+		if( $weight != '' )
+			$font_styles .= ' font-weight: '.$weight.( $is_important ? ' !important' : '' ).';';
+		$font_styles .= ' }';
+
+		if( $is_google_font ) {
+			if( $weight != '' )				
+				wp_enqueue_style( 'seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font.':'.$weight, false ); 
+			else
+				wp_enqueue_style( 'seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font, false ); 
 		} else {
-			$font = get_option( 'seed_fonts_font' );
-		}
-		
-
-		if( $is_enabled && ( $font !== FALSE ) && ( $font != '' ) ) {
-
-			if( $selectors != '' )
-				$font_styles = $selectors.' ';
-
-			$other_font = '';
-			if($font == 'noto-sans-thai')
-				$other_font = 'noto-sans, ';
-			if($font == 'noto-serif-thai')
-				$other_font = 'noto-serif, ';
-
-			$font_styles .= '{font-family: "'.$font.'", '. $other_font . 'sans-serif'.( $is_important ? ' !important' : '' ).';';
-			if( $weight != '' )
-				$font_styles .= ' font-weight: '.$weight.( $is_important ? ' !important' : '' ).';';
-			$font_styles .= ' }';
-
-			if( $is_google_font ) {
-				if( $weight != '' )				
-					wp_enqueue_style( 'seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font.':'.$weight, false ); 
-				else
-					wp_enqueue_style( 'seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font, false ); 
+			$upload_dir = wp_upload_dir();
+			if( file_exists( get_stylesheet_directory() . '/vendor/fonts/' . $font ) && is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $font ) ) {
+				wp_enqueue_style( 'seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $font . '/font.css' , array(  ) );
+			} elseif( file_exists( $upload_dir['basedir'] . '/fonts/'  . $font ) && is_dir( $upload_dir['basedir'] . '/fonts/' . $font ) ) {
+				wp_enqueue_style( 'seed-fonts-all', $upload_dir['baseurl'] . '/fonts/'  . $font . '/font.css' , array(  ) );
 			} else {
-				$upload_dir = wp_upload_dir();
-				if( file_exists( get_stylesheet_directory() . '/vendor/fonts/' . $font ) && is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $font ) ) {
-					wp_enqueue_style( 'seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $font . '/font.css' , array(  ) );
-				} elseif( file_exists( $upload_dir['basedir'] . '/fonts/'  . $font ) && is_dir( $upload_dir['basedir'] . '/fonts/' . $font ) ) {
-					wp_enqueue_style( 'seed-fonts-all', $upload_dir['baseurl'] . '/fonts/'  . $font . '/font.css' , array(  ) );
-				} else {
-					wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $font . '/font.css' , array(  ) );
-				}
+				wp_enqueue_style( 'seed-fonts-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $font . '/font.css' , array(  ) );
 			}
-
-			wp_add_inline_style( 'seed-fonts-all', $font_styles );
 		}
 
-		$body_is_enabled = ( get_option( 'seed_fonts_body_is_enabled' ) );
-		$body_is_google_font = ( get_option( 'seed_fonts_body_is_google_fonts' ) );
-		$body_weight = get_option( 'seed_fonts_body_weight' );
-		$body_size = get_option( 'seed_fonts_body_size' );
-		$body_size_unit = get_option( 'seed_fonts_body_size_unit' );
-		$body_lineheight = get_option( 'seed_fonts_body_lineheight' );
-		$body_selectors = get_option( 'seed_fonts_body_selectors' );
-		$body_is_important = ( get_option( 'seed_fonts_body_is_important' ) );
-		$body_font_styles = '';
+		wp_add_inline_style( 'seed-fonts-all', $font_styles );
+	}
 
-		if($body_is_google_font) {
-			$body_font = preg_replace('!\s+!', ' ', get_option( 'seed_fonts_body_google_font_name' ));
+	$body_is_enabled = ( get_option( 'seed_fonts_body_is_enabled' ) );
+	$body_is_google_font = ( get_option( 'seed_fonts_body_is_google_fonts' ) );
+	$body_weight = get_option( 'seed_fonts_body_weight' );
+	$body_size = get_option( 'seed_fonts_body_size' );
+	$body_size_unit = get_option( 'seed_fonts_body_size_unit' );
+	$body_lineheight = get_option( 'seed_fonts_body_lineheight' );
+	$body_selectors = get_option( 'seed_fonts_body_selectors' );
+	$body_is_important = ( get_option( 'seed_fonts_body_is_important' ) );
+	$body_font_styles = '';
+
+	if($body_is_google_font) {
+		$body_font = preg_replace('!\s+!', ' ', get_option( 'seed_fonts_body_google_font_name' ));
+	} else {
+		$body_font = get_option( 'seed_fonts_body_font' );
+	}
+
+	if( $body_is_enabled && ( $body_font !== FALSE ) && ( $body_font != '' ) ) {
+
+		if( $body_selectors != '' ) {
+			$body_font_styles = $admin_body_selectors . $body_selectors.' ';
+		}
+		$body_other_font = '';
+		if($body_font == 'noto-sans-thai') {
+			$body_other_font = 'noto-sans, ';
+		}
+		if($body_font == 'noto-serif-thai') {
+			$body_other_font = 'noto-serif, ';
+		}
+		$body_font_styles .= '{font-family: "'.$body_font.'", '.$body_other_font.'sans-serif'.( $body_is_important ? ' !important' : '' ).';';
+		if( $body_weight != '' ) {
+			$body_font_styles .= ' font-weight: '.$body_weight.( $body_is_important ? ' !important' : '' ).';';
+		}
+		if( $body_size != '' ) {
+			$body_font_styles .= ' font-size: '.$body_size.$body_size_unit.( $body_is_important ? ' !important' : '' ).';';
+		}
+		if( $body_lineheight != '' ) {
+			$body_font_styles .= ' line-height: '.$body_lineheight.( $body_is_important ? ' !important' : '' ).';';
+		}
+		$body_font_styles .= ' }';
+		if( $body_is_google_font ) {
+			if( $body_weight != '' )				
+				wp_enqueue_style( 'seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font.':'.$body_weight, false );
+			else
+				wp_enqueue_style( 'seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font, false );
 		} else {
-			$body_font = get_option( 'seed_fonts_body_font' );
-		}
-
-		if( $body_is_enabled && ( $body_font !== FALSE ) && ( $body_font != '' ) ) {
-
-			if( $body_selectors != '' )
-				$body_font_styles = $body_selectors.' ';
-
-			$body_other_font = '';
-			if($body_font == 'noto-sans-thai')
-				$body_other_font = 'noto-sans, ';
-			if($body_font == 'noto-serif-thai')
-				$body_other_font = 'noto-serif, ';
-
-
-			$body_font_styles .= '{font-family: "'.$body_font.'", '.$body_other_font.'sans-serif'.( $body_is_important ? ' !important' : '' ).';';
-			if( $body_weight != '' )
-				$body_font_styles .= ' font-weight: '.$body_weight.( $body_is_important ? ' !important' : '' ).';';
-			if( $body_size != '' )
-				$body_font_styles .= ' font-size: '.$body_size.$body_size_unit.( $body_is_important ? ' !important' : '' ).';';
-			if( $body_lineheight != '' )
-				$body_font_styles .= ' line-height: '.$body_lineheight.( $body_is_important ? ' !important' : '' ).';';
-			$body_font_styles .= ' }';
-
-			if( $body_is_google_font ) {
-				if( $body_weight != '' )				
-					wp_enqueue_style( 'seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font.':'.$body_weight, false );
-				else
-					wp_enqueue_style( 'seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font, false );
+			$upload_dir = wp_upload_dir();
+			if( file_exists( get_stylesheet_directory() . '/vendor/fonts/' . $body_font ) && is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $body_font ) ) {
+				wp_enqueue_style( 'seed-fonts-body-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $body_font . '/font.css' , array(  ) );
+			} elseif( file_exists( $upload_dir['basedir'] . '/fonts/' . $body_font ) && is_dir( $upload_dir['basedir'] . '/fonts/' . $body_font ) ) {
+				wp_enqueue_style( 'seed-fonts-body-all', $upload_dir['baseurl'] . '/fonts/' . $body_font . '/font.css' , array(  ) );
 			} else {
-				$upload_dir = wp_upload_dir();
-				if( file_exists( get_stylesheet_directory() . '/vendor/fonts/' . $body_font ) && is_dir( get_stylesheet_directory() . '/vendor/fonts/' . $body_font ) ) {
-					wp_enqueue_style( 'seed-fonts-body-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $body_font . '/font.css' , array(  ) );
-				} elseif( file_exists( $upload_dir['basedir'] . '/fonts/' . $body_font ) && is_dir( $upload_dir['basedir'] . '/fonts/' . $body_font ) ) {
-					wp_enqueue_style( 'seed-fonts-body-all', $upload_dir['baseurl'] . '/fonts/' . $body_font . '/font.css' , array(  ) );
-				} else {
-					wp_enqueue_style( 'seed-fonts-body-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $body_font . '/font.css' , array(  ) );
-				}
+				wp_enqueue_style( 'seed-fonts-body-all', plugin_dir_url( __FILE__ ) . 'fonts/' . $body_font . '/font.css' , array(  ) );
 			}
-
-			wp_add_inline_style( 'seed-fonts-body-all', $body_font_styles );
 		}
+		wp_add_inline_style( 'seed-fonts-body-all', $body_font_styles );
 	}
 }
 
@@ -195,7 +201,6 @@ function seed_fonts_init() { ?>
 <?php }
 
 /**
-seed_fonts_get_fonts
  * Put font weight options
  *
  * @since 0.10.0
@@ -240,6 +245,10 @@ function seed_fonts_get_fonts() {
 	$loop = __(' (Thai Loop)', 'seed-fonts');
 
 	$fonts = array(
+		"anuphan" => array(
+			"font"    => "Anuphan",
+			"weights" => array( 400, 500, 700)
+		),
 		"ibm-plex-thai" => array(
 			"font"    => "IBM Plex Thai",
 			"weights" => array( 300, 400, 500, 700)
@@ -707,63 +716,61 @@ function seed_fonts_output_settings_field( $option ) {
 
 	switch( $field_type ):
 
-	case 'text': ?>
-    <input type="text" name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" value="<?php echo $current; ?>"
-        class="regular-text" />
-    <?php break;
+	case 'text': 
+		?><input type="text" name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" value="<?php echo $current; ?>"
+        class="regular-text" /><?php 
+		break;
 
-	case 'checkbox': ?>
-    <?php foreach( $option['options'] as $val => $choice ):
+	case 'checkbox': 
+		foreach( $option['options'] as $val => $choice ):
 
-	if ( count( $option['options'] ) > 1 ) {
-		$id = "{$id}_{$val}";
-	}
-
-	$selected = is_array( $current ) && in_array( $val, $current ) ? 'checked="checked"' : '';  ?>
+		if ( count( $option['options'] ) > 1 ) {
+			$id = "{$id}_{$val}";
+		}
+		$selected = is_array( $current ) && in_array( $val, $current ) ? 'checked="checked"' : '';  
+		?>
     <label for="<?php echo $id; ?>">
         <input type="checkbox" name="<?php echo $option['name']; ?>[]" value="<?php echo $val; ?>"
             id="<?php echo $id; ?>" <?php echo $selected; ?> />
         <?php echo $choice; ?>
     </label>
     <?php endforeach;
-break;
+	break;
 
-case 'dropdown': ?>
+	case 'dropdown': 
+	?>
     <label for="<?php echo $option['name']; ?>">
         <select name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>">
-
             <?php foreach( $option['options'] as $val => $choice ):
-		if( $val == $current )
-			$selected = 'selected="selected"';
-		else
-			$selected = ''; ?>
+			if( $val == $current )
+				$selected = 'selected="selected"';
+			else
+				$selected = ''; ?>
             <option value="<?php echo $val; ?>" <?php echo $selected; ?>><?php echo $choice; ?></option>
-
             <?php endforeach; ?>
-
         </select>
     </label>
-    <?php break;
+    <?php 
+	break;
 
-case 'textarea':
-if( !$current && isset($option['std']) ) { $current = $option['std']; } ?>
-    <textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="8"
-        cols="70"><?php echo $current; ?></textarea>
-    <?php break;
+	case 'textarea':
+		if( !$current && isset($option['std']) ) { $current = $option['std']; } 
+		?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="8"
+        cols="70"><?php echo $current; ?></textarea><?php 
+		break;
 
-case 'textarea_code':
-if( !$current && isset($option['std']) ) { $current = $option['std']; } ?>
-    <textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="6" cols="60" class="code"
-        readonly><?php echo $current; ?></textarea>
-    <?php break;
-
-endswitch;
+	case 'textarea_code':
+		if( !$current && isset($option['std']) ) { $current = $option['std']; } 
+		?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="6" cols="60" class="code"
+        readonly><?php echo $current; ?></textarea><?php 
+		break;
+	
+	endswitch;
 
 	// Add the field description
-if ( isset( $option['desc'] ) && $option['desc'] != '' ) {
-	echo wp_kses_post( sprintf( '<p class="description">%1$s</p>', $option['desc'] ) );
-};
-
+	if ( isset( $option['desc'] ) && $option['desc'] != '' ) {
+		echo wp_kses_post( sprintf( '<p class="description">%1$s</p>', $option['desc'] ) );
+	};
 }
 
 load_plugin_textdomain('seed-fonts', false, basename( dirname( __FILE__ ) ) . '/languages' );
