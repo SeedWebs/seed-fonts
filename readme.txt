@@ -3,8 +3,8 @@ Contributors: SeedThemes
 Donate link: http://seedthemes.com/
 Tags: webfont,web fonts, @font-face embed, typography
 Requires at least: 4.0
-Tested up to: 5.2.3
-Stable tag: 2.1.1
+Tested up to: 5.5.1
+Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,13 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 
 
 == Changelog ==
+
+= 2.2.0 =
+* Date: 6 SEP 2020.
+* New: Using font in WordPress Admin Editor (Gutenburg);
+* New: Anuphan font.
+* New: Optimize Loading Speed by using font-display: swap / fallback.
+* Tweak: Add CSS Variables (--s-heading, --s-body, --s-body-line-height) on both backend and frontend.
 
 = 2.1.1 =
 * Date: 10 OCT 2019
