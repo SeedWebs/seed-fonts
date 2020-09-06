@@ -85,7 +85,6 @@ function seed_fonts_scripts() {
 
 		$body_is_enabled = ( get_option( 'seed_fonts_body_is_enabled' ) );
 		$body_is_google_font = ( get_option( 'seed_fonts_body_is_google_fonts' ) );
-
 		$body_weight = get_option( 'seed_fonts_body_weight' );
 		$body_size = get_option( 'seed_fonts_body_size' );
 		$body_size_unit = get_option( 'seed_fonts_body_size_unit' );
