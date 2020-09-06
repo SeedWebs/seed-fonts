@@ -141,44 +141,6 @@ function seed_fonts_scripts() {
 	}
 }
 
-/*
-แสดงชื่อฟอนต์ใน Body Class
-คิดว่าพอใช้ Google Font ได้ มันจะยากไปหน่อย ดังนั้นไม่ใส่ดีกว่า
-
-add_filter( 'body_class', 'seed_fonts_body_class' );
-
-function seed_fonts_body_class( $classes ) {
-	$is_enabled = get_option( 'seed_fonts_is_enabled' );
-	$font = get_option( 'seed_fonts_font' );
-	$weight = get_option( 'seed_fonts_weight' );
-
-	if( $font === FALSE )
-		$font = key ( seed_fonts_get_fonts() );
-
-	if( $weight === FALSE )
-		$weight = '';
-
-	if( $is_enabled ) {
-		$classes[] = 'seed-fonts-'.$font;
-
-		if( $weight != '' )
-			$classes[] = 'seed-fonts-weight-'.$weight;
-	}
-
-	$is_body_enabled = get_option( 'seed_fonts_body_is_enabled' );
-	$body_font = get_option( 'seed_fonts_body_font' );
-
-	if( $body_font === FALSE )
-		$body_font = key ( seed_fonts_get_fonts() );
-
-	if( $is_body_enabled ) {
-		$classes[] = 'seed-fonts-body-'.$body_font;
-	}
-
-	return $classes;
-}
-*/
-
 add_action( 'admin_menu', 'seed_fonts_setup_menu' );
 
 function seed_fonts_setup_menu() {
