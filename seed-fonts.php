@@ -281,6 +281,14 @@ function seed_fonts_get_fonts() {
 			"font"    => "Moonjelly",
 			"weights" => array( 300, 700 )
 		),
+		"chulabhornlikit-display" => array(
+			"font"    => "Chulabhorn Likit Display",
+			"weights" => array( 500)
+		),
+		"chulabhornlikit-text" => array(
+			"font"    => "Chulabhorn Likit Text" . $loop,
+			"weights" => array( 300, 400, 500, 700)
+		),
 		"noto-serif-thai" => array(
 			"font"    => "Noto Serif Thai" . $loop,
 			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900)
