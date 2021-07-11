@@ -1,0 +1,26 @@
+/*
+ Font Name: iannnnn-duck
+ Weights: 300, 400, 700
+*/
+
+@font-face {
+  font-family: "iannnnn-duck";
+  src: url("iannnnn-duck-light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: fallback;
+}
+@font-face {
+  font-family: "iannnnn-duck";
+  src: url("iannnnn-duck-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: fallback;
+}
+@font-face {
+  font-family: "iannnnn-duck";
+  src: url("iannnnn-duck-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: fallback;
+}

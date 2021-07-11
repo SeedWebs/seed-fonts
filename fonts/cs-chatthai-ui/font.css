@@ -4,8 +4,7 @@ Weights: 400
 */
 @font-face {
   font-family: "cs-chatthai-ui";
-  src: url("cschatthaiui-webfont.woff2") format("woff2"),
-    url("cschatthaiui-webfont.woff") format("woff");
+  src: url("cschatthaiui-webfont.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: fallback;

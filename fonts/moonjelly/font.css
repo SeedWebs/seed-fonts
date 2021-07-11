@@ -4,16 +4,14 @@ Weights: 300, 700
 */
 @font-face {
   font-family: "Moonjelly";
-  src: url("moonjelly-light.woff2") format("woff2"),
-    url("moonjelly-light.woff") format("woff");
+  src: url("moonjelly-light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Moonjelly";
-  src: url("moonjelly-bold.woff2") format("woff2"),
-    url("moonjelly-bold.woff") format("woff");
+  src: url("moonjelly-bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;

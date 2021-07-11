@@ -4,23 +4,21 @@ Weights: 400, 500, 700
 */
 @font-face {
   font-family: "Anuphan";
-  src: url("anuphan.woff2") format("woff2"), url("anuphan.woff") format("woff");
+  src: url("anuphan.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Anuphan";
-  src: url("anuphan-medium.woff2") format("woff2"),
-    url("anuphan-medium.woff") format("woff");
+  src: url("anuphan-medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Anuphan";
-  src: url("anuphan-bold.woff2") format("woff2"),
-    url("anuphan-bold.woff") format("woff");
+  src: url("anuphan-bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
