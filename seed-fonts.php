@@ -1,17 +1,17 @@
 <?php
 /*
 Plugin Name: Seed Fonts
-Plugin URI: https://www.seedthemes.com/plugin/seed-fonts
-Description: Enable web fonts on Appearance -> Fonts. You can use Google Fonts, Bundled fonts or add your own by <a href="https://www.seedthemes.com/plugin/seed-fonts/" target="_blank">uploading your web fonts to the theme folder</a>.
+Plugin URI: https://wordpress.org/plugins/seed-fonts/
+Description: Enable web fonts on Appearance -> Fonts. You can use Google Fonts, Bundled fonts or add your own by <a href="https://docs.seedwebs.com/article/90-upload-custom-fonts" target="_blank">uploading your web fonts to the theme folder</a>.
 Version: 2.2.0
-Author: SeedThemes
-Author URI: https://www.seedthemes.com
+Author: Seed Webs
+Author URI: https://seedwebs.com
 License: GPL2
 Text Domain: seed-fonts
 */
 
 /*
-Copyright 2016-2018 SeedThemes  (email : info@seedthemes.com)
+Copyright 2016-2021 Seed Webs  (email : info@seedwebs.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as 
@@ -186,7 +186,7 @@ function seed_fonts_init() { ?>
 	}
 	?>
     <p>
-        <?php printf( wp_kses( __( 'This plugin allows you to use Google fonts, bundled Thai fonts, or your own custom fonts. For more information, please visit <a href="%1$s" target="_blank">Seed Fonts by SeedThemes.com</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://www.seedthemes.com/plugin/seed-fonts/' ) ); ?>
+        <?php printf( wp_kses( __( 'This plugin allows you to use Google fonts, bundled Thai fonts, or your own custom fonts. For more information, please visit <a href="%1$s" target="_blank">Seed Fonts by Seedwebs.com</a>', 'seed-fonts' ), array( 'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( 'https://docs.seedwebs.com/category/91-seed-fonts' ) ); ?>
     </p>
     <form action="<?php echo admin_url( 'options.php' ); ?>" method="post" id="seed-fonts-form">
         <div id="seed-fonts-tabs">
@@ -737,8 +737,7 @@ function seed_fonts_output_settings_field( $option ) {
 	switch( $field_type ):
 
 	case 'text': 
-		?><input type="text" name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" value="<?php echo $current; ?>"
-        class="regular-text" /><?php 
+		?><input type="text" name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" value="<?php echo $current; ?>" class="regular-text" /><?php 
 		break;
 
 	case 'checkbox': 
@@ -750,8 +749,7 @@ function seed_fonts_output_settings_field( $option ) {
 		$selected = is_array( $current ) && in_array( $val, $current ) ? 'checked="checked"' : '';  
 		?>
     <label for="<?php echo $id; ?>">
-        <input type="checkbox" name="<?php echo $option['name']; ?>[]" value="<?php echo $val; ?>"
-            id="<?php echo $id; ?>" <?php echo $selected; ?> />
+        <input type="checkbox" name="<?php echo $option['name']; ?>[]" value="<?php echo $val; ?>" id="<?php echo $id; ?>" <?php echo $selected; ?> />
         <?php echo $choice; ?>
     </label>
     <?php endforeach;
@@ -775,14 +773,12 @@ function seed_fonts_output_settings_field( $option ) {
 
 	case 'textarea':
 		if( !$current && isset($option['std']) ) { $current = $option['std']; } 
-		?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="8"
-        cols="70"><?php echo $current; ?></textarea><?php 
+		?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="8" cols="70"><?php echo $current; ?></textarea><?php 
 		break;
 
 	case 'textarea_code':
 		if( !$current && isset($option['std']) ) { $current = $option['std']; } 
-		?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="6" cols="60" class="code"
-        readonly><?php echo $current; ?></textarea><?php 
+		?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="6" cols="60" class="code" readonly><?php echo $current; ?></textarea><?php 
 		break;
 	
 	endswitch;

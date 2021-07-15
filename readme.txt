@@ -1,9 +1,8 @@
 === Seed Fonts ===
-Contributors: SeedThemes
-Donate link: http://seedthemes.com/
+Contributors: Seed Webs
 Tags: webfont,web fonts, @font-face embed, typography
 Requires at least: 4.0
-Tested up to: 5.5.1
+Tested up to: 5.7.2
 Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -33,7 +32,7 @@ The GitHub repository can be found at <a href="https://github.com/SeedThemes/see
 
 = How to generate and upload my own web fonts? =
 
-Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts" target="_blank">https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fonts</a>.
+Please see <a href="https://docs.seedwebs.com/article/90-upload-custom-fonts" target="_blank">https://docs.seedwebs.com/article/90-upload-custom-fonts</a>.
 
 == Screenshots ==
 
@@ -42,6 +41,11 @@ Please see <a href="https://www.seedthemes.com/plugin/seed-fonts/#upload-your-fo
 
 
 == Changelog ==
+
+= 2.3.0 =
+* Date: 5 JUL 2021.
+* New: Chulabhornlikit Display and Chulabhornlikit Text fonts.
+* Tweak: Remove woff files. Drop support for IE.
 
 = 2.2.0 =
 * Date: 6 SEP 2020.
