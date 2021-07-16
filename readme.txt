@@ -17,7 +17,7 @@ Seed Fonts is WordPress plugin that helps you use web fonts (@font-face embed) e
 2. Bundled Thai-English fonts
 3. Your own web fonts. (Upload to /wp-content/upload/fonts/FontName/ or /wp-content/themes/ThemeName/vendor/fonts/FontName/.)
 
-The GitHub repository can be found at <a href="https://github.com/SeedThemes/seed-fonts" target="_blank">https://github.com/SeedThemes/seed-fonts</a>. 
+The GitHub repository can be found at <a href="https://github.com/SeedWebs/seed-fonts" target="_blank">https://github.com/SeedWebs/seed-fonts</a>. 
 
 
 == Installation ==

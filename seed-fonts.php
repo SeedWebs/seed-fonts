@@ -277,6 +277,10 @@ function seed_fonts_get_fonts() {
 			"font"    => "Cloud",
 			"weights" => array( 300, 700 )
 		),
+		"iannnnn-duck" => array(
+			"font"    => "iannnnn-duck",
+			"weights" => array( 300, 400, 700 )
+		),
 		"moonjelly" => array(
 			"font"    => "Moonjelly",
 			"weights" => array( 300, 700 )
@@ -289,13 +293,13 @@ function seed_fonts_get_fonts() {
 			"font"    => "Chulabhorn Likit Text" . $loop,
 			"weights" => array( 300, 400, 500, 700)
 		),
-		"noto-serif-thai" => array(
-			"font"    => "Noto Serif Thai" . $loop,
-			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900)
-		),
 		"sarabun" => array(
 			"font"    => "Sarabun" . $loop,
 			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800)
+		),
+		"noto-serif-thai" => array(
+			"font"    => "Noto Serif Thai" . $loop,
+			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900)
 		),
 		"boon" => array(
 			"font"    => "Boon" . $loop,
