@@ -3,7 +3,7 @@ Contributors: Seed Webs
 Tags: webfont,web fonts, @font-face embed, typography
 Requires at least: 4.0
 Tested up to: 5.7.2
-Stable tag: 2.2.0
+Stable tag: 2.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,11 @@ Please see <a href="https://docs.seedwebs.com/article/90-upload-custom-fonts" ta
 
 
 == Changelog ==
+
+= 2.3.1 =
+* Date: 16 JUL 2021.
+* New: iannnnn-Duck font.
+* Tweak: Change Git repo to SeedWebs.
 
 = 2.3.0 =
 * Date: 5 JUL 2021.
