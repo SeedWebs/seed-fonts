@@ -60,7 +60,7 @@ function seed_fonts_scripts() {
 			$font_styles = $admin_head_selectors . $selectors;
 			
 		$other_font = ',sans-serif';
-		if($font == 'noto-sans-thai')
+		if($font == 'noto-sans-thai' || 'noto-sans-thai-looped')
 			$other_font = ',noto-sans,sans-serif';
 		if($font == 'noto-serif-thai')
 			$other_font = ',noto-serif,sans-serif';
@@ -115,7 +115,7 @@ function seed_fonts_scripts() {
 			$body_font_styles = $admin_body_selectors . $body_selectors;
 		}
 		$body_other_font = ',sans-serif';
-		if($body_font == 'noto-sans-thai') {
+		if($body_font == 'noto-sans-thai' || 'noto-sans-thai-looped') {
 			$body_other_font = ',noto-sans,sans-serif';
 		}
 		if($body_font == 'noto-serif-thai') {
@@ -296,6 +296,10 @@ function seed_fonts_get_fonts() {
 		"sarabun" => array(
 			"font"    => "Sarabun" . $loop,
 			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800)
+		),
+		"noto-sans-thai-looped" => array(
+			"font"    => "Noto Sans Thai Looped" . $loop,
+			"weights" => array( 100, 200, 300, 400, 500, 600, 700, 800, 900)
 		),
 		"noto-serif-thai" => array(
 			"font"    => "Noto Serif Thai" . $loop,
