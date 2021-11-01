@@ -73,6 +73,7 @@ function seed_fonts_scripts() {
 
 		// Add CSS Var
 		$font_styles .= 'body {--s-heading:' . $font_family . '}';
+		$font_styles .= 'body {--s-heading-weight:' . $weight . '}';
 
 		if( $is_google_font ) {
 			if( $weight != '' )				
@@ -741,7 +742,8 @@ function seed_fonts_output_settings_field( $option ) {
 	switch( $field_type ):
 
 	case 'text': 
-		?><input type="text" name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" value="<?php echo $current; ?>" class="regular-text" /><?php 
+		?><input type="text" name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" value="<?php echo $current; ?>"
+        class="regular-text" /><?php 
 		break;
 
 	case 'checkbox': 
@@ -753,7 +755,8 @@ function seed_fonts_output_settings_field( $option ) {
 		$selected = is_array( $current ) && in_array( $val, $current ) ? 'checked="checked"' : '';  
 		?>
     <label for="<?php echo $id; ?>">
-        <input type="checkbox" name="<?php echo $option['name']; ?>[]" value="<?php echo $val; ?>" id="<?php echo $id; ?>" <?php echo $selected; ?> />
+        <input type="checkbox" name="<?php echo $option['name']; ?>[]" value="<?php echo $val; ?>"
+            id="<?php echo $id; ?>" <?php echo $selected; ?> />
         <?php echo $choice; ?>
     </label>
     <?php endforeach;
@@ -777,12 +780,14 @@ function seed_fonts_output_settings_field( $option ) {
 
 	case 'textarea':
 		if( !$current && isset($option['std']) ) { $current = $option['std']; } 
-		?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="8" cols="70"><?php echo $current; ?></textarea><?php 
+		?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="8"
+        cols="70"><?php echo $current; ?></textarea><?php 
 		break;
 
 	case 'textarea_code':
 		if( !$current && isset($option['std']) ) { $current = $option['std']; } 
-		?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="6" cols="60" class="code" readonly><?php echo $current; ?></textarea><?php 
+		?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="6" cols="60" class="code"
+        readonly><?php echo $current; ?></textarea><?php 
 		break;
 	
 	endswitch;
