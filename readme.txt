@@ -1,8 +1,8 @@
 === Seed Fonts ===
-Contributors: Seed Webs
+Contributors: seedwebs
 Tags: webfont,web fonts, @font-face embed, typography
 Requires at least: 4.0
-Tested up to: 5.7.2
+Tested up to: 6.1.0
 Stable tag: 2.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -41,6 +41,10 @@ Please see <a href="https://docs.seedwebs.com/article/90-upload-custom-fonts" ta
 
 
 == Changelog ==
+
+= 2.3.1 =
+* Date: 7 NOV 2021.
+* Tweak: Change to Seed Webs and update Tested up to WordPress 6.1.
 
 = 2.3.1 =
 * Date: 16 JUL 2021.
