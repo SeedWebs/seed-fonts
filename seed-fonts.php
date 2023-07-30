@@ -695,13 +695,29 @@ function seed_fonts_register_plugin_settings() {
 				'group'   => 'seed-fonts'
 			);
 
-			register_setting( 'seed-fonts', $option['id'] );
+			$args = array(
+				'type' => 'string',
+				'sanitize_callback' => 'sanitize_this_value',
+				'default' => '',
+			);
+
+			register_setting( 'seed-fonts', $option['id'], $args );
 			add_settings_field( $option['id'], $option['title'], 'seed_fonts_output_settings_field', 'seed-fonts', $section['id'], $field_args );
 
 		}
 	}
-
 }
+
+/**
+ * Remove all special characters but allow Thai characters and ? ! - space
+ *
+ * @since 2.3.2
+ */
+function sanitize_this_value($value){
+    $value = preg_replace('/[^ก-๙a-zA-Z0-9\?\!\-\s]/u', '', $value);
+    return $value;
+}
+
 
 /**
  * Generate new section
@@ -781,13 +797,13 @@ function seed_fonts_output_settings_field( $option ) {
 	case 'textarea':
 		if( !$current && isset($option['std']) ) { $current = $option['std']; } 
 		?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="8"
-        cols="70"><?php echo $current; ?></textarea><?php 
+        cols="70"><?php echo esc_textarea($current); ?></textarea><?php 
 		break;
 
 	case 'textarea_code':
 		if( !$current && isset($option['std']) ) { $current = $option['std']; } 
 		?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="6" cols="60" class="code"
-        readonly><?php echo $current; ?></textarea><?php 
+        readonly><?php echo esc_textarea($current); ?></textarea><?php 
 		break;
 	
 	endswitch;
