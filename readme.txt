@@ -42,6 +42,10 @@ Please see <a href="https://docs.seedwebs.com/article/90-upload-custom-fonts" ta
 
 == Changelog ==
 
+= 2.4.0 =
+* Date: 30 JUL 2023
+* Fix: Cross Site Scripting (XSS)
+
 = 2.3.1 =
 * Date: 7 NOV 2021.
 * Tweak: Change to Seed Webs and update Tested up to WordPress 6.1.
