@@ -3,7 +3,7 @@ Contributors: seedwebs
 Tags: webfont,web fonts, @font-face embed, typography
 Requires at least: 4.0
 Tested up to: 6.2.2
-Stable tag: 2.3.1
+Stable tag: 2.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ Seed Fonts is WordPress plugin that helps you use web fonts (@font-face embed) e
 
 1. Google Fonts
 2. Bundled Thai-English fonts
-3. Your own web fonts. (Upload to /wp-content/upload/fonts/FontName/ or /wp-content/themes/ThemeName/vendor/fonts/FontName/.)
+3. Your own web fonts. (Upload to /wp-content/upload/fonts/fontname/ or /wp-content/themes/ThemeName/vendor/fonts/fontname/ - lowercase is recommended.)
 
 The GitHub repository can be found at <a href="https://github.com/SeedWebs/seed-fonts" target="_blank">https://github.com/SeedWebs/seed-fonts</a>. 
 
@@ -41,6 +41,10 @@ Please see <a href="https://docs.seedwebs.com/article/90-upload-custom-fonts" ta
 
 
 == Changelog ==
+
+= 2.4.1 =
+* Date: 8 AUG 2023
+* Fix: Allow "," symbol in settings.
 
 = 2.4.0 =
 * Date: 30 JUL 2023
