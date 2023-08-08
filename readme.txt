@@ -3,7 +3,7 @@ Contributors: seedwebs
 Tags: webfont,web fonts, @font-face embed, typography
 Requires at least: 4.0
 Tested up to: 6.2.2
-Stable tag: 2.4.1
+Stable tag: 2.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,10 @@ Please see <a href="https://docs.seedwebs.com/article/90-upload-custom-fonts" ta
 
 
 == Changelog ==
+
+= 2.4.2 =
+* Date: 8 AUG 2023
+* Fix: Allow "," symbol in all settings.
 
 = 2.4.1 =
 * Date: 8 AUG 2023

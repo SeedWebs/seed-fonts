@@ -3,7 +3,7 @@
 Plugin Name: Seed Fonts
 Plugin URI: https://wordpress.org/plugins/seed-fonts/
 Description: Enable web fonts on Appearance -> Fonts. You can use Google Fonts, Bundled fonts or add your own by <a href="https://docs.seedwebs.com/article/90-upload-custom-fonts" target="_blank">uploading your web fonts to the theme folder</a>.
-Version: 2.4.1
+Version: 2.4.2
 Author: Seed Webs
 Author URI: https://seedwebs.com
 License: GPL2
@@ -731,7 +731,7 @@ function seed_fonts_register_plugin_settings()
  */
 function seed_fonts_sanitize($value)
 {
-    $value = preg_replace('/[^ก-๙a-zA-Z0-9_.-\?\!\-\s]/u', '', $value);
+    $value = preg_replace('/[^ก-๙a-zA-Z0-9_,.-\?\!\-\s]/u', '', $value);
     return $value;
 }
 
