@@ -27,6 +27,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+if (! defined('ABSPATH')) {
+    exit;
+}
+
 add_action('wp_enqueue_scripts', 'seed_fonts_scripts', 30);
 add_action('enqueue_block_editor_assets', 'seed_fonts_scripts', 30);
 
@@ -97,7 +101,8 @@ function seed_fonts_scripts()
             }
         }
 
-        wp_add_inline_style('seed-fonts-all', $font_styles);
+        // Never print "<": it could close the <style> element (WordPress 6.9 and earlier print inline CSS as is).
+        wp_add_inline_style('seed-fonts-all', str_replace('<', '', $font_styles));
     }
 
     $body_is_enabled = (seed_fonts_sanitize(get_option('seed_fonts_body_is_enabled')));
@@ -163,7 +168,8 @@ function seed_fonts_scripts()
                 wp_enqueue_style('seed-fonts-body-all', plugin_dir_url(__FILE__) . 'fonts/' . $body_font . '/font.css', array(  ));
             }
         }
-        wp_add_inline_style('seed-fonts-body-all', $body_font_styles);
+        // Never print "<": it could close the <style> element (WordPress 6.9 and earlier print inline CSS as is).
+        wp_add_inline_style('seed-fonts-body-all', str_replace('<', '', $body_font_styles));
     }
 }
 
@@ -188,6 +194,7 @@ function seed_fonts_init()
     <div class="icon32" id="icon-options-general"></div>
     <h2><?php esc_html_e('Seed Fonts', 'seed-fonts'); ?></h2>
     <?php
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only decides whether to show the notice; options.php saves the settings.
     if(isset($_GET['settings-updated'])) {
         ?>
     <div class="updated">
@@ -196,9 +203,12 @@ function seed_fonts_init()
     }
     ?>
     <p>
-        <?php printf(wp_kses(__('This plugin allows you to use Google fonts, bundled Thai fonts, or your own custom fonts. For more information, please visit <a href="%1$s" target="_blank">Seed Fonts by Seedwebs.com</a>', 'seed-fonts'), array( 'a' => array( 'href' => array(), 'target' => array() ) )), esc_url('https://docs.seedwebs.com/category/91-seed-fonts')); ?>
+        <?php
+        /* translators: %1$s: URL of the Seed Fonts documentation. */
+        printf(wp_kses(__('This plugin allows you to use Google fonts, bundled Thai fonts, or your own custom fonts. For more information, please visit <a href="%1$s" target="_blank">Seed Fonts by Seedwebs.com</a>', 'seed-fonts'), array( 'a' => array( 'href' => array(), 'target' => array() ) )), esc_url('https://docs.seedwebs.com/category/91-seed-fonts'));
+        ?>
     </p>
-    <form action="<?php echo admin_url('options.php'); ?>" method="post" id="seed-fonts-form">
+    <form action="<?php echo esc_url(admin_url('options.php')); ?>" method="post" id="seed-fonts-form">
         <div id="seed-fonts-tabs">
             <ul class="wp-clearfix">
                 <li><a href="#seed-fonts-header"><?php esc_html_e('Heading', 'seed-fonts'); ?></a></li>
@@ -227,10 +237,10 @@ function seed_fonts_hidden_weight_options()
     $fonts = seed_fonts_get_fonts();
 
     foreach($fonts as $_font => $_font_desc) { ?>
-<select id="seed-fonts-<?php esc_html_e($_font, 'seed-fonts'); ?>-weights" style="display:none">
+<select id="seed-fonts-<?php echo esc_attr($_font); ?>-weights" style="display:none">
     <option value=""></option><?php
             foreach($_font_desc["weights"] as $_weight) { ?>
-    <option value="<?php esc_html_e($_weight, 'seed-fonts'); ?>"><?php esc_html_e($_weight, 'seed-fonts'); ?>
+    <option value="<?php echo esc_attr($_weight); ?>"><?php echo esc_html($_weight); ?>
     </option><?php
             } ?>
 </select> <?php
@@ -488,6 +498,7 @@ function seed_fonts_get_header_settings()
                     'id'      => seed_fonts_get_option_id('google_font_name'),
                     'title'   => esc_html__('Google Font Name', 'seed-fonts'),
                     'type'    => 'text',
+                    /* translators: %1$s: URL of fonts.google.com. */
                     'desc'    => wp_kses(sprintf(__('Use font name from <a href="%1$s" target="_blank">fonts.google.com</a>, such as <b>Roboto</b>, <b>Open Sans</b> (case-sensitive).', 'seed-fonts'), esc_url('https://fonts.google.com/')), array(
                         'a' => array(
                             'href'   => array(),
@@ -572,6 +583,7 @@ function seed_fonts_get_body_settings()
                     'id'      => seed_fonts_get_option_id('body_google_font_name'),
                     'title'   => esc_html__('Google Font Name', 'seed-fonts'),
                     'type'    => 'text',
+                    /* translators: %1$s: URL of fonts.google.com. */
                     'desc'    => wp_kses(sprintf(__('Use font name from <a href="%1$s" target="_blank">fonts.google.com</a>, such as <b>Roboto</b>, <b>Open Sans</b> (case-sensitive).', 'seed-fonts'), esc_url('https://fonts.google.com/')), array(
                         'a' => array(
                             'href'   => array(),
@@ -725,13 +737,23 @@ function seed_fonts_register_plugin_settings()
 }
 
 /**
- * Remove all special characters but allow Thai characters and ? ! - space
+ * Remove the characters that settings may not contain.
+ *
+ * Keeps Thai, Latin letters, digits, whitespace and _ , . / : ; = > ? ! -
+ * This is exactly what 2.4.0-2.4.2 let through (partly by accident), minus "<",
+ * so saved selectors such as ".nav > li" or "a:hover" keep working.
+ * Do not "fix" this by narrowing the list: it also runs on output, so existing sites
+ * would change. See docs/adr/0001 in the GitHub repository.
  *
  * @since 2.4.0
  */
 function seed_fonts_sanitize($value)
 {
-    $value = preg_replace('/[^ก-๙a-zA-Z0-9_,.-\?\!\-\s]/u', '', $value);
+    // Unchecked or disabled fields are saved as null; PHP 8.1+ deprecates passing null to preg_replace().
+    if (null === $value) {
+        return '';
+    }
+    $value = preg_replace('/[^ก-๙a-zA-Z0-9_,.\/:;=>?!\-\s]/u', '', $value);
     return $value;
 }
 
@@ -749,7 +771,7 @@ function seed_fonts_section($section)
 {
     ?>
 </div>
-<div id="<?php echo $section['id'] ?>">
+<div id="<?php echo esc_attr($section['id']); ?>">
     <?php
 }
 
@@ -777,7 +799,7 @@ function seed_fonts_output_settings_field($option)
     switch($field_type):
 
         case 'text':
-            ?><input type="text" name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" value="<?php echo $current; ?>" class="regular-text" /><?php
+            ?><input type="text" name="<?php echo esc_attr($option['name']); ?>" id="<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($current); ?>" class="regular-text" /><?php
             break;
 
         case 'checkbox':
@@ -786,26 +808,20 @@ function seed_fonts_output_settings_field($option)
                 if (count($option['options']) > 1) {
                     $id = "{$id}_{$val}";
                 }
-                $selected = is_array($current) && in_array($val, $current) ? 'checked="checked"' : '';
                 ?>
-    <label for="<?php echo $id; ?>">
-        <input type="checkbox" name="<?php echo $option['name']; ?>[]" value="<?php echo $val; ?>" id="<?php echo $id; ?>" <?php echo $selected; ?> />
-        <?php echo $choice; ?>
+    <label for="<?php echo esc_attr($id); ?>">
+        <input type="checkbox" name="<?php echo esc_attr($option['name']); ?>[]" value="<?php echo esc_attr($val); ?>" id="<?php echo esc_attr($id); ?>" <?php checked(is_array($current) && in_array($val, $current)); ?> />
+        <?php echo esc_html($choice); ?>
     </label>
     <?php endforeach;
             break;
 
         case 'dropdown':
             ?>
-    <label for="<?php echo $option['name']; ?>">
-        <select name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>">
-            <?php foreach($option['options'] as $val => $choice):
-                if($val == $current) {
-                    $selected = 'selected="selected"';
-                } else {
-                    $selected = '';
-                } ?>
-            <option value="<?php echo $val; ?>" <?php echo $selected; ?>><?php echo $choice; ?></option>
+    <label for="<?php echo esc_attr($option['name']); ?>">
+        <select name="<?php echo esc_attr($option['name']); ?>" id="<?php echo esc_attr($id); ?>">
+            <?php foreach($option['options'] as $val => $choice): ?>
+            <option value="<?php echo esc_attr($val); ?>" <?php selected($val == $current); ?>><?php echo esc_html($choice); ?></option>
             <?php endforeach; ?>
         </select>
     </label>
@@ -816,14 +832,14 @@ function seed_fonts_output_settings_field($option)
             if(!$current && isset($option['std'])) {
                 $current = $option['std'];
             }
-            ?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="8" cols="70"><?php echo esc_textarea($current); ?></textarea><?php
+            ?><textarea name="<?php echo esc_attr($option['name']); ?>" id="<?php echo esc_attr($id); ?>" rows="8" cols="70"><?php echo esc_textarea($current); ?></textarea><?php
             break;
 
         case 'textarea_code':
             if(!$current && isset($option['std'])) {
                 $current = $option['std'];
             }
-            ?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="6" cols="60" class="code" readonly><?php echo esc_textarea($current); ?></textarea><?php
+            ?><textarea name="<?php echo esc_attr($option['name']); ?>" id="<?php echo esc_attr($id); ?>" rows="6" cols="60" class="code" readonly><?php echo esc_textarea($current); ?></textarea><?php
             break;
 
     endswitch;
