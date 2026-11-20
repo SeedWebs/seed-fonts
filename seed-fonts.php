@@ -31,6 +31,8 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
+define('SEED_FONTS_VERSION', '2.4.3');
+
 add_action('wp_enqueue_scripts', 'seed_fonts_scripts', 30);
 add_action('enqueue_block_editor_assets', 'seed_fonts_scripts', 30);
 
@@ -45,7 +47,6 @@ function seed_fonts_scripts()
         $admin_body_selectors = ".editor-styles-wrapper > *, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper cite, .editor-styles-wrapper figcaption, .editor-styles-wrapper .wp-caption-text,";
     }
 
-    $fonts = seed_fonts_get_fonts();
     $is_enabled = (seed_fonts_sanitize(get_option('seed_fonts_is_enabled')));
     $is_google_font = (seed_fonts_sanitize(get_option('seed_fonts_is_google_fonts')));
     $weight = seed_fonts_sanitize(get_option('seed_fonts_weight'));
@@ -84,20 +85,21 @@ function seed_fonts_scripts()
         $font_styles .= 'body {--s-heading:' . $font_family . '}';
         $font_styles .= 'body {--s-heading-weight:' . $weight . '}';
 
+        // A null version keeps WordPress from adding its own version number to the Google Fonts URL.
         if($is_google_font) {
             if($weight != '') {
-                wp_enqueue_style('seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font.':'.$weight, false);
+                wp_enqueue_style('seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font.':'.$weight, false, null);
             } else {
-                wp_enqueue_style('seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font, false);
+                wp_enqueue_style('seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font, false, null);
             }
         } else {
-            $upload_dir = wp_upload_dir();
+            $upload_dir = wp_get_upload_dir();
             if(file_exists(get_stylesheet_directory() . '/vendor/fonts/' . $font) && is_dir(get_stylesheet_directory() . '/vendor/fonts/' . $font)) {
-                wp_enqueue_style('seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $font . '/font.css', array(  ));
+                wp_enqueue_style('seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $font . '/font.css', array(  ), seed_fonts_file_version(get_stylesheet_directory() . '/vendor/fonts/' . $font . '/font.css'));
             } elseif(file_exists($upload_dir['basedir'] . '/fonts/'  . $font) && is_dir($upload_dir['basedir'] . '/fonts/' . $font)) {
-                wp_enqueue_style('seed-fonts-all', $upload_dir['baseurl'] . '/fonts/'  . $font . '/font.css', array(  ));
+                wp_enqueue_style('seed-fonts-all', $upload_dir['baseurl'] . '/fonts/'  . $font . '/font.css', array(  ), seed_fonts_file_version($upload_dir['basedir'] . '/fonts/' . $font . '/font.css'));
             } else {
-                wp_enqueue_style('seed-fonts-all', plugin_dir_url(__FILE__) . 'fonts/' . $font . '/font.css', array(  ));
+                wp_enqueue_style('seed-fonts-all', plugin_dir_url(__FILE__) . 'fonts/' . $font . '/font.css', array(  ), SEED_FONTS_VERSION);
             }
         }
 
@@ -152,20 +154,21 @@ function seed_fonts_scripts()
         $body_font_styles .= '--s-body-line-height:' . $body_lineheight . ';';
         $body_font_styles .= '}';
 
+        // A null version keeps WordPress from adding its own version number to the Google Fonts URL.
         if($body_is_google_font) {
             if($body_weight != '') {
-                wp_enqueue_style('seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font.':'.$body_weight, false);
+                wp_enqueue_style('seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font.':'.$body_weight, false, null);
             } else {
-                wp_enqueue_style('seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font, false);
+                wp_enqueue_style('seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font, false, null);
             }
         } else {
-            $upload_dir = wp_upload_dir();
+            $upload_dir = wp_get_upload_dir();
             if(file_exists(get_stylesheet_directory() . '/vendor/fonts/' . $body_font) && is_dir(get_stylesheet_directory() . '/vendor/fonts/' . $body_font)) {
-                wp_enqueue_style('seed-fonts-body-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $body_font . '/font.css', array(  ));
+                wp_enqueue_style('seed-fonts-body-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $body_font . '/font.css', array(  ), seed_fonts_file_version(get_stylesheet_directory() . '/vendor/fonts/' . $body_font . '/font.css'));
             } elseif(file_exists($upload_dir['basedir'] . '/fonts/' . $body_font) && is_dir($upload_dir['basedir'] . '/fonts/' . $body_font)) {
-                wp_enqueue_style('seed-fonts-body-all', $upload_dir['baseurl'] . '/fonts/' . $body_font . '/font.css', array(  ));
+                wp_enqueue_style('seed-fonts-body-all', $upload_dir['baseurl'] . '/fonts/' . $body_font . '/font.css', array(  ), seed_fonts_file_version($upload_dir['basedir'] . '/fonts/' . $body_font . '/font.css'));
             } else {
-                wp_enqueue_style('seed-fonts-body-all', plugin_dir_url(__FILE__) . 'fonts/' . $body_font . '/font.css', array(  ));
+                wp_enqueue_style('seed-fonts-body-all', plugin_dir_url(__FILE__) . 'fonts/' . $body_font . '/font.css', array(  ), SEED_FONTS_VERSION);
             }
         }
         // Never print "<": it could close the <style> element (WordPress 6.9 and earlier print inline CSS as is).
@@ -173,19 +176,35 @@ function seed_fonts_scripts()
     }
 }
 
+/**
+ * Version for the font.css of a Custom font: the file's modification time, so browsers
+ * load it again after the site owner changes it.
+ *
+ * @since 2.4.3
+ *
+ * @param string $file Path of the font.css file
+ *
+ * @return string
+ */
+function seed_fonts_file_version($file)
+{
+    return file_exists($file) ? (string) filemtime($file) : SEED_FONTS_VERSION;
+}
+
 add_action('admin_menu', 'seed_fonts_setup_menu');
 
 function seed_fonts_setup_menu()
 {
-    $seed_font_page = add_submenu_page('themes.php', __('Seed Fonts', 'seed-fonts'), __('Fonts', 'seed-fonts'), 'manage_options', 'seed-fonts', 'seed_fonts_init');
+    // The menu title is "Seed Fonts", not "Fonts": WordPress 7.0+ has its own Appearance > Fonts (Font Library).
+    $seed_font_page = add_submenu_page('themes.php', __('Seed Fonts', 'seed-fonts'), __('Seed Fonts', 'seed-fonts'), 'manage_options', 'seed-fonts', 'seed_fonts_init');
 
     add_action('load-' . $seed_font_page, 'seed_fonts_admin_styles');
 }
 
 function seed_fonts_admin_styles()
 {
-    wp_enqueue_style('seed-fonts', plugin_dir_url(__FILE__) . 'seed-fonts-admin.css', array(), '2018-1');
-    wp_enqueue_script('seed-fonts', plugin_dir_url(__FILE__) . 'seed-fonts-admin.js', array( 'jquery', 'jquery-ui-tabs' ), '2018-1', true);
+    wp_enqueue_style('seed-fonts', plugin_dir_url(__FILE__) . 'seed-fonts-admin.css', array(), SEED_FONTS_VERSION);
+    wp_enqueue_script('seed-fonts', plugin_dir_url(__FILE__) . 'seed-fonts-admin.js', array( 'jquery', 'jquery-ui-tabs' ), SEED_FONTS_VERSION, true);
 }
 
 function seed_fonts_init()
@@ -268,6 +287,13 @@ function seed_fonts_hidden_weight_options()
  */
 function seed_fonts_get_fonts()
 {
+    // Scan the font folders only once per request (per site and theme); the filter still runs on every call.
+    static $cache = array();
+    $cache_key = get_current_blog_id() . '|' . get_stylesheet();
+    if (isset($cache[ $cache_key ])) {
+        return apply_filters('seed_fonts_fonts', $cache[ $cache_key ]);
+    }
+
     $loop = __(' (Thai Loop)', 'seed-fonts');
 
     $fonts = array(
@@ -332,38 +358,47 @@ function seed_fonts_get_fonts()
     // This is where we add custom fonts
     if (file_exists(get_stylesheet_directory() . '/vendor/fonts') && is_dir(get_stylesheet_directory() . '/vendor/fonts')) {
         $d_handle = opendir(get_stylesheet_directory() . '/vendor/fonts');
-        while (false !== ($entry = readdir($d_handle))) {
-            if (is_dir(get_stylesheet_directory() . '/vendor/fonts/' . $entry) && (file_exists(get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css'))) {
-                $headers = get_file_data(get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css', array(
-                    'font'    => 'Font Name',
-                    'weights' => 'Weights'
-                ));
-                $_font = array(
-                    'font'    => empty($headers['font']) ? $entry : $headers['font'],
-                    'weights' => empty($headers['weights']) ? array() : array_map('trim', explode(',', $headers['weights'])),
-                );
-                $fonts[ $entry ] = $_font;
+        // opendir() returns false when the folder cannot be read; readdir(false) is fatal on PHP 8.
+        if (false !== $d_handle) {
+            while (false !== ($entry = readdir($d_handle))) {
+                if (is_dir(get_stylesheet_directory() . '/vendor/fonts/' . $entry) && (file_exists(get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css'))) {
+                    $headers = get_file_data(get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css', array(
+                        'font'    => 'Font Name',
+                        'weights' => 'Weights'
+                    ));
+                    $_font = array(
+                        'font'    => empty($headers['font']) ? $entry : $headers['font'],
+                        'weights' => empty($headers['weights']) ? array() : array_map('trim', explode(',', $headers['weights'])),
+                    );
+                    $fonts[ $entry ] = $_font;
+                }
             }
+            closedir($d_handle);
         }
     }
-    // add more custom fonts from /upload/fonts/
-    $upload_dir = wp_upload_dir();
+    // add more custom fonts from /uploads/fonts/
+    $upload_dir = wp_get_upload_dir();
     if (file_exists($upload_dir['basedir'] . '/fonts/') && is_dir($upload_dir['basedir'] . '/fonts/')) {
         $d_handle = opendir($upload_dir['basedir'] . '/fonts/');
-        while (false !== ($entry = readdir($d_handle))) {
-            if (is_dir($upload_dir['basedir'] . '/fonts/'  . $entry) && (file_exists($upload_dir['basedir'] . '/fonts/'  . $entry . '/font.css'))) {
-                $headers = get_file_data($upload_dir['basedir'] . '/fonts/'  . $entry . '/font.css', array(
-                    'font'    => 'Font Name',
-                    'weights' => 'Weights'
-                ));
-                $_font = array(
-                    'font'    => empty($headers['font']) ? $entry : $headers['font'],
-                    'weights' => empty($headers['weights']) ? array() : array_map('trim', explode(',', $headers['weights'])),
-                );
-                $fonts[ $entry ] = $_font;
+        if (false !== $d_handle) {
+            while (false !== ($entry = readdir($d_handle))) {
+                if (is_dir($upload_dir['basedir'] . '/fonts/'  . $entry) && (file_exists($upload_dir['basedir'] . '/fonts/'  . $entry . '/font.css'))) {
+                    $headers = get_file_data($upload_dir['basedir'] . '/fonts/'  . $entry . '/font.css', array(
+                        'font'    => 'Font Name',
+                        'weights' => 'Weights'
+                    ));
+                    $_font = array(
+                        'font'    => empty($headers['font']) ? $entry : $headers['font'],
+                        'weights' => empty($headers['weights']) ? array() : array_map('trim', explode(',', $headers['weights'])),
+                    );
+                    $fonts[ $entry ] = $_font;
+                }
             }
+            closedir($d_handle);
         }
     }
+
+    $cache[ $cache_key ] = $fonts;
 
     return apply_filters('seed_fonts_fonts', $fonts);
 
@@ -849,6 +884,3 @@ function seed_fonts_output_settings_field($option)
         echo wp_kses_post(sprintf('<p class="description">%1$s</p>', $option['desc']));
     };
 }
-
-load_plugin_textdomain('seed-fonts', false, basename(dirname(__FILE__)) . '/languages');
-?>

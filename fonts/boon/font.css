@@ -1,15 +1,7 @@
 /*
  Font Name: Boon
- Weights: 300, 400, 500, 600, 700
+ Weights: 400, 500, 600
 */
-
-@font-face {
-  font-family: "boon";
-  src: url("boon-300.woff2") format("woff2");
-  font-weight: 300;
-  font-style: normal;
-  font-display: fallback;
-}
 
 @font-face {
   font-family: "boon";
@@ -29,13 +21,6 @@
   font-family: "boon";
   src: url("boon-600.woff2") format("woff2");
   font-weight: 600;
-  font-style: normal;
-  font-display: fallback;
-}
-@font-face {
-  font-family: "boon";
-  src: url("boon-700.woff2") format("woff2");
-  font-weight: 700;
   font-style: normal;
   font-display: fallback;
 }
