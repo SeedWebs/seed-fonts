@@ -1,51 +1,51 @@
 # Seed Fonts
 
-Seed Fonts is a WordPress plugin that applies a chosen font to a site's headings and body text through CSS selectors.
+Seed Fonts เป็นปลั๊กอิน WordPress ที่ใช้ฟอนต์ที่เลือกไว้กับหัวข้อและเนื้อหาของเว็บผ่าน CSS selector
 
-## Language
+## ภาษา
 
-### Fonts
+### ฟอนต์
 
-**Bundled font**:
-A font whose files ship inside the plugin package.
-_Avoid_: built-in font, default font
+**ฟอนต์ที่แนบมา (Bundled font)**:
+ฟอนต์ที่ไฟล์มากับแพ็กเกจของปลั๊กอิน
+_เลี่ยง_: built-in font, default font, ฟอนต์ในตัว
 
-**Custom font**:
-A font the site owner adds as a folder with a `font.css`, in the active theme's `vendor/fonts/` or in `wp-content/uploads/fonts/`. It takes the place of a Bundled font with the same Font slug.
-_Avoid_: uploaded font, own font
+**ฟอนต์ที่เพิ่มเอง (Custom font)**:
+ฟอนต์ที่เจ้าของเว็บเพิ่มเองเป็นโฟลเดอร์ที่มี `font.css` ไว้ใน `vendor/fonts/` ของธีมที่ใช้อยู่ หรือใน `wp-content/uploads/fonts/` ถ้ามี Font slug เดียวกับฟอนต์ที่แนบมา จะใช้ฟอนต์ที่เพิ่มเองแทน
+_เลี่ยง_: uploaded font, own font
 
-**Google font**:
-A font loaded from the Google Fonts service by its family name instead of from the site.
-_Avoid_: web font
+**ฟอนต์จาก Google (Google font)**:
+ฟอนต์ที่โหลดจากบริการ Google Fonts ด้วยชื่อ family แทนการโหลดจากเว็บเอง
+_เลี่ยง_: web font
 
 **Font slug**:
-The identifier of a Bundled or Custom font: its folder name and the font-family its `font.css` declares.
-_Avoid_: font ID, font key
+ชื่ออ้างอิงของฟอนต์ที่แนบมาหรือฟอนต์ที่เพิ่มเอง คือชื่อโฟลเดอร์ และเป็นชื่อ font-family ที่ `font.css` ของฟอนต์นั้นต้องประกาศไว้
+_เลี่ยง_: font ID, font key
 
-**Font name**:
-The label of a font shown to the site owner; for a Google font, its exact family name.
-_Avoid_: font title
+**ชื่อฟอนต์ (Font name)**:
+ชื่อที่แสดงให้เจ้าของเว็บเห็น สำหรับฟอนต์จาก Google คือชื่อ family ที่ต้องพิมพ์ให้ตรงตัว
+_เลี่ยง_: font title
 
-**Weight**:
-A numeric font weight from 100 to 900. A font declares the Weights it has files for.
-_Avoid_: boldness
+**น้ำหนัก (Weight)**:
+น้ำหนักของฟอนต์แบบตัวเลขตั้งแต่ 100 ถึง 900 แต่ละฟอนต์ประกาศน้ำหนักที่มีไฟล์อยู่จริง
+_เลี่ยง_: boldness, ความหนา
 
-### Settings
+### การตั้งค่า
 
-**Heading font**:
-The font applied to the heading Selectors (headings, navigation, buttons).
-_Avoid_: header font, title font
+**ฟอนต์หัวข้อ (Heading font)**:
+ฟอนต์ที่ใช้กับ Selector ของหัวข้อ (หัวข้อ เมนู ปุ่ม)
+_เลี่ยง_: header font, title font
 
-**Body font**:
-The font applied to the body Selectors, with its own size and line height.
-_Avoid_: content font, text font
+**ฟอนต์เนื้อหา (Body font)**:
+ฟอนต์ที่ใช้กับ Selector ของเนื้อหา และตั้งขนาดกับระยะบรรทัดของตัวเองได้
+_เลี่ยง_: content font, text font
 
 **Selector**:
-The comma-separated CSS selectors that a Heading font or Body font applies to.
-_Avoid_: target, elements
+รายการ CSS selector ที่คั่นด้วยจุลภาค ซึ่งบอกว่าฟอนต์หัวข้อหรือฟอนต์เนื้อหาใช้กับส่วนใดของหน้า
+_เลี่ยง_: target, elements
 
-### Not part of Seed Fonts
+### ไม่ใช่ส่วนของ Seed Fonts
 
 **Font Library**:
-WordPress core's own font manager (Appearance → Fonts since WordPress 7.0), separate from Seed Fonts.
-_Avoid_: "Fonts menu"
+ตัวจัดการฟอนต์ของ WordPress core (Appearance → Fonts ตั้งแต่ WordPress 7.0) แยกจาก Seed Fonts
+_เลี่ยง_: "เมนู Fonts", "Fonts menu"

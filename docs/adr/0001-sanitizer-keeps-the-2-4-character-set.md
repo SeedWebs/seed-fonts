@@ -2,10 +2,10 @@
 status: accepted
 ---
 
-# The settings sanitizer keeps the 2.4.x character set and drops only `<`
+# ตัวกรองค่าการตั้งค่าคงชุดตัวอักษรของ 2.4.x ไว้ และตัดแค่ `<`
 
-`seed_fonts_sanitize()` runs both when settings are saved and when the CSS is printed, so any character it stops allowing changes the CSS of existing sites on their next page view. The sanitizer shipped in 2.4.0 meant to allow only Thai, Latin letters, digits, `_ . ? ! -` and whitespace (2.4.2 added `,`), but the unescaped `-` in `.-\?` formed a character range that also lets `/ : ; < = >` through. That range is what allowed closing the `<style>` element (stored XSS on WordPress 6.9 and earlier), and it is also why Selectors such as `.nav > li` and `a:hover` keep working. In 2.4.3 we list those characters explicitly and drop only `<`: without `<`, a value cannot close the style element. Do not "fix" the regex by escaping the dash; that would also strip `>` and `:` and silently change existing sites' Selectors.
+`seed_fonts_sanitize()` ทำงานทั้งตอนบันทึกการตั้งค่าและตอนพิมพ์ CSS ลงหน้าเว็บ ตัวอักษรใดที่เลิกยอมให้ผ่านจึงทำให้ CSS ของเว็บที่ใช้อยู่เปลี่ยนตั้งแต่ page view ถัดไป ตัวกรองที่ออกใน 2.4.0 ตั้งใจให้ผ่านแค่อักษรไทย อักษรละติน ตัวเลข `_ . ? ! -` และช่องว่าง (2.4.2 เพิ่ม `,`) แต่ขีด `-` ที่ไม่ได้ escape ใน `.-\?` กลายเป็นช่วงตัวอักษรที่ปล่อย `/ : ; < = >` ผ่านไปด้วย ช่วงตัวอักษรนี้ทำให้ค่าที่บันทึกไว้ปิด element `<style>` ได้ (stored XSS บน WordPress 6.9 และรุ่นก่อนหน้า) และก็เป็นเหตุที่ Selector อย่าง `.nav > li` กับ `a:hover` ยังใช้ได้ ใน 2.4.3 เราจึงระบุตัวอักษรเหล่านั้นตรง ๆ และตัดแค่ `<` เพราะถ้าไม่มี `<` ค่าก็ปิด element style ไม่ได้ อย่า "แก้" regex ด้วยการ escape ขีด เพราะจะตัด `>` และ `:` ไปด้วย แล้ว Selector ของเว็บที่ใช้อยู่จะเปลี่ยนโดยไม่มีใครรู้
 
-## Consequences
+## ผลที่ตามมา
 
-- Characters removed since 2.4.0 (`# [ ] * + ~ ( ) %`) are still removed. Restoring them, or sanitizing each field differently, changes the output of existing sites and is a separate decision for a later release.
+- ตัวอักษรที่ถูกตัดมาตั้งแต่ 2.4.0 (`# [ ] * + ~ ( ) %`) ยังถูกตัดเหมือนเดิม การคืนตัวอักษรเหล่านี้หรือการกรองแยกตามช่องจะเปลี่ยน output ของเว็บที่ใช้อยู่ จึงเป็นการตัดสินใจแยกไว้สำหรับรุ่นหลัง
