@@ -4,7 +4,7 @@ Tags: fonts, google fonts, thai, typography, webfont
 Requires at least: 4.9
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.4.2
+Stable tag: 2.4.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,20 @@ The following bundled fonts are used under open licenses. Each font folder conta
 
 
 == Changelog ==
+
+= 2.4.3 =
+* Date: 20 NOV 2026
+* Security: Fix a stored XSS in the settings that the 2.4.0 fix did not fully close (WordPress 6.9 and earlier; needs an administrator account).
+* Security: Escape all output on the settings page and block direct access to the plugin file.
+* Fix: PHP 8.1+ "Deprecated" notice when saving the settings.
+* Fix: Fatal error when a custom fonts folder cannot be read.
+* Fix: Boon no longer requests the missing 300 and 700 weight files (404).
+* Fix: The Generated CSS preview showed "san-serif".
+* Tweak: The menu is now Appearance -> Seed Fonts, so it no longer looks like the Fonts menu of WordPress 7.0+. The page address is unchanged.
+* Tweak: Font folders are no longer scanned on every front-end page.
+* Tweak: Font CSS URLs carry the plugin version (or the file date for custom fonts) instead of the WordPress version. Google Fonts URLs no longer include it.
+* Tweak: License is GPLv2 or later everywhere. Added font credits, font license files and an External services section.
+* Tweak: Requires WordPress 4.9 and PHP 7.4. Tested up to WordPress 7.1.
 
 = 2.4.2 =
 * Date: 8 AUG 2023
@@ -141,6 +155,9 @@ The following bundled fonts are used under open licenses. Each font folder conta
 
 
 == Upgrade Notice ==
+
+= 2.4.3 =
+Security update: fixes a stored XSS in the settings that 2.4.0 did not fully fix (WordPress 6.9 and earlier). The menu is now Appearance -> Seed Fonts. Requires WordPress 4.9 and PHP 7.4.
 
 = 2.0.0 =
 * Now support Google Fonts. You can choose any font and weight.
