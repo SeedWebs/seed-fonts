@@ -2,20 +2,24 @@
 /*
 Plugin Name: Seed Fonts
 Plugin URI: https://wordpress.org/plugins/seed-fonts/
-Description: Enable web fonts on Appearance -> Fonts. You can use Google Fonts, Bundled fonts or add your own by <a href="https://docs.seedwebs.com/article/90-upload-custom-fonts" target="_blank">uploading your web fonts to the theme folder</a>.
+Description: Enable web fonts on Appearance -> Seed Fonts. You can use Google Fonts, Bundled fonts or add your own by <a href="https://docs.seedwebs.com/article/90-upload-custom-fonts" target="_blank">uploading your web fonts to the theme folder</a>.
 Version: 2.4.2
+Requires at least: 4.9
+Requires PHP: 7.4
 Author: Seed Webs
 Author URI: https://seedwebs.com
-License: GPL2
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: seed-fonts
 */
 
 /*
-Copyright 2016-2023 Seed Webs Co., Ltd.  (email : support@seedwebs.com)
+Copyright 2016-2026 Seed Webs Co., Ltd.  (email : support@seedwebs.com)
 
 This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as
-published by the Free Software Foundation.
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of

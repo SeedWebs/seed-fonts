@@ -1,11 +1,12 @@
 === Seed Fonts ===
 Contributors: seedwebs
-Tags: webfont,web fonts, @font-face embed, typography
-Requires at least: 4.0
+Tags: fonts, google fonts, thai, typography, webfont
+Requires at least: 4.9
 Tested up to: 7.1
+Requires PHP: 7.4
 Stable tag: 2.4.2
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Use web fonts (@font-face) by choosing from Google Fonts, Bundled Thai-English fonts, and your own web fonts.
 
@@ -15,7 +16,7 @@ Seed Fonts is WordPress plugin that helps you use web fonts (@font-face embed) e
 
 1. Google Fonts
 2. Bundled Thai-English fonts
-3. Your own web fonts. (Upload to /wp-content/upload/fonts/fontname/ or /wp-content/themes/ThemeName/vendor/fonts/fontname/ - lowercase is recommended.)
+3. Your own web fonts. (Upload to /wp-content/uploads/fonts/fontname/ or /wp-content/themes/ThemeName/vendor/fonts/fontname/ - lowercase is recommended.)
 
 The GitHub repository can be found at <a href="https://github.com/SeedWebs/seed-fonts" target="_blank">https://github.com/SeedWebs/seed-fonts</a>. 
 
@@ -25,7 +26,7 @@ The GitHub repository can be found at <a href="https://github.com/SeedWebs/seed-
 
 1. Upload the plugin files to the `/wp-content/plugins/seed-fonts` directory, or install the plugin through the WordPress plugins screen directly.
 1. Activate the plugin through the 'Plugins' screen in WordPress
-1. Go to Appearance -> Fonts to set you web fonts. Thais use รูปแบบเว็บ -> ฟอนต์
+1. Go to Appearance -> Seed Fonts to set your web fonts. Thais use รูปแบบเว็บ -> Seed Fonts
 
 
 == Frequently Asked Questions ==
@@ -33,6 +34,31 @@ The GitHub repository can be found at <a href="https://github.com/SeedWebs/seed-
 = How to generate and upload my own web fonts? =
 
 Please see <a href="https://docs.seedwebs.com/article/90-upload-custom-fonts" target="_blank">https://docs.seedwebs.com/article/90-upload-custom-fonts</a>.
+
+== External services ==
+
+This plugin can load fonts from Google Fonts, a web font service provided by Google LLC. It only does so if you turn on "Use Google Fonts?" for the heading font and/or the body font in Appearance -> Seed Fonts. This option is off by default. Bundled fonts and fonts you upload to your own site are always served from your own site.
+
+When Google Fonts is turned on, every front-end page of your site (and the block editor screens) loads a stylesheet from fonts.googleapis.com, and the visitor's browser then downloads the font files from fonts.gstatic.com. With these requests Google receives the visitor's IP address and browser user agent, the address of your site (as the HTTP referrer), and the font family and weight you selected. The plugin does not send any other data to Google and makes no server-side requests.
+
+* Google Fonts: https://fonts.google.com/
+* Google Fonts privacy FAQ: https://developers.google.com/fonts/faq/privacy
+* Google Terms of Service: https://policies.google.com/terms
+* Google APIs Terms of Service: https://developers.google.com/terms
+* Google Privacy Policy: https://policies.google.com/privacy
+
+The settings screen also contains plain links to fonts.google.com (to look up font names) and to the plugin documentation at docs.seedwebs.com. These pages are only opened if you click the links; nothing is sent automatically.
+
+== Font credits ==
+
+The following bundled fonts are used under open licenses. Each font folder contains the full license text.
+
+* Anuphan by Mike Abbink, Paul van der Laan, Pieter van Rosmalen and Mint Tantisuwanna: SIL Open Font License 1.1
+* Boon by Sungsit Sawaiwan (FontUni): SIL Open Font License 1.1
+* IBM Plex Thai by IBM Corp.: SIL Open Font License 1.1
+* Noto Sans Thai and Noto Serif Thai by Google: SIL Open Font License 1.1
+* Sarabun by The Sarabun Project Authors: SIL Open Font License 1.1
+* CS PraJad and CS Chatthai UI by Chanok Samiti: Creative Commons Attribution 4.0 (https://creativecommons.org/licenses/by/4.0/), converted to WOFF2
 
 == Screenshots ==
 
@@ -55,13 +81,10 @@ Please see <a href="https://docs.seedwebs.com/article/90-upload-custom-fonts" ta
 * Fix: Cross Site Scripting (XSS)
 
 = 2.3.1 =
-* Date: 7 NOV 2021.
-* Tweak: Change to Seed Webs and update Tested up to WordPress 6.1.
-
-= 2.3.1 =
 * Date: 16 JUL 2021.
 * New: iannnnn-Duck font.
 * Tweak: Change Git repo to SeedWebs.
+* Readme update (7 NOV 2022): Change to Seed Webs and update Tested up to WordPress 6.1.
 
 = 2.3.0 =
 * Date: 5 JUL 2021.
