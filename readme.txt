@@ -51,7 +51,7 @@ The settings screen also contains plain links to fonts.google.com (to look up fo
 
 == Font credits ==
 
-The following bundled fonts are used under open licenses. Each font folder contains the full license text.
+The following bundled fonts are used under open licenses. Each font folder contains its license file.
 
 * Anuphan by Mike Abbink, Paul van der Laan, Pieter van Rosmalen and Mint Tantisuwanna: SIL Open Font License 1.1
 * Boon by Sungsit Sawaiwan (FontUni): SIL Open Font License 1.1
@@ -74,7 +74,7 @@ The following bundled fonts are used under open licenses. Each font folder conta
 * Security: Escape all output on the settings page and block direct access to the plugin file.
 * Fix: PHP 8.1+ "Deprecated" notice when saving the settings.
 * Fix: Fatal error when a custom fonts folder cannot be read.
-* Fix: Boon no longer requests the missing 300 and 700 weight files (404).
+* Fix: Boon no longer requests the missing 300 and 700 weight files (404). Bold and light text set in Boon now shows Boon 600 and 400 instead of a fallback font.
 * Fix: The Generated CSS preview showed "san-serif".
 * Tweak: The menu is now Appearance -> Seed Fonts, so it no longer looks like the Fonts menu of WordPress 7.0+. The page address is unchanged.
 * Tweak: Font folders are no longer scanned on every front-end page.

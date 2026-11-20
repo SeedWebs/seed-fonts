@@ -92,8 +92,10 @@ function seed_fonts_scripts()
         // A null version keeps WordPress from adding its own version number to the Google Fonts URL.
         if($is_google_font) {
             if($weight != '') {
+                // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- No version on Google Fonts URLs, so the WordPress version is not sent to Google.
                 wp_enqueue_style('seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font.':'.$weight, false, null);
             } else {
+                // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- No version on Google Fonts URLs, so the WordPress version is not sent to Google.
                 wp_enqueue_style('seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font, false, null);
             }
         } else {
@@ -161,8 +163,10 @@ function seed_fonts_scripts()
         // A null version keeps WordPress from adding its own version number to the Google Fonts URL.
         if($body_is_google_font) {
             if($body_weight != '') {
+                // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- No version on Google Fonts URLs, so the WordPress version is not sent to Google.
                 wp_enqueue_style('seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font.':'.$body_weight, false, null);
             } else {
+                // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- No version on Google Fonts URLs, so the WordPress version is not sent to Google.
                 wp_enqueue_style('seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font, false, null);
             }
         } else {
@@ -291,13 +295,6 @@ function seed_fonts_hidden_weight_options()
  */
 function seed_fonts_get_fonts()
 {
-    // Scan the font folders only once per request (per site and theme); the filter still runs on every call.
-    static $cache = array();
-    $cache_key = get_current_blog_id() . '|' . get_stylesheet();
-    if (isset($cache[ $cache_key ])) {
-        return apply_filters('seed_fonts_fonts', $cache[ $cache_key ]);
-    }
-
     $loop = __(' (Thai Loop)', 'seed-fonts');
 
     $fonts = array(
@@ -359,50 +356,59 @@ function seed_fonts_get_fonts()
         )
     );
 
-    // This is where we add custom fonts
-    if (file_exists(get_stylesheet_directory() . '/vendor/fonts') && is_dir(get_stylesheet_directory() . '/vendor/fonts')) {
-        $d_handle = opendir(get_stylesheet_directory() . '/vendor/fonts');
-        // opendir() returns false when the folder cannot be read; readdir(false) is fatal on PHP 8.
-        if (false !== $d_handle) {
-            while (false !== ($entry = readdir($d_handle))) {
-                if (is_dir(get_stylesheet_directory() . '/vendor/fonts/' . $entry) && (file_exists(get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css'))) {
-                    $headers = get_file_data(get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css', array(
-                        'font'    => 'Font Name',
-                        'weights' => 'Weights'
-                    ));
-                    $_font = array(
-                        'font'    => empty($headers['font']) ? $entry : $headers['font'],
-                        'weights' => empty($headers['weights']) ? array() : array_map('trim', explode(',', $headers['weights'])),
-                    );
-                    $fonts[ $entry ] = $_font;
-                }
-            }
-            closedir($d_handle);
-        }
-    }
-    // add more custom fonts from /uploads/fonts/
+    // Custom fonts: scan the theme and uploads folders only once per request (the cache key is the folders scanned).
+    // The list above and the seed_fonts_fonts filter still run on every call.
+    static $custom_fonts_cache = array();
     $upload_dir = wp_get_upload_dir();
-    if (file_exists($upload_dir['basedir'] . '/fonts/') && is_dir($upload_dir['basedir'] . '/fonts/')) {
-        $d_handle = opendir($upload_dir['basedir'] . '/fonts/');
-        if (false !== $d_handle) {
-            while (false !== ($entry = readdir($d_handle))) {
-                if (is_dir($upload_dir['basedir'] . '/fonts/'  . $entry) && (file_exists($upload_dir['basedir'] . '/fonts/'  . $entry . '/font.css'))) {
-                    $headers = get_file_data($upload_dir['basedir'] . '/fonts/'  . $entry . '/font.css', array(
-                        'font'    => 'Font Name',
-                        'weights' => 'Weights'
-                    ));
-                    $_font = array(
-                        'font'    => empty($headers['font']) ? $entry : $headers['font'],
-                        'weights' => empty($headers['weights']) ? array() : array_map('trim', explode(',', $headers['weights'])),
-                    );
-                    $fonts[ $entry ] = $_font;
+    $cache_key = get_stylesheet_directory() . '|' . $upload_dir['basedir'];
+    if (! isset($custom_fonts_cache[ $cache_key ])) {
+        $custom_fonts = array();
+        // This is where we add custom fonts
+        if (file_exists(get_stylesheet_directory() . '/vendor/fonts') && is_dir(get_stylesheet_directory() . '/vendor/fonts')) {
+            $d_handle = opendir(get_stylesheet_directory() . '/vendor/fonts');
+            // opendir() returns false when the folder cannot be read; readdir(false) is fatal on PHP 8.
+            if (false !== $d_handle) {
+                while (false !== ($entry = readdir($d_handle))) {
+                    if (is_dir(get_stylesheet_directory() . '/vendor/fonts/' . $entry) && (file_exists(get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css'))) {
+                        $headers = get_file_data(get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css', array(
+                            'font'    => 'Font Name',
+                            'weights' => 'Weights'
+                        ));
+                        $_font = array(
+                            'font'    => empty($headers['font']) ? $entry : $headers['font'],
+                            'weights' => empty($headers['weights']) ? array() : array_map('trim', explode(',', $headers['weights'])),
+                        );
+                        $custom_fonts[ $entry ] = $_font;
+                    }
                 }
+                closedir($d_handle);
             }
-            closedir($d_handle);
         }
+        // add more custom fonts from /uploads/fonts/
+        if (file_exists($upload_dir['basedir'] . '/fonts/') && is_dir($upload_dir['basedir'] . '/fonts/')) {
+            $d_handle = opendir($upload_dir['basedir'] . '/fonts/');
+            if (false !== $d_handle) {
+                while (false !== ($entry = readdir($d_handle))) {
+                    if (is_dir($upload_dir['basedir'] . '/fonts/'  . $entry) && (file_exists($upload_dir['basedir'] . '/fonts/'  . $entry . '/font.css'))) {
+                        $headers = get_file_data($upload_dir['basedir'] . '/fonts/'  . $entry . '/font.css', array(
+                            'font'    => 'Font Name',
+                            'weights' => 'Weights'
+                        ));
+                        $_font = array(
+                            'font'    => empty($headers['font']) ? $entry : $headers['font'],
+                            'weights' => empty($headers['weights']) ? array() : array_map('trim', explode(',', $headers['weights'])),
+                        );
+                        $custom_fonts[ $entry ] = $_font;
+                    }
+                }
+                closedir($d_handle);
+            }
+        }
+        $custom_fonts_cache[ $cache_key ] = $custom_fonts;
     }
-
-    $cache[ $cache_key ] = $fonts;
+    foreach ($custom_fonts_cache[ $cache_key ] as $entry => $_font) {
+        $fonts[ $entry ] = $_font;
+    }
 
     return apply_filters('seed_fonts_fonts', $fonts);
 

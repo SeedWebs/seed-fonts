@@ -11,7 +11,7 @@ A font whose files ship inside the plugin package.
 _Avoid_: built-in font, default font
 
 **Custom font**:
-A font the site owner adds as a folder with a `font.css`, in the active theme's `vendor/fonts/` (checked first) or in `wp-content/uploads/fonts/`. It takes the place of a Bundled font with the same Font slug.
+A font the site owner adds as a folder with a `font.css`, in the active theme's `vendor/fonts/` or in `wp-content/uploads/fonts/`. It takes the place of a Bundled font with the same Font slug.
 _Avoid_: uploaded font, own font
 
 **Google font**:
