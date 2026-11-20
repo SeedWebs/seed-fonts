@@ -32,7 +32,7 @@ jQuery(document).ready(function ($) {
     if (inputSelectors.val() != null && inputSelectors.val() != '') css += inputSelectors.val() + ' ';
 
     css += '{\r\n';
-    css += '  font-family: "' + (inputGoogleFonts.prop('checked') ? ggfont : inputFonts.val()) + '", san-serif' + (inputImportant.prop('checked') ? ' !important' : '') + ';\n';
+    css += '  font-family: "' + (inputGoogleFonts.prop('checked') ? ggfont : inputFonts.val()) + '", sans-serif' + (inputImportant.prop('checked') ? ' !important' : '') + ';\n';
     if (inputFontWeight.val() != null && inputFontWeight.val() != '') css += '  font-weight: ' + inputFontWeight.val() + (inputImportant.prop('checked') ? ' !important' : '') + ';\n';
     css += '}';
 
@@ -40,14 +40,14 @@ jQuery(document).ready(function ($) {
   }
 
   function seed_fonts_body_generate_css() {
-    css = '';
+    var css = '';
     var ggfont = inputBodyGoogleFontName.val();
     ggfont = ggfont.replace(/ +(?= )/g, '');
 
     if (inputBodySelectors.val() != null && inputBodySelectors.val() != '') css += inputBodySelectors.val() + ' ';
 
     css += '{\r\n';
-    css += '  font-family: "' + (inputBodyGoogleFonts.prop('checked') ? ggfont : inputBodyFonts.val()) + '", san-serif' + (inputBodyImportant.prop('checked') ? ' !important' : '') + ';\n';
+    css += '  font-family: "' + (inputBodyGoogleFonts.prop('checked') ? ggfont : inputBodyFonts.val()) + '", sans-serif' + (inputBodyImportant.prop('checked') ? ' !important' : '') + ';\n';
     if (inputBodySize.val() != null && inputBodySize.val() != '')
       css += '  font-size: ' + inputBodySize.val() + inputBodySizeUnit.val() + (inputBodyImportant.prop('checked') ? ' !important' : '') + ';\n';
     if (inputBodyWeight.val() != null && inputBodyWeight.val() != '') css += '  font-weight: ' + inputBodyWeight.val() + (inputBodyImportant.prop('checked') ? ' !important' : '') + ';\n';
@@ -90,7 +90,7 @@ jQuery(document).ready(function ($) {
         )
         .val(weight);
     }
-    if (inputFontWeight.val() == null) $('#seed-fonts-weight option:first').attr('selected', 'selected');
+    if (inputFontWeight.val() == null) $('#seed-fonts-weight option').first().prop('selected', true);
   }
 
   function seed_fonts_body_is_enabled() {
@@ -154,7 +154,7 @@ jQuery(document).ready(function ($) {
       )
       .val(weight);
 
-    if (inputFontWeight.val() == null) $('#seed-fonts-weight option:first').attr('selected', 'selected');
+    if (inputFontWeight.val() == null) $('#seed-fonts-weight option').first().prop('selected', true);
 
     seed_fonts_generate_css();
   });

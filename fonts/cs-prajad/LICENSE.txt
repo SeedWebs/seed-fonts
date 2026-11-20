@@ -1,0 +1,9 @@
+CS PraJad (csprajad-webfont.woff2, csprajad-bold-webfont.woff2)
+(c) 2014, Chanok Samiti. Created by Chanok Samiti with the help from F0nt.com community.
+
+This font is licensed under the Creative Commons Attribution 4.0 International
+License (CC BY 4.0). To view a copy of this license, visit
+https://creativecommons.org/licenses/by/4.0/
+
+The font files in this folder were converted to WOFF2 for use on the web.
+The font is provided "as is", without warranty of any kind.

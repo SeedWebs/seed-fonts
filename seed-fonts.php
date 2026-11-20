@@ -2,20 +2,24 @@
 /*
 Plugin Name: Seed Fonts
 Plugin URI: https://wordpress.org/plugins/seed-fonts/
-Description: Enable web fonts on Appearance -> Fonts. You can use Google Fonts, Bundled fonts or add your own by <a href="https://docs.seedwebs.com/article/90-upload-custom-fonts" target="_blank">uploading your web fonts to the theme folder</a>.
-Version: 2.4.2
+Description: Enable web fonts on Appearance -> Seed Fonts. You can use Google Fonts, Bundled fonts or add your own by <a href="https://docs.seedwebs.com/article/90-upload-custom-fonts" target="_blank">uploading your web fonts to the theme folder</a>.
+Version: 2.4.3
+Requires at least: 4.9
+Requires PHP: 7.4
 Author: Seed Webs
 Author URI: https://seedwebs.com
-License: GPL2
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: seed-fonts
 */
 
 /*
-Copyright 2016-2023 Seed Webs Co., Ltd.  (email : support@seedwebs.com)
+Copyright 2016-2026 Seed Webs Co., Ltd.  (email : support@seedwebs.com)
 
 This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as
-published by the Free Software Foundation.
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -26,6 +30,12 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
+if (! defined('ABSPATH')) {
+    exit;
+}
+
+define('SEED_FONTS_VERSION', '2.4.3');
 
 add_action('wp_enqueue_scripts', 'seed_fonts_scripts', 30);
 add_action('enqueue_block_editor_assets', 'seed_fonts_scripts', 30);
@@ -41,7 +51,6 @@ function seed_fonts_scripts()
         $admin_body_selectors = ".editor-styles-wrapper > *, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper cite, .editor-styles-wrapper figcaption, .editor-styles-wrapper .wp-caption-text,";
     }
 
-    $fonts = seed_fonts_get_fonts();
     $is_enabled = (seed_fonts_sanitize(get_option('seed_fonts_is_enabled')));
     $is_google_font = (seed_fonts_sanitize(get_option('seed_fonts_is_google_fonts')));
     $weight = seed_fonts_sanitize(get_option('seed_fonts_weight'));
@@ -80,24 +89,28 @@ function seed_fonts_scripts()
         $font_styles .= 'body {--s-heading:' . $font_family . '}';
         $font_styles .= 'body {--s-heading-weight:' . $weight . '}';
 
+        // A null version keeps WordPress from adding its own version number to the Google Fonts URL.
         if($is_google_font) {
             if($weight != '') {
-                wp_enqueue_style('seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font.':'.$weight, false);
+                // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- No version on Google Fonts URLs, so the WordPress version is not sent to Google.
+                wp_enqueue_style('seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font.':'.$weight, false, null);
             } else {
-                wp_enqueue_style('seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font, false);
+                // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- No version on Google Fonts URLs, so the WordPress version is not sent to Google.
+                wp_enqueue_style('seed-fonts-all', 'https://fonts.googleapis.com/css?family='.$font, false, null);
             }
         } else {
-            $upload_dir = wp_upload_dir();
+            $upload_dir = wp_get_upload_dir();
             if(file_exists(get_stylesheet_directory() . '/vendor/fonts/' . $font) && is_dir(get_stylesheet_directory() . '/vendor/fonts/' . $font)) {
-                wp_enqueue_style('seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $font . '/font.css', array(  ));
+                wp_enqueue_style('seed-fonts-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $font . '/font.css', array(  ), seed_fonts_file_version(get_stylesheet_directory() . '/vendor/fonts/' . $font . '/font.css'));
             } elseif(file_exists($upload_dir['basedir'] . '/fonts/'  . $font) && is_dir($upload_dir['basedir'] . '/fonts/' . $font)) {
-                wp_enqueue_style('seed-fonts-all', $upload_dir['baseurl'] . '/fonts/'  . $font . '/font.css', array(  ));
+                wp_enqueue_style('seed-fonts-all', $upload_dir['baseurl'] . '/fonts/'  . $font . '/font.css', array(  ), seed_fonts_file_version($upload_dir['basedir'] . '/fonts/' . $font . '/font.css'));
             } else {
-                wp_enqueue_style('seed-fonts-all', plugin_dir_url(__FILE__) . 'fonts/' . $font . '/font.css', array(  ));
+                wp_enqueue_style('seed-fonts-all', plugin_dir_url(__FILE__) . 'fonts/' . $font . '/font.css', array(  ), SEED_FONTS_VERSION);
             }
         }
 
-        wp_add_inline_style('seed-fonts-all', $font_styles);
+        // Never print "<": it could close the <style> element (WordPress 6.9 and earlier print inline CSS as is).
+        wp_add_inline_style('seed-fonts-all', str_replace('<', '', $font_styles));
     }
 
     $body_is_enabled = (seed_fonts_sanitize(get_option('seed_fonts_body_is_enabled')));
@@ -147,39 +160,59 @@ function seed_fonts_scripts()
         $body_font_styles .= '--s-body-line-height:' . $body_lineheight . ';';
         $body_font_styles .= '}';
 
+        // A null version keeps WordPress from adding its own version number to the Google Fonts URL.
         if($body_is_google_font) {
             if($body_weight != '') {
-                wp_enqueue_style('seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font.':'.$body_weight, false);
+                // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- No version on Google Fonts URLs, so the WordPress version is not sent to Google.
+                wp_enqueue_style('seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font.':'.$body_weight, false, null);
             } else {
-                wp_enqueue_style('seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font, false);
+                // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- No version on Google Fonts URLs, so the WordPress version is not sent to Google.
+                wp_enqueue_style('seed-fonts-body-all', 'https://fonts.googleapis.com/css?family='.$body_font, false, null);
             }
         } else {
-            $upload_dir = wp_upload_dir();
+            $upload_dir = wp_get_upload_dir();
             if(file_exists(get_stylesheet_directory() . '/vendor/fonts/' . $body_font) && is_dir(get_stylesheet_directory() . '/vendor/fonts/' . $body_font)) {
-                wp_enqueue_style('seed-fonts-body-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $body_font . '/font.css', array(  ));
+                wp_enqueue_style('seed-fonts-body-all', get_stylesheet_directory_uri() . '/vendor/fonts/' . $body_font . '/font.css', array(  ), seed_fonts_file_version(get_stylesheet_directory() . '/vendor/fonts/' . $body_font . '/font.css'));
             } elseif(file_exists($upload_dir['basedir'] . '/fonts/' . $body_font) && is_dir($upload_dir['basedir'] . '/fonts/' . $body_font)) {
-                wp_enqueue_style('seed-fonts-body-all', $upload_dir['baseurl'] . '/fonts/' . $body_font . '/font.css', array(  ));
+                wp_enqueue_style('seed-fonts-body-all', $upload_dir['baseurl'] . '/fonts/' . $body_font . '/font.css', array(  ), seed_fonts_file_version($upload_dir['basedir'] . '/fonts/' . $body_font . '/font.css'));
             } else {
-                wp_enqueue_style('seed-fonts-body-all', plugin_dir_url(__FILE__) . 'fonts/' . $body_font . '/font.css', array(  ));
+                wp_enqueue_style('seed-fonts-body-all', plugin_dir_url(__FILE__) . 'fonts/' . $body_font . '/font.css', array(  ), SEED_FONTS_VERSION);
             }
         }
-        wp_add_inline_style('seed-fonts-body-all', $body_font_styles);
+        // Never print "<": it could close the <style> element (WordPress 6.9 and earlier print inline CSS as is).
+        wp_add_inline_style('seed-fonts-body-all', str_replace('<', '', $body_font_styles));
     }
+}
+
+/**
+ * Version for the font.css of a Custom font: the file's modification time, so browsers
+ * load it again after the site owner changes it.
+ *
+ * @since 2.4.3
+ *
+ * @param string $file Path of the font.css file
+ *
+ * @return string
+ */
+function seed_fonts_file_version($file)
+{
+    return file_exists($file) ? (string) filemtime($file) : SEED_FONTS_VERSION;
 }
 
 add_action('admin_menu', 'seed_fonts_setup_menu');
 
 function seed_fonts_setup_menu()
 {
-    $seed_font_page = add_submenu_page('themes.php', __('Seed Fonts', 'seed-fonts'), __('Fonts', 'seed-fonts'), 'manage_options', 'seed-fonts', 'seed_fonts_init');
+    // The menu title is "Seed Fonts", not "Fonts": WordPress 7.0+ has its own Appearance > Fonts (Font Library).
+    $seed_font_page = add_submenu_page('themes.php', __('Seed Fonts', 'seed-fonts'), __('Seed Fonts', 'seed-fonts'), 'manage_options', 'seed-fonts', 'seed_fonts_init');
 
     add_action('load-' . $seed_font_page, 'seed_fonts_admin_styles');
 }
 
 function seed_fonts_admin_styles()
 {
-    wp_enqueue_style('seed-fonts', plugin_dir_url(__FILE__) . 'seed-fonts-admin.css', array(), '2018-1');
-    wp_enqueue_script('seed-fonts', plugin_dir_url(__FILE__) . 'seed-fonts-admin.js', array( 'jquery', 'jquery-ui-tabs' ), '2018-1', true);
+    wp_enqueue_style('seed-fonts', plugin_dir_url(__FILE__) . 'seed-fonts-admin.css', array(), SEED_FONTS_VERSION);
+    wp_enqueue_script('seed-fonts', plugin_dir_url(__FILE__) . 'seed-fonts-admin.js', array( 'jquery', 'jquery-ui-tabs' ), SEED_FONTS_VERSION, true);
 }
 
 function seed_fonts_init()
@@ -188,6 +221,7 @@ function seed_fonts_init()
     <div class="icon32" id="icon-options-general"></div>
     <h2><?php esc_html_e('Seed Fonts', 'seed-fonts'); ?></h2>
     <?php
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only decides whether to show the notice; options.php saves the settings.
     if(isset($_GET['settings-updated'])) {
         ?>
     <div class="updated">
@@ -196,9 +230,12 @@ function seed_fonts_init()
     }
     ?>
     <p>
-        <?php printf(wp_kses(__('This plugin allows you to use Google fonts, bundled Thai fonts, or your own custom fonts. For more information, please visit <a href="%1$s" target="_blank">Seed Fonts by Seedwebs.com</a>', 'seed-fonts'), array( 'a' => array( 'href' => array(), 'target' => array() ) )), esc_url('https://docs.seedwebs.com/category/91-seed-fonts')); ?>
+        <?php
+        /* translators: %1$s: URL of the Seed Fonts documentation. */
+        printf(wp_kses(__('This plugin allows you to use Google fonts, bundled Thai fonts, or your own custom fonts. For more information, please visit <a href="%1$s" target="_blank">Seed Fonts by Seedwebs.com</a>', 'seed-fonts'), array( 'a' => array( 'href' => array(), 'target' => array() ) )), esc_url('https://docs.seedwebs.com/category/91-seed-fonts'));
+        ?>
     </p>
-    <form action="<?php echo admin_url('options.php'); ?>" method="post" id="seed-fonts-form">
+    <form action="<?php echo esc_url(admin_url('options.php')); ?>" method="post" id="seed-fonts-form">
         <div id="seed-fonts-tabs">
             <ul class="wp-clearfix">
                 <li><a href="#seed-fonts-header"><?php esc_html_e('Heading', 'seed-fonts'); ?></a></li>
@@ -227,10 +264,10 @@ function seed_fonts_hidden_weight_options()
     $fonts = seed_fonts_get_fonts();
 
     foreach($fonts as $_font => $_font_desc) { ?>
-<select id="seed-fonts-<?php esc_html_e($_font, 'seed-fonts'); ?>-weights" style="display:none">
+<select id="seed-fonts-<?php echo esc_attr($_font); ?>-weights" style="display:none">
     <option value=""></option><?php
             foreach($_font_desc["weights"] as $_weight) { ?>
-    <option value="<?php esc_html_e($_weight, 'seed-fonts'); ?>"><?php esc_html_e($_weight, 'seed-fonts'); ?>
+    <option value="<?php echo esc_attr($_weight); ?>"><?php echo esc_html($_weight); ?>
     </option><?php
             } ?>
 </select> <?php
@@ -319,40 +356,58 @@ function seed_fonts_get_fonts()
         )
     );
 
-    // This is where we add custom fonts
-    if (file_exists(get_stylesheet_directory() . '/vendor/fonts') && is_dir(get_stylesheet_directory() . '/vendor/fonts')) {
-        $d_handle = opendir(get_stylesheet_directory() . '/vendor/fonts');
-        while (false !== ($entry = readdir($d_handle))) {
-            if (is_dir(get_stylesheet_directory() . '/vendor/fonts/' . $entry) && (file_exists(get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css'))) {
-                $headers = get_file_data(get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css', array(
-                    'font'    => 'Font Name',
-                    'weights' => 'Weights'
-                ));
-                $_font = array(
-                    'font'    => empty($headers['font']) ? $entry : $headers['font'],
-                    'weights' => empty($headers['weights']) ? array() : array_map('trim', explode(',', $headers['weights'])),
-                );
-                $fonts[ $entry ] = $_font;
+    // Custom fonts: scan the theme and uploads folders only once per request (the cache key is the folders scanned).
+    // The list above and the seed_fonts_fonts filter still run on every call.
+    static $custom_fonts_cache = array();
+    $upload_dir = wp_get_upload_dir();
+    $cache_key = get_stylesheet_directory() . '|' . $upload_dir['basedir'];
+    if (! isset($custom_fonts_cache[ $cache_key ])) {
+        $custom_fonts = array();
+        // This is where we add custom fonts
+        if (file_exists(get_stylesheet_directory() . '/vendor/fonts') && is_dir(get_stylesheet_directory() . '/vendor/fonts')) {
+            $d_handle = opendir(get_stylesheet_directory() . '/vendor/fonts');
+            // opendir() returns false when the folder cannot be read; readdir(false) is fatal on PHP 8.
+            if (false !== $d_handle) {
+                while (false !== ($entry = readdir($d_handle))) {
+                    if (is_dir(get_stylesheet_directory() . '/vendor/fonts/' . $entry) && (file_exists(get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css'))) {
+                        $headers = get_file_data(get_stylesheet_directory() . '/vendor/fonts/' . $entry . '/font.css', array(
+                            'font'    => 'Font Name',
+                            'weights' => 'Weights'
+                        ));
+                        $_font = array(
+                            'font'    => empty($headers['font']) ? $entry : $headers['font'],
+                            'weights' => empty($headers['weights']) ? array() : array_map('trim', explode(',', $headers['weights'])),
+                        );
+                        $custom_fonts[ $entry ] = $_font;
+                    }
+                }
+                closedir($d_handle);
             }
         }
+        // add more custom fonts from /uploads/fonts/
+        if (file_exists($upload_dir['basedir'] . '/fonts/') && is_dir($upload_dir['basedir'] . '/fonts/')) {
+            $d_handle = opendir($upload_dir['basedir'] . '/fonts/');
+            if (false !== $d_handle) {
+                while (false !== ($entry = readdir($d_handle))) {
+                    if (is_dir($upload_dir['basedir'] . '/fonts/'  . $entry) && (file_exists($upload_dir['basedir'] . '/fonts/'  . $entry . '/font.css'))) {
+                        $headers = get_file_data($upload_dir['basedir'] . '/fonts/'  . $entry . '/font.css', array(
+                            'font'    => 'Font Name',
+                            'weights' => 'Weights'
+                        ));
+                        $_font = array(
+                            'font'    => empty($headers['font']) ? $entry : $headers['font'],
+                            'weights' => empty($headers['weights']) ? array() : array_map('trim', explode(',', $headers['weights'])),
+                        );
+                        $custom_fonts[ $entry ] = $_font;
+                    }
+                }
+                closedir($d_handle);
+            }
+        }
+        $custom_fonts_cache[ $cache_key ] = $custom_fonts;
     }
-    // add more custom fonts from /upload/fonts/
-    $upload_dir = wp_upload_dir();
-    if (file_exists($upload_dir['basedir'] . '/fonts/') && is_dir($upload_dir['basedir'] . '/fonts/')) {
-        $d_handle = opendir($upload_dir['basedir'] . '/fonts/');
-        while (false !== ($entry = readdir($d_handle))) {
-            if (is_dir($upload_dir['basedir'] . '/fonts/'  . $entry) && (file_exists($upload_dir['basedir'] . '/fonts/'  . $entry . '/font.css'))) {
-                $headers = get_file_data($upload_dir['basedir'] . '/fonts/'  . $entry . '/font.css', array(
-                    'font'    => 'Font Name',
-                    'weights' => 'Weights'
-                ));
-                $_font = array(
-                    'font'    => empty($headers['font']) ? $entry : $headers['font'],
-                    'weights' => empty($headers['weights']) ? array() : array_map('trim', explode(',', $headers['weights'])),
-                );
-                $fonts[ $entry ] = $_font;
-            }
-        }
+    foreach ($custom_fonts_cache[ $cache_key ] as $entry => $_font) {
+        $fonts[ $entry ] = $_font;
     }
 
     return apply_filters('seed_fonts_fonts', $fonts);
@@ -488,6 +543,7 @@ function seed_fonts_get_header_settings()
                     'id'      => seed_fonts_get_option_id('google_font_name'),
                     'title'   => esc_html__('Google Font Name', 'seed-fonts'),
                     'type'    => 'text',
+                    /* translators: %1$s: URL of fonts.google.com. */
                     'desc'    => wp_kses(sprintf(__('Use font name from <a href="%1$s" target="_blank">fonts.google.com</a>, such as <b>Roboto</b>, <b>Open Sans</b> (case-sensitive).', 'seed-fonts'), esc_url('https://fonts.google.com/')), array(
                         'a' => array(
                             'href'   => array(),
@@ -572,6 +628,7 @@ function seed_fonts_get_body_settings()
                     'id'      => seed_fonts_get_option_id('body_google_font_name'),
                     'title'   => esc_html__('Google Font Name', 'seed-fonts'),
                     'type'    => 'text',
+                    /* translators: %1$s: URL of fonts.google.com. */
                     'desc'    => wp_kses(sprintf(__('Use font name from <a href="%1$s" target="_blank">fonts.google.com</a>, such as <b>Roboto</b>, <b>Open Sans</b> (case-sensitive).', 'seed-fonts'), esc_url('https://fonts.google.com/')), array(
                         'a' => array(
                             'href'   => array(),
@@ -725,13 +782,23 @@ function seed_fonts_register_plugin_settings()
 }
 
 /**
- * Remove all special characters but allow Thai characters and ? ! - space
+ * Remove the characters that settings may not contain.
+ *
+ * Keeps Thai, Latin letters, digits, whitespace and _ , . / : ; = > ? ! -
+ * This is exactly what 2.4.0-2.4.2 let through (partly by accident), minus "<",
+ * so saved selectors such as ".nav > li" or "a:hover" keep working.
+ * Do not "fix" this by narrowing the list: it also runs on output, so existing sites
+ * would change. See docs/adr/0001 in the GitHub repository.
  *
  * @since 2.4.0
  */
 function seed_fonts_sanitize($value)
 {
-    $value = preg_replace('/[^ก-๙a-zA-Z0-9_,.-\?\!\-\s]/u', '', $value);
+    // Unchecked or disabled fields are saved as null; PHP 8.1+ deprecates passing null to preg_replace().
+    if (null === $value) {
+        return '';
+    }
+    $value = preg_replace('/[^ก-๙a-zA-Z0-9_,.\/:;=>?!\-\s]/u', '', $value);
     return $value;
 }
 
@@ -749,7 +816,7 @@ function seed_fonts_section($section)
 {
     ?>
 </div>
-<div id="<?php echo $section['id'] ?>">
+<div id="<?php echo esc_attr($section['id']); ?>">
     <?php
 }
 
@@ -777,7 +844,7 @@ function seed_fonts_output_settings_field($option)
     switch($field_type):
 
         case 'text':
-            ?><input type="text" name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" value="<?php echo $current; ?>" class="regular-text" /><?php
+            ?><input type="text" name="<?php echo esc_attr($option['name']); ?>" id="<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($current); ?>" class="regular-text" /><?php
             break;
 
         case 'checkbox':
@@ -786,26 +853,20 @@ function seed_fonts_output_settings_field($option)
                 if (count($option['options']) > 1) {
                     $id = "{$id}_{$val}";
                 }
-                $selected = is_array($current) && in_array($val, $current) ? 'checked="checked"' : '';
                 ?>
-    <label for="<?php echo $id; ?>">
-        <input type="checkbox" name="<?php echo $option['name']; ?>[]" value="<?php echo $val; ?>" id="<?php echo $id; ?>" <?php echo $selected; ?> />
-        <?php echo $choice; ?>
+    <label for="<?php echo esc_attr($id); ?>">
+        <input type="checkbox" name="<?php echo esc_attr($option['name']); ?>[]" value="<?php echo esc_attr($val); ?>" id="<?php echo esc_attr($id); ?>" <?php checked(is_array($current) && in_array($val, $current)); ?> />
+        <?php echo esc_html($choice); ?>
     </label>
     <?php endforeach;
             break;
 
         case 'dropdown':
             ?>
-    <label for="<?php echo $option['name']; ?>">
-        <select name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>">
-            <?php foreach($option['options'] as $val => $choice):
-                if($val == $current) {
-                    $selected = 'selected="selected"';
-                } else {
-                    $selected = '';
-                } ?>
-            <option value="<?php echo $val; ?>" <?php echo $selected; ?>><?php echo $choice; ?></option>
+    <label for="<?php echo esc_attr($option['name']); ?>">
+        <select name="<?php echo esc_attr($option['name']); ?>" id="<?php echo esc_attr($id); ?>">
+            <?php foreach($option['options'] as $val => $choice): ?>
+            <option value="<?php echo esc_attr($val); ?>" <?php selected($val == $current); ?>><?php echo esc_html($choice); ?></option>
             <?php endforeach; ?>
         </select>
     </label>
@@ -816,14 +877,14 @@ function seed_fonts_output_settings_field($option)
             if(!$current && isset($option['std'])) {
                 $current = $option['std'];
             }
-            ?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="8" cols="70"><?php echo esc_textarea($current); ?></textarea><?php
+            ?><textarea name="<?php echo esc_attr($option['name']); ?>" id="<?php echo esc_attr($id); ?>" rows="8" cols="70"><?php echo esc_textarea($current); ?></textarea><?php
             break;
 
         case 'textarea_code':
             if(!$current && isset($option['std'])) {
                 $current = $option['std'];
             }
-            ?><textarea name="<?php echo $option['name']; ?>" id="<?php echo $id; ?>" rows="6" cols="60" class="code" readonly><?php echo esc_textarea($current); ?></textarea><?php
+            ?><textarea name="<?php echo esc_attr($option['name']); ?>" id="<?php echo esc_attr($id); ?>" rows="6" cols="60" class="code" readonly><?php echo esc_textarea($current); ?></textarea><?php
             break;
 
     endswitch;
@@ -833,6 +894,3 @@ function seed_fonts_output_settings_field($option)
         echo wp_kses_post(sprintf('<p class="description">%1$s</p>', $option['desc']));
     };
 }
-
-load_plugin_textdomain('seed-fonts', false, basename(dirname(__FILE__)) . '/languages');
-?>
